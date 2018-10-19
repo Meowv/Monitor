@@ -25,16 +25,18 @@ namespace IntelligentMonitor
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddOptions().Configure<AppSettings>(Configuration)
+                .AddOptions()
+                .Configure<AppSettings>(Configuration)
+                .Configure<ConnectionStrings>(Configuration.GetSection("MySqlConnection"))
                 .AddSwaggerGen(s =>
                 {
-                    s.SwaggerDoc("智能监控API", null);
+                    s.SwaggerDoc("IntelligentMonitor", null);
                     s.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "IntelligentMonitor.xml"));
                 })
-                .AddRouting(r =>
+                .AddRouting(routes =>
                 {
-                    r.LowercaseUrls = true;
-                    r.AppendTrailingSlash = false;
+                    routes.LowercaseUrls = true;
+                    routes.AppendTrailingSlash = false;
                 })
                 .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -52,11 +54,17 @@ namespace IntelligentMonitor
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+            app.UseStaticFiles();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
             app.UseSwagger();
             app.UseSwaggerUI(s =>
             {
-                s.SwaggerEndpoint("/swagger/智能监控API/swagger.json", "智能监控API");
+                s.SwaggerEndpoint("/swagger/IntelligentMonitor/swagger.json", "IntelligentMonitor API");
             });
         }
     }
