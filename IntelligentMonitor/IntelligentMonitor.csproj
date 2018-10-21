@@ -11,7 +11,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\" />
-    <Folder Include="Providers\" />
   </ItemGroup>
 
   <ItemGroup>
