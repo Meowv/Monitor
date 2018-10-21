@@ -1,13 +1,7 @@
-﻿using IntelligentMonitor.Authorization;
-using IntelligentMonitor.Models.AppSettings;
-using IntelligentMonitor.Providers;
-using IntelligentMonitor.Providers.Users;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
+﻿using IntelligentMonitor.Models.AppSettings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -30,15 +24,10 @@ namespace IntelligentMonitor
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            }).AddCookie();
             services
                 .AddOptions()
                 .Configure<AppSettings>(Configuration)
-                .Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"))
-                .AddDbContext<IntelligentMonitorContext>(options => options.UseMySql(Configuration.GetConnectionString("MySqlConnection")))
+                .Configure<ConnectionStrings>(Configuration.GetSection("MySqlConnection"))
                 .AddSwaggerGen(s =>
                 {
                     s.SwaggerDoc("IntelligentMonitor", null);
@@ -49,9 +38,6 @@ namespace IntelligentMonitor
                     routes.LowercaseUrls = true;
                     routes.AppendTrailingSlash = false;
                 })
-                .AddSingleton<AppSettings>()
-                .AddSingleton<UserProvider>()
-                .AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>()
                 .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -69,8 +55,6 @@ namespace IntelligentMonitor
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseAuthentication();
-
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
