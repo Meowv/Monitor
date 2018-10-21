@@ -1,4 +1,6 @@
-﻿namespace IntelligentMonitor.Models.Users
+﻿using System.Collections.Generic;
+
+namespace IntelligentMonitor.Models.Users
 {
     public class Users
     {
@@ -11,7 +13,10 @@
         public string Password { get; set; }
 
         public int RoleId { get; set; }
+        public string RoleName { get; set; }
 
         public int IsDelete { get; set; }
+
+        public List<Permission> Permissions { get; set; }
     }
 }
