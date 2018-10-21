@@ -7,6 +7,7 @@ using System.Linq;
 namespace IntelligentMonitor.Providers.Users
 {
     using IntelligentMonitor.Models.Users;
+    using IntelligentMonitor.Utility;
 
     public class UserProvider
     {
@@ -19,7 +20,12 @@ namespace IntelligentMonitor.Providers.Users
             _context = context;
         }
 
-        public Users GetUserById(int Id)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public Users GetUser(int Id)
         {
             var sql = @"SELECT
 	                    u.Id,
@@ -51,9 +57,26 @@ namespace IntelligentMonitor.Providers.Users
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public Users GetUser(string username, string password)
+        {
+            return _context.Users.FirstOrDefault(u => u.UserName == username && u.Password == MD5Util.TextToMD5(password) && u.IsDelete == 0);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="permissionName"></param>
+        /// <returns></returns>
         public bool CheckPermission(int Id, string permissionName)
         {
-            var user = GetUserById(Id);
+            var user = GetUser(Id);
             if (user == null)
             {
                 return false;

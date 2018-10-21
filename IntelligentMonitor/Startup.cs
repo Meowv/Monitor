@@ -50,8 +50,8 @@ namespace IntelligentMonitor
                     routes.AppendTrailingSlash = false;
                 })
                 .AddSingleton<AppSettings>()
-                .AddSingleton<UserProvider>()
                 .AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>()
+                .AddTransient<UserProvider>()
                 .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

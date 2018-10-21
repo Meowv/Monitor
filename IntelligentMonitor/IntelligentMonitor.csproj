@@ -10,7 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <Compile Remove="Authorization\DocumentAuthorizationHandler.cs" />
+    <Compile Remove="Authorization\IDocument.cs" />
+    <Compile Remove="Authorization\Operations.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Providers\" />
   </ItemGroup>
 
