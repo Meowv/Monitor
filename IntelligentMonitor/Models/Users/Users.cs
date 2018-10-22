@@ -13,6 +13,7 @@ namespace IntelligentMonitor.Models.Users
         public string Password { get; set; }
 
         public int RoleId { get; set; }
+
         public string RoleName { get; set; }
 
         public int IsDelete { get; set; }
