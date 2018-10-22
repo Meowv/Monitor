@@ -10,6 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\layuiadmin\**" />
+    <Content Remove="wwwroot\layuiadmin\**" />
+    <EmbeddedResource Remove="wwwroot\layuiadmin\**" />
+    <None Remove="wwwroot\layuiadmin\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Authorization\DocumentAuthorizationHandler.cs" />
     <Compile Remove="Authorization\IDocument.cs" />
     <Compile Remove="Authorization\Operations.cs" />

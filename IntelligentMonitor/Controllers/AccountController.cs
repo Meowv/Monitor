@@ -50,13 +50,11 @@ namespace IntelligentMonitor.Controllers
             return Json(new { code = 0, result = "登录成功！" });
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-            return RedirectToAction(nameof(AccountController.Login), "Login");
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
     }
 }
