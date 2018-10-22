@@ -65,11 +65,27 @@ namespace IntelligentMonitor.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Profile(Users user)
+        public async Task<IActionResult> Profile([Bind("NickName")]ProfileViewModel vm)
         {
-            int code = await _provider.UpdateUser(user);
+            var userIdClaim = HttpContext.User.FindFirst(u => u.Type == ClaimTypes.NameIdentifier);
+            var id = Convert.ToInt32(userIdClaim.Value);
 
-            return code > 0 ? Json(new { code = 0, msg = "修改成功！" }) : Json(new { code = 1, msg = "请稍后再试！" });
+            var user = _provider.GetUser(id);
+            user.NickName = vm.NickName;
+
+            var result = await _provider.UpdateUser(user);
+            if (result > 0)
+            {
+                var claimIdentity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+                claimIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
+                claimIdentity.AddClaim(new Claim(ClaimTypes.Name, user.NickName));
+                claimIdentity.AddClaim(new Claim(ClaimTypes.Role, user.RoleName));
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimIdentity));
+
+                return Json(new { code = 0, msg = "修改成功！" });
+            }
+
+            return Json(new { code = 1, msg = "请稍后再试！" });
         }
 
         public IActionResult Password()

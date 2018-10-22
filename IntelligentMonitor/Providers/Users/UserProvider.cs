@@ -42,10 +42,8 @@ namespace IntelligentMonitor.Providers.Users
         {
             var sql = @"UPDATE users 
                         SET NickName = @NickName,
-                        PASSWORD = @PASSWORD,
-                        RoleId = RoleId 
-                        WHERE
-	                        Id = @Id";
+                        Password = @Password
+                        WHERE Id = @Id";
             using (IDbConnection conn = _settings.MySqlConnection)
             {
                 return await conn.ExecuteAsync(sql, user);

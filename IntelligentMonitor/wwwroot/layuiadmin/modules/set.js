@@ -7,7 +7,6 @@
 layui.define(['form', 'upload'], function (exports) {
     var $ = layui.$
         , layer = layui.layer
-        , admin = layui.admin
         , form = layui.form;
 
     //自定义验证
@@ -34,21 +33,28 @@ layui.define(['form', 'upload'], function (exports) {
         }
     });
 
-
-    //设置密码
+    //Profile
     form.on('submit(setmyinfo)', function (obj) {
-        layer.msg(JSON.stringify(obj.field));
-
-        //提交修改
-        /*
-        admin.req({
-          url: ''
-          ,data: obj.field
-          ,success: function(){
-            
-          }
+        $.ajax({
+            type: "post",
+            dataType: 'json',
+            url: '/Account/Profile',
+            data: obj.field,
+            success: function (result) {
+                if (result.code == 0) {
+                    layer.msg(result.msg, {
+                        icon: 1,
+                        time: 1000
+                    }, function () {
+                        location.reload();
+                    });                } else {
+                    layer.msg(result.msg, {
+                        icon: 2,
+                        time: 1000
+                    });
+                }
+            }
         });
-        */
         return false;
     });
 

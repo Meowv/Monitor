@@ -18,6 +18,6 @@
 
     public class ProfileViewModel
     {
-
+        public string NickName { get; set; }
     }
 }
