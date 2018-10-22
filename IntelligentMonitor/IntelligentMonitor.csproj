@@ -10,13 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="wwwroot\layuiadmin\**" />
-    <Content Remove="wwwroot\layuiadmin\**" />
-    <EmbeddedResource Remove="wwwroot\layuiadmin\**" />
-    <None Remove="wwwroot\layuiadmin\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="Authorization\DocumentAuthorizationHandler.cs" />
     <Compile Remove="Authorization\IDocument.cs" />
     <Compile Remove="Authorization\Operations.cs" />
@@ -24,6 +17,40 @@
 
   <ItemGroup>
     <Folder Include="Providers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\layuiadmin\config.js" />
+    <None Include="wwwroot\layuiadmin\json\useradmin\mangadmin.js" />
+    <None Include="wwwroot\layuiadmin\json\useradmin\role.js" />
+    <None Include="wwwroot\layuiadmin\json\useradmin\webuser.js" />
+    <None Include="wwwroot\layuiadmin\layui\font\iconfont.svg" />
+    <None Include="wwwroot\layuiadmin\layui\layui.all.js" />
+    <None Include="wwwroot\layuiadmin\layui\layui.js" />
+    <None Include="wwwroot\layuiadmin\layui\lay\modules\carousel.js" />
+    <None Include="wwwroot\layuiadmin\layui\lay\modules\code.js" />
+    <None Include="wwwroot\layuiadmin\layui\lay\modules\colorpicker.js" />
+    <None Include="wwwroot\layuiadmin\layui\lay\modules\element.js" />
+    <None Include="wwwroot\layuiadmin\layui\lay\modules\flow.js" />
+    <None Include="wwwroot\layuiadmin\layui\lay\modules\form.js" />
+    <None Include="wwwroot\layuiadmin\layui\lay\modules\jquery.js" />
+    <None Include="wwwroot\layuiadmin\layui\lay\modules\laydate.js" />
+    <None Include="wwwroot\layuiadmin\layui\lay\modules\layedit.js" />
+    <None Include="wwwroot\layuiadmin\layui\lay\modules\layer.js" />
+    <None Include="wwwroot\layuiadmin\layui\lay\modules\layim.js" />
+    <None Include="wwwroot\layuiadmin\layui\lay\modules\laypage.js" />
+    <None Include="wwwroot\layuiadmin\layui\lay\modules\laytpl.js" />
+    <None Include="wwwroot\layuiadmin\layui\lay\modules\mobile.js" />
+    <None Include="wwwroot\layuiadmin\layui\lay\modules\rate.js" />
+    <None Include="wwwroot\layuiadmin\layui\lay\modules\slider.js" />
+    <None Include="wwwroot\layuiadmin\layui\lay\modules\table.js" />
+    <None Include="wwwroot\layuiadmin\layui\lay\modules\tree.js" />
+    <None Include="wwwroot\layuiadmin\layui\lay\modules\upload.js" />
+    <None Include="wwwroot\layuiadmin\layui\lay\modules\util.js" />
+    <None Include="wwwroot\layuiadmin\lib\admin.js" />
+    <None Include="wwwroot\layuiadmin\lib\index.js" />
+    <None Include="wwwroot\layuiadmin\lib\view.js" />
+    <None Include="wwwroot\layuiadmin\modules\useradmin.js" />
   </ItemGroup>
 
   <ItemGroup>

@@ -128,23 +128,34 @@ document.querySelector(".login-button").onclick = function () {
                 url: 'Login',
                 data: $('#login').serialize(),
                 success: function (data) {
-                    alert(data.result);
                     if (data.code == 0) {
-                        location.href = "/";
+                        layer.msg(data.result, {
+                            icon: 1,
+                            time: 1000
+                        }, function () {
+                            location.href = "/";
+                        });                    } else {
+                        layer.msg(data.result, {
+                            icon: 2,
+                            time: 1000
+                        });
                     }
                 }
             });
         }, 1500);
     } else {
         if (username.length > 0) {
-           alert("密码");
+            layer.msg("请输入您的密码");
         }
         if (password.length > 0) {
-            alert("账号"); 
+            layer.msg("请输入您的用户名");
         }
         return false;
     }
 }
+
+document.oncontextmenu = new Function("event.returnValue=false;");
+document.onselectstart = new Function("event.returnValue=false;");
 
 function hasClass(elem, cls) {
     cls = cls || '';

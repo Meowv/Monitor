@@ -11,5 +11,13 @@ namespace IntelligentMonitor.Controllers
         {
             return View();
         }
+
+        [PermissionFilter(Permissions.UserCreate)]
+        [PermissionFilter(Permissions.UserDelete)]
+        [PermissionFilter(Permissions.UserUpdate)]
+        public IActionResult Back()
+        {
+            return View();
+        }
     }
 }
