@@ -42,14 +42,14 @@ namespace IntelligentMonitor.Providers.Users
 	                    AND u.Id = @Id";
             using (IDbConnection conn = _settings.MySqlConnection)
             {
-                var list = new List<Permission>();
+                var list = new List<PermissionViewModel>();
 
                 var user = conn.Query<Users>(sql, new { Id }).FirstOrDefault();
 
-                var permissionList = _context.Permission.Where(p => p.RoleId == user.RoleId).ToList();
+                var permissionList = _context.Permissions.Where(p => p.RoleId == user.RoleId).ToList();
                 permissionList.ForEach(x =>
                 {
-                    list.Add(new Permission { UserId = user.Id, PermissionName = x.PermissionName });
+                    list.Add(new PermissionViewModel { UserId = user.Id, PermissionName = x.PermissionName });
                 });
                 user.Permissions = list;
 
@@ -65,7 +65,26 @@ namespace IntelligentMonitor.Providers.Users
         /// <returns></returns>
         public Users GetUser(string username, string password)
         {
-            return _context.Users.FirstOrDefault(u => u.UserName == username && u.Password == MD5Util.TextToMD5(password) && u.IsDelete == 0);
+            var sql = @"SELECT
+	                    u.Id,
+	                    u.UserName,
+	                    u.NickName,
+	                    u.PASSWORD,
+	                    u.RoleId,
+	                    r.RoleName 
+                    FROM
+	                    users AS u
+	                    JOIN roles AS r ON u.RoleId = r.Id 
+                    WHERE
+	                    u.IsDelete = 0 
+	                    AND u.UserName = @username
+	                    AND u.Password = @password";
+            using (IDbConnection conn = _settings.MySqlConnection)
+            {
+                var user = conn.Query<Users>(sql, new { username, password = MD5Util.TextToMD5(password) }).FirstOrDefault();
+
+                return user;
+            }
         }
 
         /// <summary>

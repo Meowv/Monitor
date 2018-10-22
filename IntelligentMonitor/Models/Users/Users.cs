@@ -17,6 +17,6 @@ namespace IntelligentMonitor.Models.Users
 
         public int IsDelete { get; set; }
 
-        public List<Permission> Permissions { get; set; }
+        public List<PermissionViewModel> Permissions { get; set; }
     }
 }

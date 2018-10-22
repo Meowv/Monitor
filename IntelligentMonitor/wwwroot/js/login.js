@@ -122,19 +122,19 @@ document.querySelector(".login-button").onclick = function () {
             removeClass(document.querySelector(".login"), "active");
             removeClass(document.querySelector(".sk-rotating-plane"), "active");
             document.querySelector(".login").style.display = "block";
-
             $.ajax({
                 type: "post",
-                url: 'Login',
-                data: JSON.stringify("username=qix&password=123456"),
-                contentType: "application/json; charset=utf-8",
                 dataType: 'json',
-                success: function (result) {
-
+                url: 'Login',
+                data: $('#login').serialize(),
+                success: function (data) {
+                    alert(data.result);
+                    if (data.code == 0) {
+                        location.href = "/";
+                    }
                 }
             });
-
-        }, 3000);
+        }, 1500);
     } else {
         if (username.length > 0) {
            alert("密码");

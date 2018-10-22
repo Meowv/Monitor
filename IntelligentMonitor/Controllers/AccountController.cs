@@ -20,27 +20,21 @@ namespace IntelligentMonitor.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult Login(string returnUrl = null)
+        public IActionResult Login()
         {
-            ViewData["ReturnUrl"] = returnUrl;
-
             return View();
         }
 
         [AllowAnonymous]
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel vm, string returnUrl = null)
+        public async Task<IActionResult> Login(LoginViewModel vm)
         {
-            ViewData["ReturnUrl"] = returnUrl;
-
             if (ModelState.IsValid)
             {
                 var user = _provider.GetUser(vm.UserName, vm.Password);
                 if (user == null)
                 {
-                    ModelState.AddModelError(string.Empty, "用户名或密码错误！");
-                    return View(vm);
+                    return Json(new { code = 1, result = "账号或密码错误！" });
                 }
                 else
                 {
@@ -50,16 +44,10 @@ namespace IntelligentMonitor.Controllers
                     claimIdentity.AddClaim(new Claim(ClaimTypes.Role, user.RoleName));
 
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimIdentity));
-
-                    if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
-                    {
-                        return Redirect(returnUrl);
-                    }
-                    return RedirectToAction(nameof(HomeController.Index), "Home");
                 }
             }
 
-            return View(vm);
+            return Json(new { code = 0, result = "登录成功！" });
         }
 
         [HttpPost]
