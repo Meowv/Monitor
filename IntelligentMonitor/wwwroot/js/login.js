@@ -127,15 +127,15 @@ document.querySelector(".login-button").onclick = function () {
                 dataType: 'json',
                 url: 'Login',
                 data: $('#login').serialize(),
-                success: function (data) {
-                    if (data.code == 0) {
-                        layer.msg(data.result, {
+                success: function (result) {
+                    if (result.code == 0) {
+                        layer.msg(result.msg, {
                             icon: 1,
                             time: 1000
                         }, function () {
                             location.href = "/";
                         });                    } else {
-                        layer.msg(data.result, {
+                        layer.msg(result.msg, {
                             icon: 2,
                             time: 1000
                         });

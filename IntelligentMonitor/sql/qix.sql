@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : Mysql
+ Source Server         : 本地_Mysql
  Source Server Type    : MySQL
  Source Server Version : 80012
- Source Host           : localhost:3306
+ Source Host           : 127.0.0.1:3306
  Source Schema         : qix
 
  Target Server Type    : MySQL
  Target Server Version : 80012
  File Encoding         : 65001
 
- Date: 21/10/2018 20:34:45
+ Date: 22/10/2018 16:57:34
 */
 
 SET NAMES utf8mb4;
@@ -22,18 +22,20 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `permissions`;
 CREATE TABLE `permissions`  (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
   `RoleId` int(11) NOT NULL,
-  `PermissionName` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
+  `PermissionName` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`Id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of permissions
 -- ----------------------------
-INSERT INTO `permissions` VALUES (10000, 'admin');
-INSERT INTO `permissions` VALUES (10001, 'User.Delete');
-INSERT INTO `permissions` VALUES (10001, 'User.Delete');
-INSERT INTO `permissions` VALUES (10001, 'User.Delete');
-INSERT INTO `permissions` VALUES (10002, 'User.Read');
+INSERT INTO `permissions` VALUES (10000, 10000, 'User');
+INSERT INTO `permissions` VALUES (10001, 10001, 'User.Create');
+INSERT INTO `permissions` VALUES (10002, 10001, 'User.Update');
+INSERT INTO `permissions` VALUES (10003, 10001, 'User.Delete');
+INSERT INTO `permissions` VALUES (10004, 10002, 'User.Read');
 
 -- ----------------------------
 -- Table structure for roles
@@ -69,13 +71,13 @@ CREATE TABLE `users`  (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (10000, 'qix', '阿星Plus', 'e10adc3949ba59abbe56e057f20f883e', 10000, 0);
-INSERT INTO `users` VALUES (10001, 'admin', '管理员', 'e10adc3949ba59abbe56e057f20f883e', 10000, 0);
-INSERT INTO `users` VALUES (10002, 'editor1', '1号编辑', 'e10adc3949ba59abbe56e057f20f883e', 10001, 0);
-INSERT INTO `users` VALUES (10003, 'editor2', '2号编辑', 'e10adc3949ba59abbe56e057f20f883e', 10001, 0);
-INSERT INTO `users` VALUES (10004, 'editor3', '3号编辑', 'e10adc3949ba59abbe56e057f20f883e', 10001, 0);
-INSERT INTO `users` VALUES (10005, 'user1', '1号用户', 'e10adc3949ba59abbe56e057f20f883e', 10002, 0);
-INSERT INTO `users` VALUES (10006, 'user2', '2号用户', 'e10adc3949ba59abbe56e057f20f883e', 10002, 0);
-INSERT INTO `users` VALUES (10007, 'user3', '3号用户', 'e10adc3949ba59abbe56e057f20f883e', 10002, 0);
+INSERT INTO `users` VALUES (10000, 'qix', '阿星Plus', 'E10ADC3949BA59ABBE56E057F20F883E', 10000, 0);
+INSERT INTO `users` VALUES (10001, 'admin', '管理员', 'E10ADC3949BA59ABBE56E057F20F883E', 10000, 0);
+INSERT INTO `users` VALUES (10002, 'editor1', '1号编辑', 'E10ADC3949BA59ABBE56E057F20F883E', 10001, 0);
+INSERT INTO `users` VALUES (10003, 'editor2', '2号编辑', 'E10ADC3949BA59ABBE56E057F20F883E', 10001, 0);
+INSERT INTO `users` VALUES (10004, 'editor3', '3号编辑', 'E10ADC3949BA59ABBE56E057F20F883E', 10001, 0);
+INSERT INTO `users` VALUES (10005, 'user1', '1号用户', 'E10ADC3949BA59ABBE56E057F20F883E', 10002, 0);
+INSERT INTO `users` VALUES (10006, 'user2', '2号用户', 'E10ADC3949BA59ABBE56E057F20F883E', 10002, 0);
+INSERT INTO `users` VALUES (10007, 'user3', '3号用户', 'E10ADC3949BA59ABBE56E057F20F883E', 10002, 0);
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -7,6 +7,7 @@ namespace IntelligentMonitor.Controllers
     [Authorize]
     public class HomeController : Controller
     {
+        [PermissionFilter(Permissions.UserRead)]
         public IActionResult Index()
         {
             return View();

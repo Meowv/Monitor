@@ -20,7 +20,7 @@
                         </a>
                     </li>
                     <li class="layui-nav-item layui-hide-xs" lay-unselect>
-                        <a href="/" target="_blank" title="大屏展示">
+                        <a href="@Url.Action("Index", "Home")" target="_blank" title="大屏展示">
                             <i class="layui-icon layui-icon-website"></i>
                         </a>
                     </li>
@@ -46,16 +46,16 @@
                             <cite>@User.Identity.Name</cite>
                         </a>
                         <dl class="layui-nav-child">
-                            <dd><a lay-href="set/user/info.html">基本资料</a></dd>
-                            <dd><a lay-href="set/user/password.html">修改密码</a></dd>
-                            <dd layadmin-event="logout"><a>退出</a></dd>
+                            <dd><a lay-href="@Url.Action("Profile", "Account")">基本资料</a></dd>
+                            <dd><a lay-href="@Url.Action("Password", "Account")">修改密码</a></dd>
+                            <dd><a href="@Url.Action("Logout", "Account")">退出</a></dd>
                         </dl>
                     </li>
                 </ul>
             </div>
             <div class="layui-side layui-side-menu">
                 <div class="layui-side-scroll">
-                    <div class="layui-logo" lay-href="/Home/Index">
+                    <div class="layui-logo" lay-href="@Url.Action("Index", "Home")">
                         <span>智能监控系统</span>
                     </div>
                     <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
@@ -66,7 +66,7 @@
                             </a>
                             <dl class="layui-nav-child">
                                 <dd data-name="console" class="layui-this">
-                                    <a lay-href="/Home/Index">大屏预览</a>
+                                    <a lay-href="@Url.Action("Index", "Home")">大屏预览</a>
                                 </dd>
                             </dl>
                         </li>
@@ -94,10 +94,10 @@
                             </a>
                             <dl class="layui-nav-child">
                                 <dd>
-                                    <a lay-href="/views/set/user/info.html">基本资料</a>
+                                    <a lay-href="@Url.Action("Profile", "Account")">基本资料</a>
                                 </dd>
                                 <dd>
-                                    <a lay-href="/views/set/user/password.html">修改密码</a>
+                                    <a lay-href="@Url.Action("Password", "Account")">修改密码</a>
                                 </dd>
                             </dl>
                         </li>
@@ -121,13 +121,13 @@
                 </div>
                 <div class="layui-tab" lay-unauto lay-allowClose="true" lay-filter="layadmin-layout-tabs">
                     <ul class="layui-tab-title" id="LAY_app_tabsheader">
-                        <li lay-id="/Home/Index" lay-attr="/Home/Index" class="layui-this"><i class="layui-icon layui-icon-home"></i></li>
+                        <li lay-id="@Url.Action("Index", "Home")" lay-attr="@Url.Action("Index", "Home")" class="layui-this"><i class="layui-icon layui-icon-home"></i></li>
                     </ul>
                 </div>
             </div>
             <div class="layui-body" id="LAY_app_body">
                 <div class="layadmin-tabsbody-item layui-show">
-                    <iframe src="/Home/Index" frameborder="0" class="layadmin-iframe"></iframe>
+                    <iframe src="@Url.Action("Index", "Home")" frameborder="0" class="layadmin-iframe"></iframe>
                 </div>
             </div>
             <div class="layadmin-body-shade" layadmin-event="shade"></div>

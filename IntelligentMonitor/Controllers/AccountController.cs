@@ -1,5 +1,6 @@
 ﻿using IntelligentMonitor.Models.Users;
 using IntelligentMonitor.Providers.Users;
+using IntelligentMonitor.Utility;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -34,7 +35,7 @@ namespace IntelligentMonitor.Controllers
                 var user = _provider.GetUser(vm.UserName, vm.Password);
                 if (user == null)
                 {
-                    return Json(new { code = 1, result = "账号或密码错误！" });
+                    return Json(new { code = 1, msg = "账号或密码错误！" });
                 }
                 else
                 {
@@ -47,7 +48,7 @@ namespace IntelligentMonitor.Controllers
                 }
             }
 
-            return Json(new { code = 0, result = "登录成功！" });
+            return Json(new { code = 0, msg = "登录成功！" });
         }
 
         public async Task<IActionResult> Logout()
@@ -55,6 +56,34 @@ namespace IntelligentMonitor.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
             return RedirectToAction(nameof(HomeController.Index), "Home");
+        }
+
+        public IActionResult Profile()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Profile(Users user)
+        {
+            int code = await _provider.UpdateUser(user);
+
+            return code > 0 ? Json(new { code = 0, msg = "修改成功！" }) : Json(new { code = 1, msg = "请稍后再试！" });
+        }
+
+        public IActionResult Password()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Password(Users user)
+        {
+            user.Password = MD5Util.TextToMD5(user.Password);
+
+            int code = await _provider.UpdateUser(user);
+
+            return code > 0 ? Json(new { code = 0, msg = "修改成功！" }) : Json(new { code = 1, msg = "请稍后再试！" });
         }
     }
 }
