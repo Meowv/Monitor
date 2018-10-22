@@ -54,18 +54,26 @@ layui.define(['form', 'upload'], function (exports) {
 
     //Password
     form.on('submit(setmypass)', function (obj) {
-        layer.msg(JSON.stringify(obj.field));
-
-        //提交修改
-        /*
-        admin.req({
-          url: ''
-          ,data: obj.field
-          ,success: function(){
-            
-          }
+        $.ajax({
+            type: "post",
+            dataType: 'json',
+            url: '/Account/Password',
+            data: obj.field,
+            success: function (result) {
+                if (result.code == 0) {
+                    layer.msg(result.msg, {
+                        icon: 1,
+                        time: 1000
+                    }, function () {
+                        location.reload();
+                    });                } else {
+                    layer.msg(result.msg, {
+                        icon: 2,
+                        time: 1000
+                    });
+                }
+            }
         });
-        */
         return false;
     });
 

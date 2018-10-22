@@ -134,7 +134,8 @@ document.querySelector(".login-button").onclick = function () {
                             time: 1000
                         }, function () {
                             location.href = "/";
-                        });                    } else {
+                        });
+                    } else {
                         layer.msg(result.msg, {
                             icon: 2,
                             time: 1000

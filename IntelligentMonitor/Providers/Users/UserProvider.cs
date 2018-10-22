@@ -40,8 +40,31 @@ namespace IntelligentMonitor.Providers.Users
         /// <returns></returns>
         public async Task<int> UpdateUser(Users user)
         {
-            _context.Entry(user).State = EntityState.Modified;
-            return await _context.SaveChangesAsync();
+            var sql = @"UPDATE users 
+                        SET NickName = @NickName,
+                        PASSWORD = @PASSWORD,
+                        RoleId = RoleId 
+                        WHERE
+	                        Id = @Id";
+            using (IDbConnection conn = _settings.MySqlConnection)
+            {
+                return await conn.ExecuteAsync(sql, user);
+            }
+        }
+
+        /// <summary>
+        /// 验证密码
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public async Task<bool> VerifyPassword(int Id, string password)
+        {
+            var sql = "SELECT COUNT(*) FROM users WHERE Password = @password and Id = @Id";
+            using (IDbConnection conn = _settings.MySqlConnection)
+            {
+                return await conn.ExecuteScalarAsync<int>(sql, new { Id, password = MD5Util.TextToMD5(password) }) > 0;
+            }
         }
 
         /// <summary>

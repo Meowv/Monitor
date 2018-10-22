@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -28,7 +29,7 @@ namespace IntelligentMonitor.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel vm)
+        public async Task<IActionResult> Login([Bind("UserName", "Password")]LoginViewModel vm)
         {
             if (ModelState.IsValid)
             {
@@ -77,13 +78,27 @@ namespace IntelligentMonitor.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Password(Users user)
+        public async Task<IActionResult> Password([Bind("OldPassword", "Password", "Repassword")]PasswordViewModel vm)
         {
-            user.Password = MD5Util.TextToMD5(user.Password);
+            var code = 0;
+            var msg = "";
 
-            int code = await _provider.UpdateUser(user);
+            var userIdClaim = HttpContext.User.FindFirst(u => u.Type == ClaimTypes.NameIdentifier);
+            var id = Convert.ToInt32(userIdClaim.Value);
 
-            return code > 0 ? Json(new { code = 0, msg = "修改成功！" }) : Json(new { code = 1, msg = "请稍后再试！" });
+            var pass = await _provider.VerifyPassword(id, vm.OldPassword);
+            if (!pass)
+            {
+                code = 1;
+                msg = "旧密码错误！";
+                return Json(new { code, msg });
+            }
+
+            var user = _provider.GetUser(id);
+            user.Password = MD5Util.TextToMD5(vm.Repassword);
+            var result = await _provider.UpdateUser(user);
+
+            return result > 0 ? Json(new { code, msg = "密码修改成功！" }) : Json(new { code = 1, msg = "请稍后再试！" });
         }
     }
 }
