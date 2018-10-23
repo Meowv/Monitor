@@ -29,8 +29,12 @@ namespace IntelligentMonitor.Providers.Users
         /// <returns></returns>
         public async Task<int> InsertUser(Users user)
         {
-            _context.Add(user);
-            return await _context.SaveChangesAsync();
+            var sql = @"INSERT INTO users ( UserName, NickName, Password, RoleId, IsDelete )
+                        VALUES ( @UserName, @NickName, @Password, @RoleId, 0 )";
+            using (IDbConnection conn = _settings.MySqlConnection)
+            {
+                return await conn.ExecuteAsync(sql, user);
+            }
         }
 
         /// <summary>
@@ -41,8 +45,7 @@ namespace IntelligentMonitor.Providers.Users
         public async Task<int> UpdateUser(Users user)
         {
             var sql = @"UPDATE users 
-                        SET NickName = @NickName,
-                        Password = @Password
+                        SET NickName = @NickName
                         WHERE Id = @Id";
             using (IDbConnection conn = _settings.MySqlConnection)
             {
@@ -82,9 +85,23 @@ namespace IntelligentMonitor.Providers.Users
         /// 用户列表
         /// </summary>
         /// <returns></returns>
-        public async Task<List<Users>> GetUserList()
+        public List<Users> GetUserList()
         {
-            return await _context.Users.Where(u => u.IsDelete == 0).ToListAsync();
+            var sql = @"SELECT
+	                    u.Id,
+	                    u.UserName,
+	                    u.NickName,
+	                    u.RoleId,
+	                    r.RoleName 
+                    FROM
+	                    users AS u
+	                    JOIN roles AS r ON u.RoleId = r.Id 
+                    WHERE
+                        u.IsDelete = 0";
+            using (IDbConnection conn = _settings.MySqlConnection)
+            {
+                return conn.Query<Users>(sql).ToList();
+            }
         }
 
         /// <summary>
@@ -208,9 +225,9 @@ namespace IntelligentMonitor.Providers.Users
         /// 角色列表
         /// </summary>
         /// <returns></returns>
-        public async Task<List<Roles>> GetRoleList()
+        public List<Roles> GetRoleList()
         {
-            return await _context.Roles.ToListAsync();
+            return _context.Roles.ToList();
         }
 
         /// <summary>

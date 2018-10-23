@@ -121,5 +121,81 @@ namespace IntelligentMonitor.Controllers
 
             return result > 0 ? Json(new { code, msg = "密码修改成功！" }) : Json(new { code = 1, msg = "请稍后再试！" });
         }
+
+        public IActionResult Roles()
+        {
+            return View();
+        }
+
+        public IActionResult Users()
+        {
+            var userRoleClaim = HttpContext.User.FindFirst(u => u.Type == ClaimTypes.Role);
+            ViewData["Role"] = userRoleClaim.Value;
+
+            return View();
+        }
+
+        public IActionResult AddUser()
+        {
+            return View();
+        }
+
+        public IActionResult EditUser()
+        {
+            return View();
+        }
+
+        public IActionResult Admins()
+        {
+            var userIdClaim = HttpContext.User.FindFirst(u => u.Type == ClaimTypes.NameIdentifier);
+            ViewData["Id"] = userIdClaim.Value;
+
+            return View();
+        }
+
+        public IActionResult AddAdmin()
+        {
+            var vm = new RoleViewModel
+            {
+                RoleList = _provider.GetRoleList()
+            };
+            return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddAdmin([Bind("UserName", "NickName", "Password", "RoleId")]UserViewModel vm)
+        {
+            var user = new Users
+            {
+                UserName = vm.UserName,
+                NickName = vm.NickName,
+                Password = MD5Util.TextToMD5(vm.Password),
+                RoleId = vm.RoleId
+            };
+            var result = await _provider.InsertUser(user);
+
+            return result > 0 ? Json(new { code = 0, msg = "添加成功！" }) : Json(new { code = 1, msg = "请稍后再试！" });
+        }
+
+        public IActionResult EditAdmin(int id)
+        {
+            var vm = new RoleViewModel
+            {
+                User = _provider.GetUser(id),
+                RoleList = _provider.GetRoleList()
+            };
+            return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditAdmin([Bind("NickName")]UserViewModel vm, int id)
+        {
+            var user = _provider.GetUser(id);
+            user.NickName = vm.NickName;
+
+            var result = await _provider.UpdateUser(user);
+
+            return result > 0 ? Json(new { code = 0, msg = "保存成功！" }) : Json(new { code = 1, msg = "请稍后再试！" });
+        }
     }
 }

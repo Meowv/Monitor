@@ -12,6 +12,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.IO;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 
 namespace IntelligentMonitor
 {
@@ -49,6 +51,7 @@ namespace IntelligentMonitor
                     routes.LowercaseUrls = true;
                     routes.AppendTrailingSlash = false;
                 })
+                .AddSingleton(HtmlEncoder.Create(UnicodeRanges.All))
                 .AddSingleton<AppSettings>()
                 .AddTransient<IAuthorizationHandler, PermissionAuthorizationHandler>()
                 .AddTransient<UserProvider>()

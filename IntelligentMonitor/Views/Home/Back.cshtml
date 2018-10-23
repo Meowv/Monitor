@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@inject IAuthorizationService AuthorizationService
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -77,15 +78,18 @@
                             </a>
                             <dl class="layui-nav-child">
                                 <dd>
-                                    <a lay-href="/views/user/user/list.html">网站用户</a>
+                                    <a lay-href="@Url.Action("Users", "Account")">网站用户</a>
                                 </dd>
-                                <dd>
-                                    <a lay-href="/views/user/administrators/list.html">后台管理员</a>
-                                </dd>
-                                <dd>
-                                    <a lay-href="/views/user/administrators/role.html">角色管理</a>
-                                </dd>
-                            </dl>
+                                @if ((await AuthorizationService.AuthorizeAsync(User, null, new PermissionAuthorizationRequirement(IntelligentMonitor.Authorization.Permissions.User))).Succeeded)
+                                {
+                                        <dd>
+                                            <a lay-href="@Url.Action("Admins", "Account")">后台管理员</a>
+                                        </dd>
+                                        <dd>
+                                            <a lay-href="@Url.Action("Roles", "Account")">角色管理</a>
+                                        </dd>
+                                }
+                                </dl>
                         </li>
                         <li data-name="set" class="layui-nav-item">
                             <a href="javascript:;" lay-tips="设置" lay-direction="2">

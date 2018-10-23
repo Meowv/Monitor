@@ -1,4 +1,4 @@
-
+﻿
 
 <!DOCTYPE html>
 <html>
@@ -148,8 +148,8 @@
 
             //监听提交
             iframeWindow.layui.form.on('submit('+ submitID +')', function(data){
-              var field = data.field; //获取提交的字段
-              
+                var field = data.field; //获取提交的字段
+                alert(field);
               //提交 Ajax 成功后，静态更新表格中的数据
               //$.ajax({});
               table.reload('LAY-user-front-submit'); //数据刷新

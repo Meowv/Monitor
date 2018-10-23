@@ -14,7 +14,6 @@ namespace IntelligentMonitor.Controllers
         }
 
         [PermissionFilter(Permissions.UserCreate)]
-        [PermissionFilter(Permissions.UserDelete)]
         [PermissionFilter(Permissions.UserUpdate)]
         public IActionResult Back()
         {
