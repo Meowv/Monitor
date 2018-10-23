@@ -61,7 +61,12 @@ namespace IntelligentMonitor.Controllers
 
         public IActionResult Profile()
         {
-            return View();
+            var userIdClaim = HttpContext.User.FindFirst(u => u.Type == ClaimTypes.NameIdentifier);
+            var id = Convert.ToInt32(userIdClaim.Value);
+
+            var user = _provider.GetUser(id);
+
+            return View(user);
         }
 
         [HttpPost]

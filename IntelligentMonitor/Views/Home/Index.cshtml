@@ -5,6 +5,7 @@
 </head>
 <body>
     <p>欢迎您：@User.Identity.Name !</p>
-    <a asp-controller="Account" asp-action="Logout">退出</a>
+    <a href="@Url.Action("Back", "Home")">进入后台</a>
+    <a href="@Url.Action("Logout", "Account")">退出</a>
 </body>
 </html>

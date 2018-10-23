@@ -20,19 +20,19 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">我的角色</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" value="aa" readonly class="layui-input layui-disabled">
+                                    <input type="text" value="@Model.RoleName" readonly class="layui-input layui-disabled">
                                 </div>
                             </div>
                             <div class="layui-form-item">
                                 <label class="layui-form-label">用户名</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" value="xianxin" readonly class="layui-input layui-disabled">
+                                    <input type="text" value="@Model.UserName" readonly class="layui-input layui-disabled">
                                 </div>
                             </div>
                             <div class="layui-form-item">
                                 <label class="layui-form-label">昵称</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" name="NickName" value="@User.Identity.Name" lay-verify="nickname" autocomplete="off" placeholder="请输入昵称" class="layui-input">
+                                    <input type="text" name="NickName" value="@Model.NickName" lay-verify="nickname" autocomplete="off" placeholder="请输入昵称" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item">
