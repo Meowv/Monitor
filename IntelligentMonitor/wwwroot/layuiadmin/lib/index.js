@@ -1,9 +1,3 @@
-/**
- @Name：layuiAdmin iframe版主入口
- @Author：贤心
- @Site：http://www.layui.com/admin/
- @License：LPPL
- */
 layui.extend({
     setter: 'config' //配置模块
     , admin: 'lib/admin' //核心模块

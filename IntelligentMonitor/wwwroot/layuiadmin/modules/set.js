@@ -41,7 +41,8 @@ layui.define(['form', 'upload'], function (exports) {
                         time: 1000
                     }, function () {
                         location.reload();
-                    });                } else {
+                    });
+                } else {
                     layer.msg(result.msg, {
                         icon: 2,
                         time: 1000
@@ -66,7 +67,8 @@ layui.define(['form', 'upload'], function (exports) {
                         time: 1000
                     }, function () {
                         location.reload();
-                    });                } else {
+                    });
+                } else {
                     layer.msg(result.msg, {
                         icon: 2,
                         time: 1000

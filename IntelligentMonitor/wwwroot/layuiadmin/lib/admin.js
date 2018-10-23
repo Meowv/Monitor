@@ -1,9 +1,3 @@
-/**
- @Name：layuiAdmin iframe版核心模块
- @Author：贤心
- @Site：http://www.layui.com/admin/
- @License：LPPL
- */
 layui.define('view', function (exports) {
     var $ = layui.jquery
         , laytpl = layui.laytpl
