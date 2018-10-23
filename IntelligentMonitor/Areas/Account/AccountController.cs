@@ -3,6 +3,7 @@ using IntelligentMonitor.Models.Users;
 using IntelligentMonitor.Providers.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -27,10 +28,11 @@ namespace IntelligentMonitor.Areas.Account
         /// <param name="page"></param>
         /// <param name="limit"></param>
         /// <param name="userName"></param>
+        /// <param name="roleId"></param>
         /// <returns></returns>
         [HttpGet]
         [Route("get_users")]
-        public JsonResult<List<Users>> GetUserList(int role, int page, int limit, string userName = null)
+        public JsonResult<List<Users>> GetUserList(int role, int page, int limit, string userName = null, string roleId = null)
         {
             var list = _provider.GetUserList();
             if (role == 1)
@@ -40,6 +42,11 @@ namespace IntelligentMonitor.Areas.Account
             else
             {
                 list = list.Where(u => u.RoleId != 10000).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(roleId))
+            {
+                list = list.Where(u => u.RoleId == Convert.ToUInt32(roleId)).ToList();
             }
 
             if (!string.IsNullOrEmpty(userName))
