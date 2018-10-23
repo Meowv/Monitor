@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 
 namespace IntelligentMonitor.Controllers
 {
+    using IntelligentMonitor.Authorization;
+
     [Authorize]
     public class AccountController : Controller
     {
@@ -129,8 +131,8 @@ namespace IntelligentMonitor.Controllers
 
         public IActionResult Users()
         {
-            var userRoleClaim = HttpContext.User.FindFirst(u => u.Type == ClaimTypes.Role);
-            ViewData["Role"] = userRoleClaim.Value;
+            var userIdClaim = HttpContext.User.FindFirst(u => u.Type == ClaimTypes.NameIdentifier);
+            ViewData["Id"] = userIdClaim.Value;
 
             return View();
         }
@@ -140,11 +142,42 @@ namespace IntelligentMonitor.Controllers
             return View();
         }
 
+        [HttpPost]
+        [PermissionFilter(Permissions.UserCreate)]
+        [PermissionFilter(Permissions.UserUpdate)]
+        public async Task<IActionResult> AddUser([Bind("UserName", "NickName", "Password", "RoleId")]UserViewModel vm)
+        {
+            var user = new Users
+            {
+                UserName = vm.UserName,
+                NickName = vm.NickName,
+                Password = MD5Util.TextToMD5(vm.Password),
+                RoleId = vm.RoleId
+            };
+            var result = await _provider.InsertUser(user);
+
+            return result > 0 ? Json(new { code = 0, msg = "添加成功！" }) : Json(new { code = 1, msg = "请稍后再试！" });
+        }
+
         public IActionResult EditUser()
         {
             return View();
         }
 
+        [HttpPost]
+        [PermissionFilter(Permissions.UserCreate)]
+        [PermissionFilter(Permissions.UserUpdate)]
+        public async Task<IActionResult> EditUser([Bind("NickName")]UserViewModel vm, int id)
+        {
+            var user = _provider.GetUser(id);
+            user.NickName = vm.NickName;
+
+            var result = await _provider.UpdateUser(user);
+
+            return result > 0 ? Json(new { code = 0, msg = "保存成功！" }) : Json(new { code = 1, msg = "请稍后再试！" });
+        }
+
+        [PermissionFilter(Permissions.User)]
         public IActionResult Admins()
         {
             var userIdClaim = HttpContext.User.FindFirst(u => u.Type == ClaimTypes.NameIdentifier);
@@ -153,6 +186,7 @@ namespace IntelligentMonitor.Controllers
             return View();
         }
 
+        [PermissionFilter(Permissions.User)]
         public IActionResult AddAdmin()
         {
             var vm = new RoleViewModel
@@ -163,6 +197,7 @@ namespace IntelligentMonitor.Controllers
         }
 
         [HttpPost]
+        [PermissionFilter(Permissions.User)]
         public async Task<IActionResult> AddAdmin([Bind("UserName", "NickName", "Password", "RoleId")]UserViewModel vm)
         {
             var user = new Users
@@ -177,6 +212,7 @@ namespace IntelligentMonitor.Controllers
             return result > 0 ? Json(new { code = 0, msg = "添加成功！" }) : Json(new { code = 1, msg = "请稍后再试！" });
         }
 
+        [PermissionFilter(Permissions.User)]
         public IActionResult EditAdmin(int id)
         {
             var vm = new RoleViewModel
@@ -188,6 +224,7 @@ namespace IntelligentMonitor.Controllers
         }
 
         [HttpPost]
+        [PermissionFilter(Permissions.User)]
         public async Task<IActionResult> EditAdmin([Bind("NickName")]UserViewModel vm, int id)
         {
             var user = _provider.GetUser(id);
