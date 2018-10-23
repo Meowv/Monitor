@@ -109,54 +109,63 @@ particlesJS('particles-js', {
     "retina_detect": false
 });
 
-document.querySelector(".login-button").onclick = function () {
-    let username = $('input[name="username"]').val().trim();
-    let password = $('input[name="password"]').val().trim();
-    if (username.length > 0 && password.length > 0) {
-        addClass(document.querySelector(".login"), "active");
-        setTimeout(function () {
-            addClass(document.querySelector(".sk-rotating-plane"), "active");
-            document.querySelector(".login").style.display = "none";
-        }, 800);
-        setTimeout(function () {
-            removeClass(document.querySelector(".login"), "active");
-            removeClass(document.querySelector(".sk-rotating-plane"), "active");
-            document.querySelector(".login").style.display = "block";
-            $.ajax({
-                type: "post",
-                dataType: 'json',
-                url: 'Login',
-                data: $('#login').serialize(),
-                success: function (result) {
-                    if (result.code == 0) {
-                        layer.msg(result.msg, {
-                            icon: 1,
-                            time: 1000
-                        }, function () {
-                            location.href = "/";
-                        });
-                    } else {
-                        layer.msg(result.msg, {
-                            icon: 2,
-                            time: 1000
-                        });
-                    }
-                }
-            });
-        }, 1500);
-    } else {
-        if (username.length > 0) {
-            layer.msg("请输入您的密码");
-        }
-        if (password.length > 0) {
-            layer.msg("请输入您的用户名");
-        }
-        return false;
-    }
-}
+layui.use(['layer'], function () {
+    var layer = layui.layer;
 
-document.oncontextmenu = new Function("event.returnValue=false;");
-document.onselectstart = new Function("event.returnValue=false;");
+    document.querySelector(".login-button").onclick = function () {
+        let username = $('input[name="username"]').val().trim();
+        let password = $('input[name="password"]').val().trim();
+        if (username.length > 0 && password.length > 0) {
+            addClass(document.querySelector(".login"), "active");
+            setTimeout(function () {
+                addClass(document.querySelector(".sk-rotating-plane"), "active");
+                document.querySelector(".login").style.display = "none";
+            }, 800);
+            setTimeout(function () {
+                removeClass(document.querySelector(".login"), "active");
+                removeClass(document.querySelector(".sk-rotating-plane"), "active");
+                document.querySelector(".login").style.display = "block";
+                $.ajax({
+                    type: "post",
+                    dataType: 'json',
+                    url: 'Login',
+                    data: $('#login').serialize(),
+                    success: function (result) {
+                        if (result.code == 0) {
+                            layer.msg(result.msg, {
+                                icon: 1,
+                                time: 1000
+                            }, function () {
+                                location.href = "/";
+                            });
+                        } else {
+                            layer.msg(result.msg, {
+                                icon: 2,
+                                time: 1000
+                            });
+                        }
+                    }
+                });
+            }, 1500);
+        } else {
+            if (username.length > 0) {
+                layer.msg("请输入您的密码");
+            }
+            if (password.length > 0) {
+                layer.msg("请输入您的用户名");
+            }
+            return false;
+        }
+    }
+    document.oncontextmenu = new Function("event.returnValue=false;");
+    document.onselectstart = new Function("event.returnValue=false;");
+
+    $(document).keyup(function (event) {
+        if (event.keyCode == 13) {
+            $(".login-button").trigger("click");
+        }
+    });
+});
 
 function hasClass(elem, cls) {
     cls = cls || '';
