@@ -1,15 +1,9 @@
-/**
- @Name：layuiAdmin（iframe版） 设置
- @Author：贤心
- @Site：http://www.layui.com/admin/
- @License: LPPL
- */
 layui.define(['form', 'upload'], function (exports) {
     var $ = layui.$
         , layer = layui.layer
         , form = layui.form;
 
-    //自定义验证
+    //verify
     form.verify({
         nickname: function (value, item) {
             if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
@@ -83,6 +77,5 @@ layui.define(['form', 'upload'], function (exports) {
         return false;
     });
 
-    //对外暴露的接口
     exports('set', {});
 });

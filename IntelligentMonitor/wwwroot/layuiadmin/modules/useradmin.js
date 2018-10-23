@@ -3,7 +3,7 @@ layui.define(['table', 'form'], function (exports) {
         , table = layui.table
         , form = layui.form;
 
-    //用户管理
+    //user
     table.render({
         elem: '#LAY-user-manage'
         , url: '/api/account/get_users?role=0'
@@ -35,18 +35,17 @@ layui.define(['table', 'form'], function (exports) {
             });
         } else if (obj.event === 'edit') {
             var tr = $(obj.tr);
-            console.log(tr);
             layer.open({
                 type: 2
                 , title: '编辑用户'
-                , content: '/account/editadmin?id=' + 10000
+                , content: '/account/edituser?id=' + $(obj.tr).find('td:eq(1)').text()
                 , maxmin: true
                 , area: ['500px', '450px']
             });
         }
     });
 
-    //管理员管理
+    //admin
     table.render({
         elem: '#LAY-user-back-manage'
         , url: '/api/account/get_users?role=1'
@@ -86,7 +85,7 @@ layui.define(['table', 'form'], function (exports) {
         }
     });
 
-    //角色管理
+    //role
     table.render({
         elem: '#LAY-user-back-role'
         , url: layui.setter.base + 'json/useradmin/role.js'

@@ -139,7 +139,11 @@ namespace IntelligentMonitor.Controllers
 
         public IActionResult AddUser()
         {
-            return View();
+            var vm = new RoleViewModel
+            {
+                RoleList = _provider.GetRoleList()
+            };
+            return View(vm);
         }
 
         [HttpPost]
@@ -159,9 +163,14 @@ namespace IntelligentMonitor.Controllers
             return result > 0 ? Json(new { code = 0, msg = "添加成功！" }) : Json(new { code = 1, msg = "请稍后再试！" });
         }
 
-        public IActionResult EditUser()
+        public IActionResult EditUser(int id)
         {
-            return View();
+            var vm = new RoleViewModel
+            {
+                User = _provider.GetUser(id),
+                RoleList = _provider.GetRoleList()
+            };
+            return View(vm);
         }
 
         [HttpPost]
