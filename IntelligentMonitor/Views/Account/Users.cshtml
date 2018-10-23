@@ -17,7 +17,28 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">用户名</label>
                         <div class="layui-input-block">
-                            <input type="text" name="username" placeholder="请输入" autocomplete="off" class="layui-input">
+                            <input type="text" name="username" placeholder="按用户名搜索" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">角色</label>
+                        <div class="layui-input-block">
+                            <select name="roleId">
+                                <option value="">按角色筛选</option>
+                                @{
+                                    foreach (var role in Model.RoleList)
+                                    {
+                                        if (role.Id == 10000)
+                                        {
+                                            <option value="@role.Id" disabled="">@role.RoleName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@role.Id">@role.RoleName</option>
+                                        }
+                                    }
+                                }
+                            </select>
                         </div>
                     </div>
                     <div class="layui-inline">
@@ -33,7 +54,7 @@
             <div class="layui-card-body">
                 <table id="LAY-user-manage" lay-filter="LAY-user-manage"></table>
                 <script type="text/html" id="table-useradmin-webuser">
-                    {{#  if(@ViewData["Id"] == 10000){ }}
+                    {{#  if(@ViewData["Id"] <= 10001){ }}
                     <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
                     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
                     {{#  } else { }}
@@ -60,6 +81,9 @@
                 , table = layui.table;
             form.on('submit(LAY-user-front-search)', function (data) {
                 var field = data.field;
+                if ((field.username.length + field.roleId.length) == 0) {
+                    return false;
+                }
                 table.reload('LAY-user-manage', {
                     where: field
                 });

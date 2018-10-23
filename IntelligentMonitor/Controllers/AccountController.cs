@@ -134,7 +134,11 @@ namespace IntelligentMonitor.Controllers
             var userIdClaim = HttpContext.User.FindFirst(u => u.Type == ClaimTypes.NameIdentifier);
             ViewData["Id"] = userIdClaim.Value;
 
-            return View();
+            var vm = new RoleViewModel
+            {
+                RoleList = _provider.GetRoleList()
+            };
+            return View(vm);
         }
 
         public IActionResult AddUser()
@@ -242,6 +246,15 @@ namespace IntelligentMonitor.Controllers
             var result = await _provider.UpdateUser(user);
 
             return result > 0 ? Json(new { code = 0, msg = "保存成功！" }) : Json(new { code = 1, msg = "请稍后再试！" });
+        }
+
+        [HttpPost]
+        [PermissionFilter(Permissions.User)]
+        public async Task<IActionResult> DeleteUser(int Id)
+        {
+            var result = await _provider.DeleteUser(Id);
+            
+            return result > 0 ? Json(new { code = 0, msg = "删除成功！" }) : Json(new { code = 1, msg = "请稍后再试！" });
         }
     }
 }

@@ -20,21 +20,33 @@ layui.define(['table', 'form'], function (exports) {
         , height: '445'
     });
     table.on('tool(LAY-user-manage)', function (obj) {
-        var data = obj.data;
         if (obj.event === 'del') {
-            layer.prompt({
-                formType: 1
-                , title: '敏感操作，请验证口令'
-            }, function (value, index) {
-                layer.close(index);
-
-                layer.confirm('真的删除行么', function (index) {
-                    obj.del();
-                    layer.close(index);
+            layer.confirm('确认删除此用户？', function (index) {
+                var id = obj.data.id;
+                $.ajax({
+                    type: "post",
+                    url: "/Account/DeleteUser?Id=" + id,
+                    dataType: 'json',
+                    data: null,
+                    success: function (result) {
+                        if (result.code == 0) {
+                            layer.msg(result.msg, {
+                                icon: 1,
+                                time: 1000
+                            }, function () {
+                                obj.del();
+                                layer.close(index);
+                            });
+                        } else {
+                            layer.msg(result.msg, {
+                                icon: 2,
+                                time: 1000
+                            });
+                        }
+                    }
                 });
             });
         } else if (obj.event === 'edit') {
-            var tr = $(obj.tr);
             layer.open({
                 type: 2
                 , title: '编辑用户'
@@ -62,17 +74,30 @@ layui.define(['table', 'form'], function (exports) {
         , height: '445'
     });
     table.on('tool(LAY-user-back-manage)', function (obj) {
-        var data = obj.data;
         if (obj.event === 'del') {
-            layer.prompt({
-                formType: 1
-                , title: '敏感操作，请验证口令'
-            }, function (value, index) {
-                layer.close(index);
-                layer.confirm('确定删除此管理员？', function (index) {
-                    console.log(obj)
-                    obj.del();
-                    layer.close(index);
+            layer.confirm('确定删除此管理员？', function (index) {
+                var id = obj.data.id;
+                $.ajax({
+                    type: "post",
+                    url: "/Account/DeleteUser?Id=" + id,
+                    dataType: 'json',
+                    data: null,
+                    success: function (result) {
+                        if (result.code == 0) {
+                            layer.msg(result.msg, {
+                                icon: 1,
+                                time: 1000
+                            }, function () {
+                                obj.del();
+                                layer.close(index);
+                            });
+                        } else {
+                            layer.msg(result.msg, {
+                                icon: 2,
+                                time: 1000
+                            });
+                        }
+                    }
                 });
             });
         } else if (obj.event === 'edit') {

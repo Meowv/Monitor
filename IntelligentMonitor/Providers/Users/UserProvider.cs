@@ -71,14 +71,17 @@ namespace IntelligentMonitor.Providers.Users
         /// <summary>
         /// 删除用户
         /// </summary>
-        /// <param name="user"></param>
+        /// <param name="Id"></param>
         /// <returns></returns>
-        public async Task<int> DeleteUser(Users user)
+        public async Task<int> DeleteUser(int Id)
         {
-            var entity = await _context.Users.Where(u => u.Id == user.Id).SingleOrDefaultAsync();
-            entity.IsDelete = 1;
-            _context.Entry(entity).State = EntityState.Modified;
-            return await _context.SaveChangesAsync();
+            var sql = @"UPDATE users 
+                        SET IsDelete = 1
+                        WHERE Id = @Id";
+            using (IDbConnection conn = _settings.MySqlConnection)
+            {
+                return await conn.ExecuteAsync(sql, new { Id });
+            }
         }
 
         /// <summary>
