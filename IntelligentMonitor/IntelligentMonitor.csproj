@@ -21,9 +21,7 @@
 
   <ItemGroup>
     <None Include="wwwroot\layuiadmin\config.js" />
-    <None Include="wwwroot\layuiadmin\json\useradmin\mangadmin.js" />
     <None Include="wwwroot\layuiadmin\json\useradmin\role.js" />
-    <None Include="wwwroot\layuiadmin\json\useradmin\webuser.js" />
     <None Include="wwwroot\layuiadmin\layui\font\iconfont.svg" />
     <None Include="wwwroot\layuiadmin\layui\layui.all.js" />
     <None Include="wwwroot\layuiadmin\layui\layui.js" />
