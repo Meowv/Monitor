@@ -1,4 +1,5 @@
-﻿using IntelligentMonitor.Models.JsonResult;
+﻿using IntelligentMonitor.Authorization;
+using IntelligentMonitor.Models.JsonResult;
 using IntelligentMonitor.Models.Users;
 using IntelligentMonitor.Providers.Users;
 using Microsoft.AspNetCore.Authorization;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Permissions = IntelligentMonitor.Authorization.Permissions;
 
 namespace IntelligentMonitor.Areas.Account
 {
@@ -32,6 +34,7 @@ namespace IntelligentMonitor.Areas.Account
         /// <returns></returns>
         [HttpGet]
         [Route("get_users")]
+        [PermissionFilter(Permissions.UserEditor)]
         public JsonResult<List<Users>> GetUserList(int role, int page, int limit, string userName = null, string roleId = null)
         {
             var list = _provider.GetUserList();
@@ -73,6 +76,7 @@ namespace IntelligentMonitor.Areas.Account
         /// <returns></returns>
         [HttpGet]
         [Route("get_roles")]
+        [PermissionFilter(Permissions.User)]
         public JsonResult<List<RolePermissionViewModel>> GetRoelPermissionList(string id = null)
         {
             var list = new List<RolePermissionViewModel>();

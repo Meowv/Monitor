@@ -9,8 +9,8 @@ namespace IntelligentMonitor.Providers
         {
         }
 
-        public DbSet<Models.Users.Users> Users { get; set; }
         public DbSet<Roles> Roles { get; set; }
+
         public DbSet<Permissions> Permissions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

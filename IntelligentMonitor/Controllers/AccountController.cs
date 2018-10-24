@@ -1,4 +1,5 @@
-﻿using IntelligentMonitor.Models.Users;
+﻿using IntelligentMonitor.Authorization;
+using IntelligentMonitor.Models.Users;
 using IntelligentMonitor.Providers.Users;
 using IntelligentMonitor.Utility;
 using Microsoft.AspNetCore.Authentication;
@@ -6,14 +7,13 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Permissions = IntelligentMonitor.Authorization.Permissions;
 
 namespace IntelligentMonitor.Controllers
 {
-    using IntelligentMonitor.Authorization;
-    using System.Linq;
-
     [Authorize]
     public class AccountController : Controller
     {

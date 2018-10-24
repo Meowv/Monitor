@@ -192,28 +192,6 @@ namespace IntelligentMonitor.Providers.Users
         }
 
         /// <summary>
-        /// 添加角色
-        /// </summary>
-        /// <param name="role"></param>
-        /// <returns></returns>
-        public async Task<int> InsertRole(Roles role)
-        {
-            _context.Roles.Add(role);
-            return await _context.SaveChangesAsync();
-        }
-
-        /// <summary>
-        /// 修改角色
-        /// </summary>
-        /// <param name="role"></param>
-        /// <returns></returns>
-        public async Task<int> UpdateRole(Roles role)
-        {
-            _context.Entry(role).State = EntityState.Modified;
-            return await _context.SaveChangesAsync();
-        }
-
-        /// <summary>
         /// 删除角色
         /// </summary>
         /// <param name="Id"></param>
@@ -247,31 +225,6 @@ namespace IntelligentMonitor.Providers.Users
             using (IDbConnection conn = _settings.MySqlConnection)
             {
                 return await conn.ExecuteAsync(sql, permission);
-            }
-        }
-
-        /// <summary>
-        /// 修改权限
-        /// </summary>
-        /// <param name="permission"></param>
-        /// <returns></returns>
-        public async Task<int> UpdatePermission(Permissions permission)
-        {
-            _context.Entry(permission).State = EntityState.Modified;
-            return await _context.SaveChangesAsync();
-        }
-
-        /// <summary>
-        /// 删除权限
-        /// </summary>
-        /// <param name="Id"></param>
-        /// <returns></returns>
-        public async Task<int> DeletePermission(int Id)
-        {
-            var sql = @"DELETE FROM permissions WHERE Id = @Id";
-            using (IDbConnection conn = _settings.MySqlConnection)
-            {
-                return await conn.ExecuteAsync(sql, new { Id });
             }
         }
 
