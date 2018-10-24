@@ -240,8 +240,11 @@ namespace IntelligentMonitor.Providers.Users
         /// <returns></returns>
         public async Task<int> InsertPermission(Permissions permission)
         {
-            _context.Permissions.Add(permission);
-            return await _context.SaveChangesAsync();
+            var sql = "INSERT INTO permissions(RoleId,PermissionName,PermissionDescribe) VALUES(@RoleId, @PermissionName,@PermissionDescribe)";
+            using (IDbConnection conn = _settings.MySqlConnection)
+            {
+                return await conn.ExecuteAsync(sql, permission);
+            }
         }
 
         /// <summary>
@@ -262,18 +265,20 @@ namespace IntelligentMonitor.Providers.Users
         /// <returns></returns>
         public async Task<int> DeletePermission(int Id)
         {
-            var permission = _context.Permissions.Where(p => p.Id == Id);
-            _context.Remove(permission);
-            return await _context.SaveChangesAsync();
+            var sql = @"DELETE FROM permissions WHERE Id = @Id";
+            using (IDbConnection conn = _settings.MySqlConnection)
+            {
+                return await conn.ExecuteAsync(sql, new { Id });
+            }
         }
 
         /// <summary>
         /// 权限列表 
         /// </summary>
         /// <returns></returns>
-        public async Task<List<Permissions>> GetPermissionList()
+        public List<Permissions> GetPermissionList()
         {
-            return await _context.Permissions.ToListAsync();
+            return _context.Permissions.ToList();
         }
     }
 }

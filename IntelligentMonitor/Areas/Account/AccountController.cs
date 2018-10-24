@@ -66,5 +66,46 @@ namespace IntelligentMonitor.Areas.Account
 
             return result;
         }
+
+        /// <summary>
+        /// 角色列表
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("get_roles")]
+        public JsonResult<List<RolePermissionViewModel>> GetRoelPermissionList(string id = null)
+        {
+            var list = new List<RolePermissionViewModel>();
+
+            var roleList = _provider.GetRoleList();
+
+            if (!string.IsNullOrEmpty(id))
+            {
+                roleList = roleList.Where(r => r.Id == Convert.ToInt32(id)).ToList();
+            }
+
+            roleList.ForEach(r =>
+            {
+                var permissionList = _provider.GetPermissionList().Where(p => p.RoleId == r.Id).ToList();
+
+                var vm = new RolePermissionViewModel
+                {
+                    Id = r.Id,
+                    RoleName = r.RoleName,
+                    PermissionList = permissionList
+                };
+                list.Add(vm);
+            });
+
+            var result = new JsonResult<List<RolePermissionViewModel>>
+            {
+                Code = 0,
+                Count = list.Count,
+                Msg = "success",
+                Data = list
+            };
+
+            return result;
+        }
     }
 }

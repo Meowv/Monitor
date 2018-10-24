@@ -13,7 +13,7 @@
         public const string UserEditor = "User.Editor";
 
         /// <summary>
-        /// 具有用户权限
+        /// 具有查看权限
         /// </summary>
         public const string UserRead = "User.Read";
     }

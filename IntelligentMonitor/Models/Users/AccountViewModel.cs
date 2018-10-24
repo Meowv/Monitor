@@ -49,4 +49,24 @@ namespace IntelligentMonitor.Models.Users
 
         public int RoleId { get; set; }
     }
+
+    public class RolePermissionViewModel
+    {
+        public int Id { get; set; }
+
+        public string RoleName { get; set; }
+
+        public List<Permissions> PermissionList { get; set; }
+    }
+
+    public class UserRolePermissionViewModel
+    {
+        public string RoleName { get; set; }
+
+        public string User { get; set; }
+
+        public string UserEditor { get; set; }
+
+        public string UserRead { get; set; }
+    }
 }
