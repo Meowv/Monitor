@@ -46,6 +46,7 @@ namespace IntelligentMonitor.Providers.Users
         {
             var sql = @"UPDATE users 
                         SET NickName = @NickName,
+                        Password = @Password,
                         RoleId = @RoleId
                         WHERE Id = @Id";
             using (IDbConnection conn = _settings.MySqlConnection)
