@@ -125,8 +125,29 @@ layui.define(['table', 'form'], function (exports) {
     table.on('tool(LAY-user-back-role)', function (obj) {
         if (obj.event === 'del') {
             layer.confirm('确定删除此角色？', function (index) {
-                obj.del();
-                layer.close(index);
+                var id = obj.data.id;
+                $.ajax({
+                    type: "post",
+                    url: "/Account/DeleteRole?Id=" + id,
+                    dataType: 'json',
+                    data: null,
+                    success: function (result) {
+                        if (result.code == 0) {
+                            layer.msg(result.msg, {
+                                icon: 1,
+                                time: 1000
+                            }, function () {
+                                obj.del();
+                                layer.close(index);
+                            });
+                        } else {
+                            layer.msg(result.msg, {
+                                icon: 2,
+                                time: 1000
+                            });
+                        }
+                    }
+                });
             });
         } else if (obj.event === 'edit') {
             layer.open({

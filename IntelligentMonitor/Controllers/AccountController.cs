@@ -149,82 +149,40 @@ namespace IntelligentMonitor.Controllers
         [PermissionFilter(Permissions.User)]
         public async Task<IActionResult> EditRole([Bind("RoleName", "User", "UserEditor", "UserRead")]UserRolePermissionViewModel vm, int id)
         {
-            var permissionList = _provider.GetPermissionList().Where(p => p.RoleId == id).ToList();
-
             var result = 1;
 
-            foreach (var item in permissionList)
+            await _provider.DeletePermissionByRoleId(id);
+
+            if (vm.User == "on")
             {
-                if (vm.User == "on")
+                result = await _provider.InsertPermission(new Models.Users.Permissions()
                 {
-                    var exist = item.PermissionName == Permissions.User && item.RoleId == id;
-                    if (!exist)
-                    {
-                        result = await _provider.InsertPermission(new Models.Users.Permissions()
-                        {
-                            RoleId = id,
-                            PermissionName = Permissions.User,
-                            PermissionDescribe = "具有管理员权限"
-                        });
-                    }
-                }
-                else
+                    RoleId = id,
+                    PermissionName = Permissions.User,
+                    PermissionDescribe = "具有管理员权限"
+                });
+            }
+            if (vm.UserEditor == "on")
+            {
+                result = await _provider.InsertPermission(new Models.Users.Permissions()
                 {
-                    var exist = item.PermissionName == Permissions.User && item.RoleId == id;
-                    if (exist)
-                    {
-                        result = await _provider.DeletePermission(item.Id);
-                    }
-                }
-
-                if (vm.UserEditor == "on")
+                    RoleId = id,
+                    PermissionName = Permissions.UserEditor,
+                    PermissionDescribe = "具有编辑者权限"
+                });
+            }
+            if (vm.UserRead == "on")
+            {
+                result = await _provider.InsertPermission(new Models.Users.Permissions()
                 {
-                    var exist = item.PermissionName == Permissions.UserEditor && item.RoleId == id;
-                    if (!exist)
-                    {
-                        result = await _provider.InsertPermission(new Models.Users.Permissions()
-                        {
-                            RoleId = id,
-                            PermissionName = Permissions.UserEditor,
-                            PermissionDescribe = "具有编辑者权限"
-                        });
-                    }
-                }
-                else
-                {
-                    var exist = item.PermissionName == Permissions.UserEditor && item.RoleId == id;
-                    if (exist)
-                    {
-                        result = await _provider.DeletePermission(item.Id);
-                    }
-                }
-
-                if (vm.UserRead == "on")
-                {
-                    var exist = item.PermissionName == Permissions.UserRead && item.RoleId == id;
-                    if (!exist)
-                    {
-                        result = await _provider.InsertPermission(new Models.Users.Permissions()
-                        {
-                            RoleId = id,
-                            PermissionName = Permissions.UserRead,
-                            PermissionDescribe = "具有查看权限"
-                        });
-                    }
-                }
-                else
-                {
-                    var exist = item.PermissionName == Permissions.UserRead && item.RoleId == id;
-                    if (exist)
-                    {
-                        result = await _provider.DeletePermission(item.Id);
-                    }
-                }
+                    RoleId = id,
+                    PermissionName = Permissions.UserRead,
+                    PermissionDescribe = "具有查看权限"
+                });
             }
 
             return result > 0 ? Json(new { code = 0, msg = "保存成功！" }) : Json(new { code = 1, msg = "请稍后再试！" });
         }
-
 
         [PermissionFilter(Permissions.UserEditor)]
         public IActionResult Users()
@@ -278,10 +236,11 @@ namespace IntelligentMonitor.Controllers
 
         [HttpPost]
         [PermissionFilter(Permissions.UserEditor)]
-        public async Task<IActionResult> EditUser([Bind("NickName")]UserViewModel vm, int id)
+        public async Task<IActionResult> EditUser([Bind("NickName", "RoleId")]UserViewModel vm, int id)
         {
             var user = _provider.GetUser(id);
             user.NickName = vm.NickName;
+            user.RoleId = vm.RoleId;
 
             var result = await _provider.UpdateUser(user);
 
@@ -336,10 +295,11 @@ namespace IntelligentMonitor.Controllers
 
         [HttpPost]
         [PermissionFilter(Permissions.User)]
-        public async Task<IActionResult> EditAdmin([Bind("NickName")]UserViewModel vm, int id)
+        public async Task<IActionResult> EditAdmin([Bind("NickName", "RoleId")]UserViewModel vm, int id)
         {
             var user = _provider.GetUser(id);
             user.NickName = vm.NickName;
+            user.RoleId = vm.RoleId;
 
             var result = await _provider.UpdateUser(user);
 
@@ -352,6 +312,16 @@ namespace IntelligentMonitor.Controllers
         {
             var result = await _provider.DeleteUser(Id);
             
+            return result > 0 ? Json(new { code = 0, msg = "删除成功！" }) : Json(new { code = 1, msg = "请稍后再试！" });
+        }
+
+        [HttpPost]
+        [PermissionFilter(Permissions.User)]
+        public async Task<IActionResult> DeleteRole(int Id)
+        {
+            var result = await _provider.DeletePermissionByRoleId(Id);
+            result = await _provider.DeleteRole(Id);
+
             return result > 0 ? Json(new { code = 0, msg = "删除成功！" }) : Json(new { code = 1, msg = "请稍后再试！" });
         }
     }

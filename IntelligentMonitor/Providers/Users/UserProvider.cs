@@ -45,7 +45,8 @@ namespace IntelligentMonitor.Providers.Users
         public async Task<int> UpdateUser(Users user)
         {
             var sql = @"UPDATE users 
-                        SET NickName = @NickName
+                        SET NickName = @NickName,
+                        RoleId = @RoleId
                         WHERE Id = @Id";
             using (IDbConnection conn = _settings.MySqlConnection)
             {
@@ -219,9 +220,11 @@ namespace IntelligentMonitor.Providers.Users
         /// <returns></returns>
         public async Task<int> DeleteRole(int Id)
         {
-            var role = _context.Roles.Where(r => r.Id == Id).SingleOrDefaultAsync();
-            _context.Remove(role);
-            return await _context.SaveChangesAsync();
+            var sql = @"DELETE FROM roles WHERE Id = @Id";
+            using (IDbConnection conn = _settings.MySqlConnection)
+            {
+                return await conn.ExecuteAsync(sql, new { Id });
+            }
         }
 
         /// <summary>
@@ -266,6 +269,20 @@ namespace IntelligentMonitor.Providers.Users
         public async Task<int> DeletePermission(int Id)
         {
             var sql = @"DELETE FROM permissions WHERE Id = @Id";
+            using (IDbConnection conn = _settings.MySqlConnection)
+            {
+                return await conn.ExecuteAsync(sql, new { Id });
+            }
+        }
+
+        /// <summary>
+        /// 删除权限
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public async Task<int> DeletePermissionByRoleId(int Id)
+        {
+            var sql = @"DELETE FROM permissions WHERE RoleId = @Id";
             using (IDbConnection conn = _settings.MySqlConnection)
             {
                 return await conn.ExecuteAsync(sql, new { Id });

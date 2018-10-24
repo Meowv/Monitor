@@ -34,7 +34,7 @@
                     {{#  if(d.id == 10000){ }}
                     <a class="layui-btn layui-btn-danger layui-btn-disabled layui-btn-xs"><i class="layui-icon layui-icon-delete"></i>删除</a>
                     {{#  } else { }}
-                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-disabled layui-btn-xs"><i class="layui-icon layui-icon-delete"></i>删除</a>
                     {{#  } }}
                 </script>
             </div>
@@ -55,25 +55,8 @@
                     layer.open({
                         type: 2
                         , title: '添加新角色'
-                        , content: 'roleform.html'
-                        , area: ['500px', '480px']
-                        , btn: ['确定', '取消']
-                        , yes: function (index, layero) {
-                            var iframeWindow = window['layui-layer-iframe' + index]
-                                , submit = layero.find('iframe').contents().find("#LAY-user-role-submit");
-
-                            //监听提交
-                            iframeWindow.layui.form.on('submit(LAY-user-role-submit)', function (data) {
-                                var field = data.field; //获取提交的字段
-
-                                //提交 Ajax 成功后，静态更新表格中的数据
-                                //$.ajax({});
-                                table.reload('LAY-user-back-role');
-                                layer.close(index); //关闭弹层
-                            });
-
-                            submit.trigger('click');
-                        }
+                        , content: '@Url.Action("AddRole", "Account")'
+                        , area: ['400px', '300px']
                     });
                 }
             }
@@ -85,4 +68,3 @@
     </script>
 </body>
 </html>
-
