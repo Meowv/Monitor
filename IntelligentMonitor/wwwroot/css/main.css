@@ -1,0 +1,21 @@
+﻿body{
+    background-color:#aaa;
+}
+.wrap{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+}
+.header{
+    height:50px;
+    background-color:#ddd;
+}
+.main {
+    width: 98%;
+    margin: 0 auto;
+    background-color: #ccc;
+}
+.charts{
+    text-align:center;
+    line-height:400px;
+}

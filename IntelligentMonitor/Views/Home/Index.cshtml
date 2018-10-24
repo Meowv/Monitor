@@ -1,14 +1,59 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
     <title>联诺智能监控系统</title>
+    <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+    <link href="~/css/main.css" rel="stylesheet" />
 </head>
 <body>
-    <p>欢迎您：@User.Identity.Name !</p>
-
-    
-    <a href="@Url.Action("Back", "Home")">进入后台</a>
-
-    <a href="@Url.Action("Logout", "Account")">退出</a>
+    <div class="wrap">
+        <div class="header">
+            @*<a href="javascript:;" id="btnMenu">menu</a>*@
+        </div>
+        <div class="main">
+            <div class="layui-row">
+                <div class="layui-col-md4 layui-col-md4 layui-col-md4">
+                    <div class="charts" id="charts1" style="height:400px">
+                        1
+                    </div>
+                </div>
+                <div class="layui-col-md4 layui-col-md4 layui-col-md4">
+                    <div class="charts" id="charts2" style="height:400px">
+                        2
+                    </div>
+                </div>
+                <div class="layui-col-md4 layui-col-md4 layui-col-md4">
+                    <div class="charts" id="charts3" style="height:400px">
+                        3
+                    </div>
+                </div>
+                <div class="layui-col-md4 layui-col-md4 layui-col-md4">
+                    <div class="charts" id="charts4" style="height:400px">
+                        4
+                    </div>
+                </div>
+                <div class="layui-col-md4 layui-col-md4 layui-col-md4">
+                    <div class="charts" id="charts5" style="height:400px">
+                        5
+                    </div>
+                </div>
+                <div class="layui-col-md4 layui-col-md4 layui-col-md4">
+                    <div class="charts" id="charts6" style="height:400px">
+                        6
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="menu">
+            <p>欢迎您：@User.Identity.Name !</p>
+            <a href="@Url.Action("Back", "Home")">进入后台</a>
+            <a href="@Url.Action("Logout", "Account")">退出</a>
+        </div>
+    </div>
+    <script src="~/js/jquery-2.1.1.min.js"></script>
+    <script src="~/js/echarts.js"></script>
+    <script src="~/js/mSlider.min.js"></script>
+    <script src="~/js/main.js"></script>
 </body>
 </html>
