@@ -70,6 +70,8 @@
                                 </dd>
                             </dl>
                         </li>
+                        @if ((await AuthorizationService.AuthorizeAsync(User, null, new PermissionAuthorizationRequirement(IntelligentMonitor.Authorization.Permissions.UserEditor))).Succeeded)
+                        {
                         <li data-name="user" class="layui-nav-item">
                             <a href="javascript:;" lay-tips="用户" lay-direction="2">
                                 <i class="layui-icon layui-icon-user"></i>
@@ -81,15 +83,16 @@
                                 </dd>
                                 @if ((await AuthorizationService.AuthorizeAsync(User, null, new PermissionAuthorizationRequirement(IntelligentMonitor.Authorization.Permissions.User))).Succeeded)
                                 {
-                                        <dd>
-                                            <a lay-href="@Url.Action("Admins", "Account")">后台管理员</a>
-                                        </dd>
-                                        <dd>
-                                            <a lay-href="@Url.Action("Roles", "Account")">角色管理</a>
-                                        </dd>
+                                    <dd>
+                                        <a lay-href="@Url.Action("Admins", "Account")">后台管理员</a>
+                                    </dd>
+                                    <dd>
+                                        <a lay-href="@Url.Action("Roles", "Account")">角色管理</a>
+                                    </dd>
                                 }
-                                </dl>
+                            </dl>
                         </li>
+                        }
                         <li data-name="set" class="layui-nav-item">
                             <a href="javascript:;" lay-tips="设置" lay-direction="2">
                                 <i class="layui-icon layui-icon-set"></i>

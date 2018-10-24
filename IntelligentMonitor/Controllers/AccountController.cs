@@ -124,11 +124,13 @@ namespace IntelligentMonitor.Controllers
             return result > 0 ? Json(new { code, msg = "密码修改成功！" }) : Json(new { code = 1, msg = "请稍后再试！" });
         }
 
+        [PermissionFilter(Permissions.UserEditor)]
         public IActionResult Roles()
         {
             return View();
         }
 
+        [PermissionFilter(Permissions.UserEditor)]
         public IActionResult Users()
         {
             var userIdClaim = HttpContext.User.FindFirst(u => u.Type == ClaimTypes.NameIdentifier);
@@ -141,6 +143,7 @@ namespace IntelligentMonitor.Controllers
             return View(vm);
         }
 
+        [PermissionFilter(Permissions.UserEditor)]
         public IActionResult AddUser()
         {
             var vm = new RoleViewModel
@@ -151,8 +154,7 @@ namespace IntelligentMonitor.Controllers
         }
 
         [HttpPost]
-        [PermissionFilter(Permissions.UserCreate)]
-        [PermissionFilter(Permissions.UserUpdate)]
+        [PermissionFilter(Permissions.UserEditor)]
         public async Task<IActionResult> AddUser([Bind("UserName", "NickName", "Password", "RoleId")]UserViewModel vm)
         {
             var user = new Users
@@ -167,6 +169,7 @@ namespace IntelligentMonitor.Controllers
             return result > 0 ? Json(new { code = 0, msg = "添加成功！" }) : Json(new { code = 1, msg = "请稍后再试！" });
         }
 
+        [PermissionFilter(Permissions.UserEditor)]
         public IActionResult EditUser(int id)
         {
             var vm = new RoleViewModel
@@ -178,8 +181,7 @@ namespace IntelligentMonitor.Controllers
         }
 
         [HttpPost]
-        [PermissionFilter(Permissions.UserCreate)]
-        [PermissionFilter(Permissions.UserUpdate)]
+        [PermissionFilter(Permissions.UserEditor)]
         public async Task<IActionResult> EditUser([Bind("NickName")]UserViewModel vm, int id)
         {
             var user = _provider.GetUser(id);

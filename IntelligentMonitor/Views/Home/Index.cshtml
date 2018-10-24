@@ -6,10 +6,8 @@
 <body>
     <p>欢迎您：@User.Identity.Name !</p>
 
-    @if ((await AuthorizationService.AuthorizeAsync(User, null, new PermissionAuthorizationRequirement(IntelligentMonitor.Authorization.Permissions.UserCreate))).Succeeded)
-    {
-        <a href="@Url.Action("Back", "Home")">进入后台</a>
-    }
+    
+    <a href="@Url.Action("Back", "Home")">进入后台</a>
 
     <a href="@Url.Action("Logout", "Account")">退出</a>
 </body>
