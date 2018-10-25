@@ -15,9 +15,18 @@
                 </a>
             </div>
             <div class="nav-time">
-                <span>当前时间：@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")</span>
+                <span>
+                    <i class="layui-icon layui-icon-shrink-right"></i>
+                </span>
+                <span>
+                    <i class="layui-icon layui-icon-user"></i>
+                    @User.Identity.Name !
+                </span>
+                <span>
+                    当前时间：@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                </span>
             </div>
-            <div class="nav-title" id="btnMenu">
+            <div class="nav-title">
                 <p>联诺智能监控系统</p>
             </div>
             <div class="nav-menu layui-hide">
@@ -133,34 +142,22 @@
         <div class="content">
             <div class="layui-row">
                 <div class="layui-col-md4 layui-col-md4 layui-col-md4">
-                    <div class="charts" id="charts1" style="height:300px">
-                        1
-                    </div>
+                    <div class="charts" id="charts1"></div>
                 </div>
                 <div class="layui-col-md4 layui-col-md4 layui-col-md4">
-                    <div class="charts" id="charts2" style="height:300px">
-                        2
-                    </div>
+                    <div class="charts" id="charts2"></div>
                 </div>
                 <div class="layui-col-md4 layui-col-md4 layui-col-md4">
-                    <div class="charts" id="charts3" style="height:300px">
-                        3
-                    </div>
+                    <div class="charts" id="charts3"></div>
                 </div>
                 <div class="layui-col-md4 layui-col-md4 layui-col-md4">
-                    <div class="charts" id="charts4" style="height:300px">
-                        4
-                    </div>
+                    <div class="charts" id="charts4"></div>
                 </div>
                 <div class="layui-col-md4 layui-col-md4 layui-col-md4">
-                    <div class="charts" id="charts5" style="height:300px">
-                        5
-                    </div>
+                    <div class="charts" id="charts5"></div>
                 </div>
                 <div class="layui-col-md4 layui-col-md4 layui-col-md4">
-                    <div class="charts" id="charts6" style="height:300px">
-                        6
-                    </div>
+                    <div class="charts" id="charts6"></div>
                 </div>
             </div>
         </div>

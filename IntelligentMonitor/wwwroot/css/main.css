@@ -1,7 +1,9 @@
-﻿html, body {
+﻿html,
+body {
     height: 100%;
     font-family: "微软雅黑";
     overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 ::-webkit-scrollbar {
@@ -41,29 +43,34 @@ body {
 .main {
     height: 100%;
 }
+
 .nav {
     width: 100%;
     height: 50px;
 }
-.nav-header{
-    float:left;
+
+.nav-header {
+    float: left;
 }
+
 .nav-header-brand {
     margin-left: 15px;
 }
 
-.nav-header-brand img{
-    height:35px;
-    margin-top:2.5px;
+.nav-header-brand img {
+    height: 40px;
+    margin-top: 5px;
 }
+
 .nav-title {
     color: #fff;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 900;
     line-height: 50px;
     margin: 0 auto;
-    width: 160px;
+    width: 180px;
 }
+
 .nav-time {
     float: right;
     color: #fff;
@@ -72,13 +79,22 @@ body {
     margin-right: 15px;
 }
 
+.nav-time span {
+    padding-left: 15px;
+}
+
+.nav-time span:first-child {
+    cursor: pointer;
+}
+
 .nav-menu {
     width: 100%;
     height: 100%;
-    
+
 }
-.user{
-    padding-bottom:50px;
+
+.user {
+    padding-bottom: 50px;
 }
 
 .user p {
@@ -91,6 +107,10 @@ body {
 .theme {
     width: 150px;
     margin: 0 auto;
+}
+
+.theme a{
+    cursor:pointer;
 }
 
 .theme-plan-group {
@@ -108,6 +128,7 @@ body {
     border-radius: 4px;
     margin-bottom: 8px;
 }
+
 .theme-plan-color {
     width: 20px;
     height: 20px;
