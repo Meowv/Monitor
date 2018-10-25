@@ -7,52 +7,167 @@
     <link href="~/css/main.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="wrap">
-        <div class="header">
-            @*<a href="javascript:;" id="btnMenu">menu</a>*@
+    <div class="main">
+        <div class="nav">
+            <div class="nav-header">
+                <a href="@Url.Action("Index", "Home")" class="nav-header-brand">
+                    <img src="~/imgs/logo.png" />
+                </a>
+            </div>
+            <div class="nav-time">
+                <span>当前时间：@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")</span>
+            </div>
+            <div class="nav-title" id="btnMenu">
+                <p>联诺智能监控系统</p>
+            </div>
+            <div class="nav-menu layui-hide">
+                <div class="user">
+                    <p>@User.Identity.Name !</p>
+                    <p>
+                        <a class="layui-btn layui-btn-primary" href="@Url.Action("Back", "Home")">进入后台</a>
+                        <a class="layui-btn layui-btn-primary" href="@Url.Action("Logout", "Account")">安全退出</a>
+                    </p>
+                </div>
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>主题切换</legend>
+                </fieldset>
+                <div class="theme">
+                    <div class="layui-row">
+                        <div class="layui-col-md12 layui-col-md12 layui-col-md12">
+                            <a class="theme-plan-group" title="dark" style="background-color: rgb(51, 51, 51);">
+                                <div class="theme-plan-color" style="background-color: rgb(221, 107, 102);"></div>
+                                <div class="theme-plan-color" style="background-color: rgb(117, 154, 160);"></div>
+                                <div class="theme-plan-color" style="background-color: rgb(230, 157, 135);"></div>
+                                <div class="theme-plan-color" style="background-color: rgb(141, 193, 169);"></div>
+                                <div class="theme-plan-color" style="background-color: rgb(234, 126, 83);"></div>
+                            </a>
+                        </div>
+                        <div class="layui-col-md12 layui-col-md12 layui-col-md12">
+                            <a class="theme-plan-group" title="chalk" style="background-color: rgb(41, 52, 65);">
+                                <div class="theme-plan-color" style="background-color: rgb(252, 151, 175);"></div>
+                                <div class="theme-plan-color" style="background-color: rgb(135, 247, 207);"></div>
+                                <div class="theme-plan-color" style="background-color: rgb(247, 244, 148);"></div>
+                                <div class="theme-plan-color" style="background-color: rgb(114, 204, 255);"></div>
+                                <div class="theme-plan-color" style="background-color: rgb(247, 197, 160);"></div>
+                            </a>
+                        </div>
+                        <div class="layui-col-md12 layui-col-md12 layui-col-md12">
+                            <a class="theme-plan-group" title="vintage" style="background-color: rgb(254, 248, 239);">
+                                <div class="theme-plan-color" style="background-color: rgb(216, 124, 124);"></div>
+                                <div class="theme-plan-color" style="background-color: rgb(145, 158, 139);"></div>
+                                <div class="theme-plan-color" style="background-color: rgb(215, 171, 130);"></div>
+                                <div class="theme-plan-color" style="background-color: rgb(110, 112, 116);"></div>
+                                <div class="theme-plan-color" style="background-color: rgb(97, 160, 168);"></div>
+                            </a>
+                        </div>
+                        <div class="layui-col-md12 layui-col-md12 layui-col-md12">
+                            <a class="theme-plan-group" title="westeros" style="background-color: transparent;">
+                                <div class="theme-plan-color" style="background-color: rgb(81, 107, 145);"></div>
+                                <div class="theme-plan-color" style="background-color: rgb(89, 196, 230);"></div>
+                                <div class="theme-plan-color" style="background-color: rgb(237, 175, 218);"></div>
+                                <div class="theme-plan-color" style="background-color: rgb(147, 183, 227);"></div>
+                                <div class="theme-plan-color" style="background-color: rgb(165, 231, 240);"></div>
+                            </a>
+                        </div>
+                        <div class="layui-col-md12 layui-col-md12 layui-col-md12">
+                            <a class="theme-plan-group" title="essos" style="background-color: rgba(242, 234, 191, 0.15);">
+                                <div class="theme-plan-color" style="background-color: rgb(137, 52, 72);"></div>
+                                <div class="theme-plan-color" style="background-color: rgb(217, 88, 80);"></div>
+                                <div class="theme-plan-color" style="background-color: rgb(235, 129, 70);"></div>
+                                <div class="theme-plan-color" style="background-color: rgb(255, 178, 72);"></div>
+                                <div class="theme-plan-color" style="background-color: rgb(242, 214, 67);"></div>
+                            </a>
+                        </div>
+                        <div class="layui-col-md12 layui-col-md12 layui-col-md12">
+                            <a class="theme-plan-group" title="wonderland" style="background-color: transparent;">
+                                <div class="theme-plan-color" style="background-color: rgb(78, 163, 151);"></div>
+                                <div class="theme-plan-color" style="background-color: rgb(34, 195, 170);"></div>
+                                <div class="theme-plan-color" style="background-color: rgb(123, 217, 165);"></div>
+                                <div class="theme-plan-color" style="background-color: rgb(208, 100, 138);"></div>
+                                <div class="theme-plan-color" style="background-color: rgb(245, 141, 178);"></div>
+                            </a>
+                        </div>
+                        <div class="layui-col-md12 layui-col-md12 layui-col-md12">
+                            <a class="theme-plan-group" title="walden" style="background-color: rgba(252, 252, 252, 0);">
+                                <div class="theme-plan-color" style="background-color: rgb(63, 177, 227);">
+                                </div><div class="theme-plan-color" style="background-color: rgb(107, 230, 193);">
+                                </div><div class="theme-plan-color" style="background-color: rgb(98, 108, 145);">
+                                </div><div class="theme-plan-color" style="background-color: rgb(160, 167, 230);">
+                                </div><div class="theme-plan-color" style="background-color: rgb(196, 235, 173);">
+                                </div>
+                            </a>
+                        </div>
+                        <div class="layui-col-md12 layui-col-md12 layui-col-md12">
+                            <a class="theme-plan-group" title="infographic" style="background-color: transparent;">
+                                <div class="theme-plan-color" style="background-color: rgb(193, 35, 43);">
+                                </div><div class="theme-plan-color" style="background-color: rgb(39, 114, 123);">
+                                </div><div class="theme-plan-color" style="background-color: rgb(252, 206, 16);">
+                                </div><div class="theme-plan-color" style="background-color: rgb(232, 124, 37);">
+                                </div><div class="theme-plan-color" style="background-color: rgb(181, 195, 52);"></div>
+                            </a>
+                        </div>
+                        <div class="layui-col-md12 layui-col-md12 layui-col-md12">
+                            <a class="theme-plan-group" title="macarons" style="background-color: transparent;">
+                                <div class="theme-plan-color" style="background-color: rgb(46, 199, 201);">
+                                </div><div class="theme-plan-color" style="background-color: rgb(182, 162, 222);">
+                                </div><div class="theme-plan-color" style="background-color: rgb(90, 177, 239);">
+                                </div><div class="theme-plan-color" style="background-color: rgb(255, 185, 128);">
+                                </div><div class="theme-plan-color" style="background-color: rgb(216, 122, 128);">
+                                </div>
+                            </a>
+                        </div>
+                        <div class="layui-col-md12 layui-col-md12 layui-col-md12">
+                            <a class="theme-plan-group" title="roma" style="background-color: transparent;">
+                                <div class="theme-plan-color" style="background-color: rgb(224, 31, 84);">
+                                </div><div class="theme-plan-color" style="background-color: rgb(0, 24, 82);">
+                                </div><div class="theme-plan-color" style="background-color: rgb(245, 232, 200);">
+                                </div><div class="theme-plan-color" style="background-color: rgb(184, 210, 199);">
+                                </div><div class="theme-plan-color" style="background-color: rgb(198, 179, 142);">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="main">
+        <div class="content">
             <div class="layui-row">
                 <div class="layui-col-md4 layui-col-md4 layui-col-md4">
-                    <div class="charts" id="charts1" style="height:400px">
+                    <div class="charts" id="charts1" style="height:300px">
                         1
                     </div>
                 </div>
                 <div class="layui-col-md4 layui-col-md4 layui-col-md4">
-                    <div class="charts" id="charts2" style="height:400px">
+                    <div class="charts" id="charts2" style="height:300px">
                         2
                     </div>
                 </div>
                 <div class="layui-col-md4 layui-col-md4 layui-col-md4">
-                    <div class="charts" id="charts3" style="height:400px">
+                    <div class="charts" id="charts3" style="height:300px">
                         3
                     </div>
                 </div>
                 <div class="layui-col-md4 layui-col-md4 layui-col-md4">
-                    <div class="charts" id="charts4" style="height:400px">
+                    <div class="charts" id="charts4" style="height:300px">
                         4
                     </div>
                 </div>
                 <div class="layui-col-md4 layui-col-md4 layui-col-md4">
-                    <div class="charts" id="charts5" style="height:400px">
+                    <div class="charts" id="charts5" style="height:300px">
                         5
                     </div>
                 </div>
                 <div class="layui-col-md4 layui-col-md4 layui-col-md4">
-                    <div class="charts" id="charts6" style="height:400px">
+                    <div class="charts" id="charts6" style="height:300px">
                         6
                     </div>
                 </div>
             </div>
         </div>
-        <div class="menu">
-            <p>欢迎您：@User.Identity.Name !</p>
-            <a href="@Url.Action("Back", "Home")">进入后台</a>
-            <a href="@Url.Action("Logout", "Account")">退出</a>
-        </div>
     </div>
     <script src="~/js/jquery-2.1.1.min.js"></script>
     <script src="~/js/echarts.js"></script>
+    <script src="~/js/dark.js"></script>
     <script src="~/js/mSlider.min.js"></script>
     <script src="~/js/main.js"></script>
 </body>
