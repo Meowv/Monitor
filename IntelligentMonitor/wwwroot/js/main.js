@@ -49,7 +49,7 @@ function getTime() {
     var second = date.getSeconds();
     second = second < 10 ? '0' + second : second;
     var time = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
-    $('.nav-time span:eq(2)').html("当前时间：" + time);
+    $('.nav-time span:eq(3)').html("当前时间：" + time);
 }
 
 //切换主题
@@ -65,6 +65,36 @@ $('.theme').on('click', 'a', function () {
 //菜单点击事件
 $('.nav-time span:eq(0)').click(function () {
     _menu.open();
+});
+
+//全屏查看
+$('.nav-time span:eq(1)').click(function () {
+    var ele = document.documentElement;
+    var SCREEN_FULL_TEXT = "全屏";
+    var SCREEN_REST_TEXT = "退出全屏";
+    var SCREEN_FULL = 'layui-icon-screen-full';
+    var SCREEN_REST = 'layui-icon-screen-restore';
+    var iconElem = $(this).children("i");
+    if (iconElem.hasClass(SCREEN_FULL)) {
+        var reqFullScreen = ele.requestFullScreen || ele.webkitRequestFullScreen || ele.mozRequestFullScreen || ele.msRequestFullscreen;
+        if (typeof reqFullScreen !== 'undefined' && reqFullScreen) {
+            reqFullScreen.call(ele);
+        };
+        iconElem.addClass(SCREEN_REST).removeClass(SCREEN_FULL);
+        $('.nav-time span:eq(1)').attr('title', SCREEN_REST_TEXT);
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.webkitCancelFullScreen) {
+            document.webkitCancelFullScreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+        iconElem.addClass(SCREEN_FULL).removeClass(SCREEN_REST);
+        $('.nav-time span:eq(1)').attr('title', SCREEN_FULL_TEXT);
+    }
 });
 
 //监听窗口变化

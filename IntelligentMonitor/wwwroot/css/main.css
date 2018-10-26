@@ -81,7 +81,7 @@ body {
     padding-left: 15px;
 }
 
-.nav-time span:first-child {
+.nav-time span:nth-child(1), .nav-time span:nth-child(2) {
     cursor: pointer;
 }
 
