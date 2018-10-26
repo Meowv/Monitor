@@ -14,6 +14,9 @@ const loading = {
     zlevel: 0
 };
 
+//图表刷新时间
+const refreshTime = 60000;
+//当前主题
 let theme = '';
 let charts1 = echarts.init(document.getElementById('charts1'));
 let charts2 = echarts.init(document.getElementById('charts2'));
@@ -25,7 +28,7 @@ let charts6 = echarts.init(document.getElementById('charts6'));
 resetChartsHeight();
 init();
 setInterval(getTime, 1000);
-setInterval(reloadCharts, 60000);
+setInterval(reloadCharts, refreshTime);
 
 //重置图表高度
 function resetChartsHeight() {
@@ -108,33 +111,36 @@ function setTheme() {
         $('body').removeClass('whitebg');
     }
     $.getJSON('js/themes/' + theme + '.json', function (result) {
-        disposeCharts(theme, result);
+        disposeCharts();
+        echarts.registerTheme(theme, result);
         renderCharts1(theme);
+        renderCharts2(theme);
+        renderCharts3(theme);
+        renderCharts4(theme);
+        renderCharts5(theme);
+        renderCharts6(theme);
     });
 }
 
-//释放实例，注册主题
-function disposeCharts(theme, result) {
+//释放实例
+function disposeCharts() {
     charts1.dispose();
     charts2.dispose();
     charts3.dispose();
     charts4.dispose();
     charts5.dispose();
     charts6.dispose();
-
-    echarts.registerTheme(theme, result);
 }
 
-//清空实例，重载图表
+//重载图表
 function reloadCharts() {
-    charts1.clear();
-    charts2.clear();
-    charts3.clear();
-    charts4.clear();
-    charts5.clear();
-    charts6.clear();
-
+    disposeCharts();
     renderCharts1(theme);
+    renderCharts2(theme);
+    renderCharts3(theme);
+    renderCharts4(theme);
+    renderCharts5(theme);
+    renderCharts6(theme);
 }
 
 //设置主题选项
@@ -216,4 +222,39 @@ function renderCharts1(theme) {
     };
     charts1.setOption(option);
     charts1.hideLoading();
+}
+function renderCharts2(theme) {
+    charts2 = echarts.init(document.getElementById('charts2'), theme);
+    charts2.showLoading(loading);
+    let option = {};
+    charts2.setOption(option);
+    //charts2.hideLoading();
+}
+function renderCharts3(theme) {
+    charts3 = echarts.init(document.getElementById('charts3'), theme);
+    charts3.showLoading(loading);
+    let option = {};
+    charts3.setOption(option);
+    //charts3.hideLoading();
+}
+function renderCharts4(theme) {
+    charts4 = echarts.init(document.getElementById('charts4'), theme);
+    charts4.showLoading(loading);
+    let option = {};
+    charts4.setOption(option);
+    //charts4.hideLoading();
+}
+function renderCharts5(theme) {
+    charts5 = echarts.init(document.getElementById('charts5'), theme);
+    charts5.showLoading(loading);
+    let option = {};
+    charts5.setOption(option);
+    //charts5.hideLoading();
+}
+function renderCharts6(theme) {
+    charts6 = echarts.init(document.getElementById('charts6'), theme);
+    charts6.showLoading(loading);
+    let option = {};
+    charts6.setOption(option);
+    //charts6.hideLoading();
 }
