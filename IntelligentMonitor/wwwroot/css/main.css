@@ -31,13 +31,20 @@ body {
     -webkit-box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-body {
+.blackbg {
     background-image: url(../imgs/background-1.png);
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
     background-color: #000;
+}
+.whitebg {
+    /*background-image: url(../imgs/background-3.png);*/
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
 }
 
 .main {

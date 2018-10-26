@@ -1,0 +1,34 @@
+{
+  "themes": [
+    {
+      "background": "#333",
+      "name": "dark",
+      "theme": [ "#dd6b66", "#759aa0", "#e69d87", "#8dc1a9", "#ea7e53" ]
+    },
+    {
+      "background": "#fef8ef",
+      "name": "vintage",
+      "theme": [ "#d87c7c", "#919e8b", "#d7ab82", "#6e7074", "#61a0a8" ]
+    },
+    {
+      "background": "transparent",
+      "name": "westeros",
+      "theme": [ "#516b91", "#59c4e6", "#edafda", "#93b7e3", "#a5e7f0" ]
+    },
+    {
+      "background": "rgba(242,234,191,0.15)",
+      "name": "essos",
+      "theme": [ "#893448", "#d95850", "#eb8146", "#ffb248", "#f2d643" ]
+    },
+    {
+      "background": "transparent",
+      "name": "infographic",
+      "theme": [ "#C1232B", "#27727B", "#FCCE10", "#E87C25", "#B5C334" ]
+    },
+    {
+      "background": "transparent",
+      "name": "shine",
+      "theme": [ "#c12e34", "#e6b600", "#0098d9", "#2b821d", "#005eaa" ]
+    }
+  ]
+}
