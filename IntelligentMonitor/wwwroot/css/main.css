@@ -31,20 +31,13 @@ body {
     -webkit-box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-.blackbg {
+body {
     background-image: url(../imgs/background-1.png);
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
     background-color: #000;
-}
-.whitebg {
-    /*background-image: url(../imgs/background-3.png);*/
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
 }
 
 .main {
@@ -70,7 +63,6 @@ body {
 }
 
 .nav-title {
-    color: #fff;
     font-size: 22px;
     font-weight: 900;
     line-height: 50px;
@@ -80,7 +72,6 @@ body {
 
 .nav-time {
     float: right;
-    color: #fff;
     line-height: 50px;
     font-weight: 900;
     margin-right: 15px;
