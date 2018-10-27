@@ -6,31 +6,6 @@ body {
     overflow-y: hidden;
 }
 
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: #fff;
-    -webkit-box-shadow: inset 1px 1px 2px #e0e0e0;
-    border: 1px solid #d8d8d8;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #e8e8e8;
-    -webkit-box-shadow: inset 1px 1px 2px rgba(155, 155, 155, 0.4);
-}
-
-::-webkit-scrollbar-thumb:hover {
-    -webkit-box-shadow: inset 1px 1px 10px rgba(0, 0, 0, 0.3);
-}
-
-::-webkit-scrollbar-thumb:active {
-    background: #888;
-    -webkit-box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.3);
-}
-
 body {
     background-image: url(../imgs/background-1.png);
     background-position: center center;

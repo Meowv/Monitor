@@ -128,11 +128,9 @@ function getCookie(name) {
 function setTheme() {
     theme = getCookie('.AspNetCore.Theme') || 'dark';
     if (theme != 'dark') {
-        $('body').removeClass('blackbg');
-        $('body').addClass('whitebg');
+        $('.nav-header-brand img').attr('src', '/imgs/logo_white.png');
     } else {
-        $('body').addClass('blackbg');
-        $('body').removeClass('whitebg');
+        $('.nav-header-brand img').attr('src', '/imgs/logo_black.png');
     }
     $.getJSON('js/themes/' + theme + '.json', function (result) {
         disposeCharts();
@@ -145,6 +143,7 @@ function setTheme() {
             "background-color": style.backgroundColor
         });
         $('.nav').css("color", style.color);
+        $('.nav-header-brand img').attr("src", style.logo);
 
         renderCharts1(theme);
         renderCharts2(theme);

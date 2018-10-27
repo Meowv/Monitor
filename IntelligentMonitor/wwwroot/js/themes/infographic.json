@@ -516,6 +516,7 @@
   "style": {
     "backgroundImage": "url(../imgs/background-3.png)",
     "backgroundColor": "#fff",
-    "color": "#000"
+    "color": "#000",
+    "logo": "/imgs/logo_black.png"
   }
 }
