@@ -1,34 +1,34 @@
 # themes
 
 ### dark
-![dark](/images/dark.png "dark")
+![dark](images/dark.png "dark")
 
 ### chalk
-![chalk](/images/chalk.png "chalk")
+![chalk](images/chalk.png "chalk")
 
 ### halloween
-![halloween](/images/halloween.png "halloween")
+![halloween](images/halloween.png "halloween")
 
 ### shine
-![shine](/images/shine.png "shine")
+![shine](images/shine.png "shine")
 
 ### infographic
-![infographic](/images/infographic.png "infographic")
+![infographic](images/infographic.png "infographic")
 
 ### vintage
-![vintage](/images/vintage.png "vintage")
+![vintage](images/vintage.png "vintage")
 
 ### westeros
-![westeros](/images/westeros.png "westeros")
+![westeros](images/westeros.png "westeros")
 
 ### essos
-![essos](/images/essos.png "essos")
+![essos](images/essos.png "essos")
 
 # menu
-![menu](/images/menu.png "menu")
+![menu](images/menu.png "menu")
 
 # login
-![login](/images/login.png "login")
+![login](images/login.png "login")
 
 # back
-![back](/images/back.png "back")
+![back](images/back.png "back")
