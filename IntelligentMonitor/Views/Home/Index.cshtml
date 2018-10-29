@@ -56,5 +56,12 @@
     <script src="~/js/echarts.min.js"></script>
     <script src="~/js/mSlider.min.js"></script>
     <script src="~/js/main.js" asp-append-version="true"></script>
-</body>
+    @if ((await AuthorizationService.AuthorizeAsync(User, null, new PermissionAuthorizationRequirement(IntelligentMonitor.Authorization.Permissions.UserEditor))).Succeeded)
+    {
+        <script src="~/js/jquery.dad.min.js"></script>
+        <script>
+            $('.content .layui-row').dad();
+        </script>
+    }
+    </body>
 </html>
