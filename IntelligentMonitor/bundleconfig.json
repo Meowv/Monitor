@@ -4,5 +4,23 @@
     "inputFiles": [
       "wwwroot/js/main.js"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/css/login.min.css",
+    "inputFiles": [
+      "wwwroot/css/login.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/main.min.css",
+    "inputFiles": [
+      "wwwroot/css/main.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/login.min.js",
+    "inputFiles": [
+      "wwwroot/js/login.js"
+    ]
   }
 ]
