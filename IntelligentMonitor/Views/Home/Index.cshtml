@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>联诺智能监控系统</title>
     <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
-    <link href="~/css/main.css" rel="stylesheet" />
+    <link href="~/css/main.css" asp-append-version="true" rel="stylesheet" />
 </head>
 <body>
     <div class="main">
@@ -49,31 +49,12 @@
             </div>
         </div>
         <div class="content">
-            <div class="layui-row">
-                <div class="layui-col-md4 layui-col-md4 layui-col-md4">
-                    <div class="charts" id="charts1"></div>
-                </div>
-                <div class="layui-col-md4 layui-col-md4 layui-col-md4">
-                    <div class="charts" id="charts2"></div>
-                </div>
-                <div class="layui-col-md4 layui-col-md4 layui-col-md4">
-                    <div class="charts" id="charts3"></div>
-                </div>
-                <div class="layui-col-md4 layui-col-md4 layui-col-md4">
-                    <div class="charts" id="charts4"></div>
-                </div>
-                <div class="layui-col-md4 layui-col-md4 layui-col-md4">
-                    <div class="charts" id="charts5"></div>
-                </div>
-                <div class="layui-col-md4 layui-col-md4 layui-col-md4">
-                    <div class="charts" id="charts6"></div>
-                </div>
-            </div>
+            <div class="layui-row"></div>
         </div>
     </div>
     <script src="~/js/jquery-2.1.1.min.js"></script>
     <script src="~/js/echarts.min.js"></script>
     <script src="~/js/mSlider.min.js"></script>
-    <script src="~/js/main.js"></script>
+    <script src="~/js/main.js" asp-append-version="true"></script>
 </body>
 </html>
