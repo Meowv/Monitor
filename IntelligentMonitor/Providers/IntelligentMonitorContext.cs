@@ -1,4 +1,5 @@
-﻿using IntelligentMonitor.Models.Users;
+﻿using IntelligentMonitor.Models.ChartsDic;
+using IntelligentMonitor.Models.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace IntelligentMonitor.Providers
@@ -12,6 +13,8 @@ namespace IntelligentMonitor.Providers
         public DbSet<Roles> Roles { get; set; }
 
         public DbSet<Permissions> Permissions { get; set; }
+
+        public DbSet<ChartsDic> ChartsDics { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

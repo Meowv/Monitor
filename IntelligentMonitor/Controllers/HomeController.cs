@@ -15,5 +15,10 @@ namespace IntelligentMonitor.Controllers
         {
             return View();
         }
+
+        public IActionResult ChartsEdit()
+        {
+            return View();
+        }
     }
 }

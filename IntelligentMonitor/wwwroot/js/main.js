@@ -2,7 +2,7 @@ const refreshTime = 10000;//图表刷新时间
 let loading = {};//加载配置
 let theme = '';//当前主题
 
-const chartsIds = ['charts1', 'charts2', 'charts3', 'charts4', 'charts5', 'charts6'];
+let chartsIds = getChartsId();
 loadChartsHtml();
 resetChartsHeight();
 setTheme();
@@ -10,12 +10,12 @@ setThemeOptions();
 setInterval(getTime, 1000);
 setInterval(reloadCharts, refreshTime);
 
-let charts1 = echarts.init(document.getElementById(chartsIds[0]));
-let charts2 = echarts.init(document.getElementById(chartsIds[1]));
-let charts3 = echarts.init(document.getElementById(chartsIds[2]));
-let charts4 = echarts.init(document.getElementById(chartsIds[3]));
-let charts5 = echarts.init(document.getElementById(chartsIds[4]));
-let charts6 = echarts.init(document.getElementById(chartsIds[5]));
+let charts1 = echarts.init(document.getElementById("charts1"));
+let charts2 = echarts.init(document.getElementById("charts2"));
+let charts3 = echarts.init(document.getElementById("charts3"));
+let charts4 = echarts.init(document.getElementById("charts4"));
+let charts5 = echarts.init(document.getElementById("charts5"));
+let charts6 = echarts.init(document.getElementById("charts6"));
 
 const _menu = new mSlider({
     dom: ".nav-menu",
@@ -37,6 +37,18 @@ window.addEventListener("resize", function () {
     charts5.resize();
     charts6.resize();
 });
+
+function getChartsId() {
+    let ids = getCookie(".AspNetCore.ChartsId");
+    if (ids != null) {
+        ids = decodeURI(getCookie(".AspNetCore.ChartsId")).split(',');
+    } else {
+        $.getJSON('/api/Charts/get_chartsid', function (result) {
+            ids = result.data;
+        });
+    }
+    return ids;
+}
 
 //切换主题
 $('.theme').on('click', 'a', function () {
