@@ -41,13 +41,18 @@ window.addEventListener("resize", function () {
 function getChartsId() {
     let ids = getCookie(".AspNetCore.ChartsId");
     if (ids != null) {
-        ids = decodeURI(getCookie(".AspNetCore.ChartsId")).split(',');
+        return decodeURI(getCookie(".AspNetCore.ChartsId")).split(',');
     } else {
-        $.getJSON('/api/Charts/get_chartsid', function (result) {
-            ids = result.data;
+        $.ajax({
+            async: false,
+            type: 'get',
+            url: '/api/Charts/get_chartsid',
+            dataType: 'json',
+            success: function (result) {
+                return result.data;
+            }
         });
     }
-    return ids;
 }
 
 //切换主题
