@@ -1,8 +1,21 @@
-const refreshTime = 10000;//图表刷新时间
-let loading = {};//加载配置
-let theme = '';//当前主题
+//图表刷新时间
+const refreshTime = 2000;
+//菜单配置
+const _menu = new mSlider({
+    dom: ".nav-menu",
+    direction: "right",
+    distance: "20%",
+});
+//加载中
+let loading = {};
+//当前主题
+let theme = '';
+//6个图表的Id
+let chartsIds = [];
+//所有图表变量
+let charts1, charts2, charts3, charts4, charts5, charts6, charts7, charts8, charts9;
 
-let chartsIds = getChartsId();
+getChartsId();
 loadChartsHtml();
 resetChartsHeight();
 setTheme();
@@ -10,18 +23,34 @@ setThemeOptions();
 setInterval(getTime, 1000);
 setInterval(reloadCharts, refreshTime);
 
-let charts1 = echarts.init(document.getElementById("charts1"));
-let charts2 = echarts.init(document.getElementById("charts2"));
-let charts3 = echarts.init(document.getElementById("charts3"));
-let charts4 = echarts.init(document.getElementById("charts4"));
-let charts5 = echarts.init(document.getElementById("charts5"));
-let charts6 = echarts.init(document.getElementById("charts6"));
+if (IsInArray(chartsIds, "charts1")) {
+    charts1 = echarts.init(document.getElementById("charts1"));
+}
+if (IsInArray(chartsIds, "charts2")) {
+    charts2 = echarts.init(document.getElementById("charts2"));
+}
+if (IsInArray(chartsIds, "charts3")) {
+    charts3 = echarts.init(document.getElementById("charts3"));
+}
+if (IsInArray(chartsIds, "charts4")) {
+    charts4 = echarts.init(document.getElementById("charts4"));
+}
+if (IsInArray(chartsIds, "charts5")) {
+    charts5 = echarts.init(document.getElementById("charts5"));
+}
+if (IsInArray(chartsIds, "charts6")) {
+    charts6 = echarts.init(document.getElementById("charts6"));
+}
+if (IsInArray(chartsIds, "charts7")) {
+    charts7 = echarts.init(document.getElementById("charts7"));
+}
+if (IsInArray(chartsIds, "charts8")) {
+    charts8 = echarts.init(document.getElementById("charts8"));
+}
+if (IsInArray(chartsIds, "charts9")) {
+    charts9 = echarts.init(document.getElementById("charts9"));
+}
 
-const _menu = new mSlider({
-    dom: ".nav-menu",
-    direction: "right",
-    distance: "20%",
-});
 //菜单点击事件
 $('.nav-time span:eq(0)').click(function () {
     _menu.open();
@@ -30,26 +59,48 @@ $('.nav-time span:eq(0)').click(function () {
 //监听窗口变化
 window.addEventListener("resize", function () {
     resetChartsHeight();
-    charts1.resize();
-    charts2.resize();
-    charts3.resize();
-    charts4.resize();
-    charts5.resize();
-    charts6.resize();
+    if (IsInArray(chartsIds, "charts1")) {
+        charts1.resize();
+    }
+    if (IsInArray(chartsIds, "charts2")) {
+        charts2.resize();
+    }
+    if (IsInArray(chartsIds, "charts3")) {
+        charts3.resize();
+    }
+    if (IsInArray(chartsIds, "charts4")) {
+        charts4.resize();
+    }
+    if (IsInArray(chartsIds, "charts5")) {
+        charts5.resize();
+    }
+    if (IsInArray(chartsIds, "charts6")) {
+        charts6.resize();
+    }
+    if (IsInArray(chartsIds, "charts7")) {
+        charts7.resize();
+    }
+    if (IsInArray(chartsIds, "charts8")) {
+        charts8.resize();
+    }
+    if (IsInArray(chartsIds, "charts9")) {
+        charts9.resize();
+    }
 });
 
+//API获取图表Id
 function getChartsId() {
     let ids = getCookie(".AspNetCore.ChartsId");
     if (ids != null) {
-        return decodeURI(getCookie(".AspNetCore.ChartsId")).split(',');
+        chartsIds = decodeURI(getCookie(".AspNetCore.ChartsId")).split(',');
     } else {
         $.ajax({
-            async: false,
             type: 'get',
             url: '/api/Charts/get_chartsid',
             dataType: 'json',
+            async: false,
             success: function (result) {
-                return result.data;
+                chartsIds = result.data;
             }
         });
     }
@@ -163,34 +214,45 @@ function setTheme() {
         $('.nav').css("color", style.color);
         $('.nav-header-brand img').attr("src", style.logo);
 
-        renderCharts1(theme);
-        renderCharts2(theme);
-        renderCharts3(theme);
-        renderCharts4(theme);
-        renderCharts5(theme);
-        renderCharts6(theme);
+        renderCharts();
     });
 }
 
 //释放实例
 function disposeCharts() {
-    charts1.dispose();
-    charts2.dispose();
-    charts3.dispose();
-    charts4.dispose();
-    charts5.dispose();
-    charts6.dispose();
+    if (IsInArray(chartsIds, "charts1")) {
+        charts1.dispose();
+    }
+    if (IsInArray(chartsIds, "charts2")) {
+        charts2.dispose();
+    }
+    if (IsInArray(chartsIds, "charts3")) {
+        charts3.dispose();
+    }
+    if (IsInArray(chartsIds, "charts4")) {
+        charts4.dispose();
+    }
+    if (IsInArray(chartsIds, "charts5")) {
+        charts5.dispose();
+    }
+    if (IsInArray(chartsIds, "charts6")) {
+        charts6.dispose();
+    }
+    if (IsInArray(chartsIds, "charts7")) {
+        charts7.dispose();
+    }
+    if (IsInArray(chartsIds, "charts8")) {
+        charts8.dispose();
+    }
+    if (IsInArray(chartsIds, "charts9")) {
+        charts9.dispose();
+    }
 }
 
 //重载图表
 function reloadCharts() {
     disposeCharts();
-    renderCharts1(theme);
-    renderCharts2(theme);
-    renderCharts3(theme);
-    renderCharts4(theme);
-    renderCharts5(theme);
-    renderCharts6(theme);
+    renderCharts();
 }
 
 //设置主题选项
@@ -209,6 +271,42 @@ function setThemeOptions() {
         }
         $('.theme>div').html(html);
     });
+}
+
+//数组是否存在图表Id
+function IsInArray(arr, item) {
+    return $.inArray(item, arr) >= 0;
+}
+
+//渲染图表
+function renderCharts() {
+    if (IsInArray(chartsIds, "charts1")) {
+        renderCharts1(theme);
+    }
+    if (IsInArray(chartsIds, "charts2")) {
+        renderCharts2(theme);
+    }
+    if (IsInArray(chartsIds, "charts3")) {
+        renderCharts3(theme);
+    }
+    if (IsInArray(chartsIds, "charts4")) {
+        renderCharts4(theme);
+    }
+    if (IsInArray(chartsIds, "charts5")) {
+        renderCharts5(theme);
+    }
+    if (IsInArray(chartsIds, "charts6")) {
+        renderCharts6(theme);
+    }
+    if (IsInArray(chartsIds, "charts7")) {
+        renderCharts7(theme);
+    }
+    if (IsInArray(chartsIds, "charts8")) {
+        renderCharts8(theme);
+    }
+    if (IsInArray(chartsIds, "charts9")) {
+        renderCharts9(theme);
+    }
 }
 
 function renderCharts1(theme) {
@@ -364,7 +462,7 @@ function renderCharts2(theme) {
             }
         ]
     };
-    
+
     charts2.setOption(option);
     charts2.hideLoading();
 }
@@ -569,8 +667,8 @@ function renderCharts6(theme) {
 
     let option = {
         title: {
-            
-        },tooltip: {
+
+        }, tooltip: {
             trigger: 'item',
             formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
@@ -605,3 +703,6 @@ function renderCharts6(theme) {
     charts6.setOption(option);
     charts6.hideLoading();
 }
+function renderCharts7(theme) {}
+function renderCharts8(theme) {}
+function renderCharts9(theme) {}
