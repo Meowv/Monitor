@@ -20,5 +20,13 @@ namespace IntelligentMonitor.Models.AppSettings
                 return new MySqlConnection(ConnectionStrings.MySqlConnection);
             }
         }
+
+        public IDbConnection ZabbixConnection
+        {
+            get
+            {
+                return new MySqlConnection(ConnectionStrings.ZabbixConnection);
+            }
+        }
     }
 }

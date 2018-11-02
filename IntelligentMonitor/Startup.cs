@@ -40,7 +40,9 @@ namespace IntelligentMonitor
                 .AddOptions()
                 .Configure<AppSettings>(Configuration)
                 .Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"))
+                .Configure<ZabbixConfig>(Configuration.GetSection("ZabbixConfig"))
                 .AddDbContext<IntelligentMonitorContext>(options => options.UseMySql(Configuration.GetConnectionString("MySqlConnection")))
+                .AddDbContext<ZabbixContext>(options => options.UseMySql(Configuration.GetConnectionString("ZabbixConnection")))
                 .AddSwaggerGen(s =>
                 {
                     s.SwaggerDoc("IntelligentMonitor", null);
