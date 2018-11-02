@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using IntelligentMonitor.Providers.Zabbix;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace IntelligentMonitor.Areas.Zabbix
 {
-    using IntelligentMonitor.Providers.Zabbix;
     using ZabbixAPICore;
 
     [Route("api/[controller]")]
@@ -28,7 +28,14 @@ namespace IntelligentMonitor.Areas.Zabbix
         {
             var zabbix = _provider.ZabbixLogin();
 
-            var result = zabbix.GetResponseObjectAsync(method, new { });
+            var result = zabbix.GetResponseObjectAsync(method, new
+            {
+                output = "extend",
+                filter = new
+                {
+                    hostid = 10084,
+                }
+            });
             result.Wait();
 
             _provider.ZabbixLogout(zabbix);
