@@ -22,10 +22,11 @@ namespace IntelligentMonitor.Areas.Charts
         /// <summary>
         /// 展示的图表Id
         /// </summary>
+        /// <param name="count"></param>
         /// <returns></returns>
         [HttpGet]
         [Route("get_chartsid")]
-        public JsonResult<string[]> GetChartsId()
+        public JsonResult<string[]> GetChartsId(int count)
         {
             var value = _context.ChartsDics.Where(x => x.Key == "chartsId").SingleOrDefault().Value;
 
@@ -34,7 +35,7 @@ namespace IntelligentMonitor.Areas.Charts
                 Code = 0,
                 Count = 0,
                 Msg = "success",
-                Data = value.Split(',').Take(6).ToArray()
+                Data = value.Split(',').Take(count).ToArray()
             };
 
             return result;
