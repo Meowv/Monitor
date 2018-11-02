@@ -81,7 +81,7 @@ function loadChartsHtml() {
     for (var i = 0; i < chartsIds.length; i++) {
         html += "<div class=\"layui-col-md4 layui-col-md4 layui-col-md4\">";
         html += "<div class=\"layui-card\">";
-        html += "<div class=\"layui-card-header\">图表" + chartsIds[i] + "</div>";
+        html += "<div class=\"layui-card-header\">" + getChartsName(chartsIds[i]) + "</div>";
         html += "<div class=\"layui-card-body\">";
         html += "<div class=\"layui-carousel charts\" id=\"" + chartsIds[i] + "\"></div>";
         html += "</div>";
@@ -92,6 +92,29 @@ function loadChartsHtml() {
 
     $('.charts').css("height", "250px");
     $('.charts>div').css("height", "250px");
+}
+
+function getChartsName(chartsId) {
+    switch (chartsId) {
+        case 'charts1':
+            return "图表1";
+        case 'charts2':
+            return "图表2";
+        case 'charts3':
+            return "图表3";
+        case 'charts4':
+            return "图表4";
+        case 'charts5':
+            return "图表5";
+        case 'charts6':
+            return "图表6";
+        case 'charts7':
+            return "图表7";
+        case 'charts8':
+            return "图表8";
+        case 'charts9':
+            return "图表9";
+    }
 }
 
 function reloadCharts() {
