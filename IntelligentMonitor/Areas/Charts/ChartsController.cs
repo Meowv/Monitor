@@ -34,7 +34,7 @@ namespace IntelligentMonitor.Areas.Charts
                 Code = 0,
                 Count = 0,
                 Msg = "success",
-                Data = value.Split(',')
+                Data = value.Split(',').Take(6).ToArray()
             };
 
             return result;
