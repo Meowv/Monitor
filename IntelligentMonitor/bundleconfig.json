@@ -22,5 +22,11 @@
     "inputFiles": [
       "wwwroot/js/login.js"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/css/drap.min.css",
+    "inputFiles": [
+      "wwwroot/css/drap.css"
+    ]
   }
 ]

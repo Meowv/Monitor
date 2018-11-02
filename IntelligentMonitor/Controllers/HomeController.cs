@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using IntelligentMonitor.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IntelligentMonitor.Controllers
@@ -16,6 +17,7 @@ namespace IntelligentMonitor.Controllers
             return View();
         }
 
+        [PermissionFilter(Permissions.UserEditor)]
         public IActionResult ChartsEdit()
         {
             return View();

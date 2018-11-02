@@ -68,9 +68,12 @@
                                 <dd class="layui-this">
                                     <a lay-href="@Url.Action("Index", "Home")">首页预览</a>
                                 </dd>
-                                <dd>
-                                    <a lay-href="@Url.Action("ChartsEdit", "Home")">图表设置</a>
-                                </dd>
+                                @if ((await AuthorizationService.AuthorizeAsync(User, null, new PermissionAuthorizationRequirement(IntelligentMonitor.Authorization.Permissions.UserEditor))).Succeeded)
+                                {
+                                    <dd>
+                                        <a lay-href="@Url.Action("ChartsEdit", "Home")">图表设置</a>
+                                    </dd>
+                                }
                             </dl>
                         </li>
                         @if ((await AuthorizationService.AuthorizeAsync(User, null, new PermissionAuthorizationRequirement(IntelligentMonitor.Authorization.Permissions.UserEditor))).Succeeded)
