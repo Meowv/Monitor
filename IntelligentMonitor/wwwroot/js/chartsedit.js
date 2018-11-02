@@ -11,21 +11,13 @@ if (getCookie(".AspNetCore.Tip") != "no") {
         });
     });
 }
-const charts = [
-    { id: "charts1", title: "图1" }
-    , { id: "charts2", title: "图2" }
-    , { id: "charts3", title: "图3" }
-    , { id: "charts4", title: "图4" }
-    , { id: "charts5", title: "图5" }
-    , { id: "charts6", title: "图6" }
-    , { id: "charts7", title: "图7" }
-    , { id: "charts8", title: "图8" }
-    , { id: "charts9", title: "图9" }
-];
+
+let chartsIds = [];
 const refreshTime = 5000;
 let loading = {};
 let theme = 'shine';
 
+getChartsId();
 loadChartsHtml();
 setTheme();
 setInterval(reloadCharts, refreshTime);
@@ -39,6 +31,18 @@ let charts6 = echarts.init(document.getElementById("charts6"));
 let charts7 = echarts.init(document.getElementById("charts7"));
 let charts8 = echarts.init(document.getElementById("charts8"));
 let charts9 = echarts.init(document.getElementById("charts9"));
+
+function getChartsId() {
+    $.ajax({
+        type: 'get',
+        url: '/api/Charts/get_chartsid?count=9',
+        dataType: 'json',
+        async: false,
+        success: function (result) {
+            chartsIds = result.data;
+        }
+    });
+}
 
 $('.layui-fluid .layui-row').dad({
     draggable: '.layui-card-header',
@@ -74,12 +78,12 @@ window.addEventListener("resize", function () {
 
 function loadChartsHtml() {
     var html = '';
-    for (var i = 0; i < charts.length; i++) {
+    for (var i = 0; i < chartsIds.length; i++) {
         html += "<div class=\"layui-col-md4 layui-col-md4 layui-col-md4\">";
         html += "<div class=\"layui-card\">";
-        html += "<div class=\"layui-card-header\">" + charts[i].title + "</div>";
+        html += "<div class=\"layui-card-header\">图表" + chartsIds[i] + "</div>";
         html += "<div class=\"layui-card-body\">";
-        html += "<div class=\"layui-carousel charts\" id=\"" + charts[i].id + "\"></div>";
+        html += "<div class=\"layui-carousel charts\" id=\"" + chartsIds[i] + "\"></div>";
         html += "</div>";
         html += "</div>";
         html += "</div>";
@@ -140,6 +144,7 @@ function renderCharts() {
     renderCharts5(theme);
     renderCharts6(theme);
     renderCharts7(theme);
+    renderCharts8(theme);
     renderCharts9(theme);
     renderCharts9(theme);
 }
@@ -543,7 +548,19 @@ function renderCharts7(theme) {
     charts7.showLoading(loading);
 
     let option = {
-        
+        xAxis: {
+            data: ['2017-10-24', '2017-10-25', '2017-10-26', '2017-10-27']
+        },
+        yAxis: {},
+        series: [{
+            type: 'k',
+            data: [
+                [20, 30, 10, 35],
+                [40, 35, 30, 55],
+                [33, 38, 33, 40],
+                [40, 40, 32, 42]
+            ]
+        }]
     };
 
     charts7.setOption(option);
@@ -554,7 +571,41 @@ function renderCharts8(theme) {
     charts8.showLoading(loading);
 
     let option = {
-
+        color: ['#3398DB'],
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: [
+            {
+                type: 'category',
+                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                axisTick: {
+                    alignWithLabel: true
+                }
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                name: '直接访问',
+                type: 'bar',
+                barWidth: '60%',
+                data: [10, 52, 200, 334, 390, 330, 220]
+            }
+        ]
     };
 
     charts8.setOption(option);
@@ -565,7 +616,25 @@ function renderCharts9(theme) {
     charts9.showLoading(loading);
 
     let option = {
-
+        xAxis: {},
+        yAxis: {},
+        series: [{
+            symbolSize: 20,
+            data: [
+                [10.0, 8.04],
+                [8.0, 6.95],
+                [13.0, 7.58],
+                [9.0, 8.81],
+                [11.0, 8.33],
+                [14.0, 9.96],
+                [6.0, 7.24],
+                [4.0, 4.26],
+                [12.0, 10.84],
+                [7.0, 4.82],
+                [5.0, 5.68]
+            ],
+            type: 'scatter'
+        }]
     };
 
     charts9.setOption(option);

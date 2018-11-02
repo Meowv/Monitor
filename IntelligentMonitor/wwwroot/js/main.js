@@ -90,20 +90,15 @@ window.addEventListener("resize", function () {
 
 //API获取图表Id
 function getChartsId() {
-    let ids = getCookie(".AspNetCore.ChartsId");
-    if (ids != null) {
-        chartsIds = decodeURI(getCookie(".AspNetCore.ChartsId")).split(',');
-    } else {
-        $.ajax({
-            type: 'get',
-            url: '/api/Charts/get_chartsid',
-            dataType: 'json',
-            async: false,
-            success: function (result) {
-                chartsIds = result.data;
-            }
-        });
-    }
+    $.ajax({
+        type: 'get',
+        url: '/api/Charts/get_chartsid?count=6',
+        dataType: 'json',
+        async: false,
+        success: function (result) {
+            chartsIds = result.data;
+        }
+    });
 }
 
 //切换主题
@@ -708,7 +703,19 @@ function renderCharts7(theme) {
     charts7.showLoading(loading);
 
     let option = {
-
+        xAxis: {
+            data: ['2017-10-24', '2017-10-25', '2017-10-26', '2017-10-27']
+        },
+        yAxis: {},
+        series: [{
+            type: 'k',
+            data: [
+                [20, 30, 10, 35],
+                [40, 35, 30, 55],
+                [33, 38, 33, 40],
+                [40, 40, 32, 42]
+            ]
+        }]
     };
 
     charts7.setOption(option);
@@ -719,7 +726,41 @@ function renderCharts8(theme) {
     charts8.showLoading(loading);
 
     let option = {
-
+        color: ['#3398DB'],
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: [
+            {
+                type: 'category',
+                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                axisTick: {
+                    alignWithLabel: true
+                }
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                name: '直接访问',
+                type: 'bar',
+                barWidth: '60%',
+                data: [10, 52, 200, 334, 390, 330, 220]
+            }
+        ]
     };
 
     charts8.setOption(option);
@@ -730,7 +771,25 @@ function renderCharts9(theme) {
     charts9.showLoading(loading);
 
     let option = {
-
+        xAxis: {},
+        yAxis: {},
+        series: [{
+            symbolSize: 20,
+            data: [
+                [10.0, 8.04],
+                [8.0, 6.95],
+                [13.0, 7.58],
+                [9.0, 8.81],
+                [11.0, 8.33],
+                [14.0, 9.96],
+                [6.0, 7.24],
+                [4.0, 4.26],
+                [12.0, 10.84],
+                [7.0, 4.82],
+                [5.0, 5.68]
+            ],
+            type: 'scatter'
+        }]
     };
 
     charts9.setOption(option);

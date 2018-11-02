@@ -28,5 +28,11 @@
     "inputFiles": [
       "wwwroot/css/drap.css"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/js/chartsedit.min.js",
+    "inputFiles": [
+      "wwwroot/js/chartsedit.js"
+    ]
   }
 ]

@@ -56,32 +56,6 @@
     <script src="~/js/jquery-2.1.1.min.js"></script>
     <script src="~/js/echarts.min.js"></script>
     <script src="~/js/mSlider.min.js"></script>
-    <script src="~/js/main.js" asp-append-version="true"></script>
-    @if ((await AuthorizationService.AuthorizeAsync(User, null, new PermissionAuthorizationRequirement(IntelligentMonitor.Authorization.Permissions.UserEditor))).Succeeded)
-    {
-        <script src="~/js/jquery.dad.min.js"></script>
-        <script>
-            $('.content .layui-row').dad({
-                callback: function () {
-                    var chartsIdArr = [];
-                    $('.content .layui-row .dads-children').each(function (index, value) {
-                        var item = $(this).children().attr("id");
-                        chartsIdArr.push(item);
-                    });
-                    addCookie(".AspNetCore.ChartsId", chartsIdArr);
-
-                    $.ajax({
-                        type: "post",
-                        url: "/api/Charts/chartsid",
-                        contentType: "application/json; charset=utf-8",
-                        data: "\"" + chartsIdArr.join(',') + "\"",
-                        success: function (result) {
-                            console.log(result);
-                        }
-                    });
-                }
-            });
-        </script>
-    }
-    </body>
+    <script src="~/js/main.min.js" asp-append-version="true"></script>
+</body>
 </html>
