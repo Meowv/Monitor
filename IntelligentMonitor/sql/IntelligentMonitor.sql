@@ -1,21 +1,37 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 本地_Mysql
+ Source Server         : 118.24.6.176
  Source Server Type    : MySQL
  Source Server Version : 80012
- Source Host           : 127.0.0.1:3306
+ Source Host           : 118.24.6.176:3306
  Source Schema         : intelligentmonitor
 
  Target Server Type    : MySQL
  Target Server Version : 80012
  File Encoding         : 65001
 
- Date: 24/10/2018 17:30:32
+ Date: 02/11/2018 20:50:03
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for chartsdic
+-- ----------------------------
+DROP TABLE IF EXISTS `chartsdic`;
+CREATE TABLE `chartsdic`  (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `key` longtext CHARACTER SET utf8 COLLATE utf8_general_ci,
+  `value` longtext CHARACTER SET utf8 COLLATE utf8_general_ci,
+  PRIMARY KEY (`Id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of chartsdic
+-- ----------------------------
+INSERT INTO `chartsdic` VALUES (1, 'chartsId', 'charts1,charts2,charts3,charts4,charts5,charts6,charts7,charts8,charts9');
 
 -- ----------------------------
 -- Table structure for permissions
@@ -27,7 +43,7 @@ CREATE TABLE `permissions`  (
   `PermissionName` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `PermissionDescribe` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`Id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10009 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10005 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of permissions
@@ -47,7 +63,7 @@ CREATE TABLE `roles`  (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `RoleName` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`Id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10003 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10002 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of roles
@@ -68,7 +84,7 @@ CREATE TABLE `users`  (
   `RoleId` int(11) DEFAULT NULL,
   `IsDelete` int(255) DEFAULT NULL,
   PRIMARY KEY (`Id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10046 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10025 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of users
