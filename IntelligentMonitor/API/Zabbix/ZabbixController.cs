@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace IntelligentMonitor.Areas.Zabbix
+namespace IntelligentMonitor.API.Zabbix
 {
     using ZabbixAPICore;
 

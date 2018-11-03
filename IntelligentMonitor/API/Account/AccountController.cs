@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Permissions = IntelligentMonitor.Authorization.Permissions;
 
-namespace IntelligentMonitor.Areas.Account
+namespace IntelligentMonitor.API.Account
 {
     [Route("api/[controller]")]
     [ApiController]

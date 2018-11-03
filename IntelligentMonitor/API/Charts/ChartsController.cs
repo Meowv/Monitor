@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
-namespace IntelligentMonitor.Areas.Charts
+namespace IntelligentMonitor.API.Charts
 {
     [Authorize]
     [Route("api/[controller]")]
