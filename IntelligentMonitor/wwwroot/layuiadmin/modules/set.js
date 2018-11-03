@@ -3,6 +3,8 @@ layui.define(['form', 'upload'], function (exports) {
         , layer = layui.layer
         , form = layui.form;
 
+    const nickname = $('input[name="NickName"]').val();
+
     //verify
     form.verify({
         nickname: function (value, item) {
@@ -29,6 +31,9 @@ layui.define(['form', 'upload'], function (exports) {
 
     //Profile
     form.on('submit(setmyinfo)', function (obj) {
+        if (obj.field.NickName == nickname) {
+            return false;
+        }
         $.ajax({
             type: "post",
             dataType: 'json',
