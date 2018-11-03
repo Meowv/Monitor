@@ -13,7 +13,7 @@ if (getCookie(".AspNetCore.Tip") != "no") {
 }
 
 let chartsIds = [];
-const refreshTime = 5000;
+const refreshTime = 60000;
 let loading = {};
 let theme = 'shine';
 

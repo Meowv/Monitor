@@ -1,5 +1,5 @@
 //图表刷新时间
-const refreshTime = 5000;
+const refreshTime = 60000;
 //菜单配置
 const _menu = new mSlider({
     dom: ".nav-menu",
