@@ -22,5 +22,11 @@ namespace IntelligentMonitor.Controllers
         {
             return View();
         }
+        
+        [PermissionFilter(Permissions.UserEditor)]
+        public IActionResult Dashboard()
+        {
+            return View();
+        }
     }
 }
