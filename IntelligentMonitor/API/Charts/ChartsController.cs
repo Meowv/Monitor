@@ -185,10 +185,10 @@ namespace IntelligentMonitor.API.Charts
         public JsonResult<string> UpdateCharts([FromBody]string chartsId)
         {
             var chartsIdArr = chartsId.Split(',');
-            for (int i = 0; i < chartsIdArr.Length; i++)
+            for (int i = chartsIdArr.Length, j = 0; i > 0; i--, j++)
             {
-                var charts = _context.Charts.Where(x => x.Id == Convert.ToInt32(chartsIdArr[i])).FirstOrDefault();
-                charts.Seq = i + 1;
+                var charts = _context.Charts.Where(x => x.Id == Convert.ToInt32(chartsIdArr[j])).FirstOrDefault();
+                charts.Seq = i;
 
                 _context.Entry(charts).State = EntityState.Modified;
                 _context.SaveChanges();
