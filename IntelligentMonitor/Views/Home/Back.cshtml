@@ -71,10 +71,10 @@
                                 @if ((await AuthorizationService.AuthorizeAsync(User, null, new PermissionAuthorizationRequirement(IntelligentMonitor.Authorization.Permissions.UserEditor))).Succeeded)
                                 {
                                     <dd>
-                                        <a lay-href="@Url.Action("ChartsEdit", "Home")">图表设置</a>
+                                        <a lay-href="@Url.Action("ChartsEdit", "Home")">图表管理</a>
                                     </dd>
                                     <dd>
-                                        <a lay-href="@Url.Action("Dashboard", "Home")">仪表盘</a>
+                                        <a lay-href="@Url.Action("Dashboard", "Home")">添加图表</a>
                                     </dd>
                                 }
                             </dl>

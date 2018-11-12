@@ -16,6 +16,8 @@ namespace IntelligentMonitor.Providers
 
         public DbSet<ChartsDic> ChartsDics { get; set; }
 
+        public DbSet<Models.Charts.Charts> Charts { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
