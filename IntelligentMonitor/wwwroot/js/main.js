@@ -101,6 +101,7 @@ loadChartsHtml();
 resetChartsHeight();
 setTheme();
 setThemeOptions();
+setRangeOptions();
 setInterval(getTime, 1000);
 setInterval(reloadCharts, refreshTime);
 
@@ -268,7 +269,6 @@ function reloadCharts() {
 
 //设置主题选项
 function setThemeOptions() {
-    $('.range-menu').removeClass("layui-hide");
     $('.nav-menu').removeClass("layui-hide");
     var html = "";
     $.getJSON('js/themes/themes.json', function (result) {
@@ -283,6 +283,48 @@ function setThemeOptions() {
         }
         $('.theme>div').html(html);
     });
+}
+
+function setRangeOptions() {
+    $('.range-menu').removeClass("layui-hide");
+    var html = "";
+    var data = [
+        {
+            "name": "Last 5 minutes",
+            "range": "5|m"
+        }, {
+            "name": "Last 15 minutes",
+            "range": "15|m"
+        }
+        , {
+            "name": "Last 30 minutes",
+            "range": "30|m"
+        }
+        , {
+            "name": "Last 1 hours",
+            "range": "1|h"
+        }
+        , {
+            "name": "Last 3 hours",
+            "range": "3|h"
+        }
+        , {
+            "name": "Last 6 hours",
+            "range": "6|h"
+        }
+        , {
+            "name": "Last 12 hours",
+            "range": "12|h"
+        }
+        , {
+            "name": "Last 24 hours",
+            "range": "24|h"
+        }
+    ];
+    for (var value of data) {
+        html += "<a href=\"javascript:;\" data-range=\"" + value.range + "\" class=\"layui-btn layui-btn-primary layui-btn-sm\">" + value.name + "</a>";
+    }
+    $('.ranges').html(html);
 }
 
 function format(unix) {
