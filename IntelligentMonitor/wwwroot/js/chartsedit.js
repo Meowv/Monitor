@@ -168,19 +168,14 @@ function renderCharts() {
         charts[i].showLoading(loading);
 
         var url = "/api/Zabbix/history?itemids=" + charts_data[i].itemId + "&time_from=" + charts_data[i].timeForm + "&time_till=" + charts_data[i].timeTill;
-        var chartsdata;
-        $.ajax({
-            type: 'get',
-            url: url,
-            dataType: 'json',
-            async: false,
-            success: function (data) {
-                chartsdata = data.result;
-            }
-        });
-
         var itemName = charts_data[i].itemName;
 
+        getChartsData(url, itemName, i);
+    }
+}
+
+var getChartsData = function (url, itemName, i) {
+    $.getJSON(url, function (data) {
         var option = {
             backgroundColor: '#fff',
             tooltip: {
@@ -190,7 +185,7 @@ function renderCharts() {
                 data: [itemName]
             },
             xAxis: {
-                data: chartsdata.map(function (item) {
+                data: data.result.map(function (item) {
                     return format(item.clock);
                 })
             },
@@ -202,13 +197,12 @@ function renderCharts() {
             series: {
                 name: itemName,
                 type: 'line',
-                data: chartsdata.map(function (item) {
+                data: data.result.map(function (item) {
                     return item.value;
                 })
             }
         };
-
         charts[i].setOption(option);
         charts[i].hideLoading();
-    }
+    });
 }
