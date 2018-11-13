@@ -76,7 +76,7 @@ Date.prototype.format = function () {
 }
 
 //图表刷新时间
-const refreshTime = 100000;
+const refreshTime = 60000;
 //菜单配置
 const nav_menu = new mSlider({
     dom: ".nav-menu",
