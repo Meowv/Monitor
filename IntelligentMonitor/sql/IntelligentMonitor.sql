@@ -11,27 +11,32 @@
  Target Server Version : 80012
  File Encoding         : 65001
 
- Date: 02/11/2018 20:50:03
+ Date: 13/11/2018 10:10:35
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for chartsdic
+-- Table structure for charts
 -- ----------------------------
-DROP TABLE IF EXISTS `chartsdic`;
-CREATE TABLE `chartsdic`  (
+DROP TABLE IF EXISTS `charts`;
+CREATE TABLE `charts`  (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `key` longtext CHARACTER SET utf8 COLLATE utf8_general_ci,
-  `value` longtext CHARACTER SET utf8 COLLATE utf8_general_ci,
+  `ChartsName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `ItemId` int(11) DEFAULT NULL,
+  `TimeFrom` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `TimeTill` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `ItemName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `IsDelete` int(255) DEFAULT 0,
+  `CreateTime` datetime(0) DEFAULT NULL,
+  `Seq` int(11) DEFAULT 0,
   PRIMARY KEY (`Id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of chartsdic
+-- Records of charts
 -- ----------------------------
-INSERT INTO `chartsdic` VALUES (1, 'chartsId', 'charts1,charts2,charts3,charts4,charts5,charts6,charts7,charts8,charts9');
 
 -- ----------------------------
 -- Table structure for permissions
@@ -40,10 +45,10 @@ DROP TABLE IF EXISTS `permissions`;
 CREATE TABLE `permissions`  (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `RoleId` int(11) NOT NULL,
-  `PermissionName` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `PermissionDescribe` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `PermissionName` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `PermissionDescribe` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`Id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10005 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10009 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of permissions
@@ -61,9 +66,9 @@ INSERT INTO `permissions` VALUES (10005, 10002, 'User.Read', '具有查看权限
 DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles`  (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `RoleName` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `RoleName` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`Id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10002 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10003 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of roles
@@ -78,13 +83,13 @@ INSERT INTO `roles` VALUES (10002, '用户');
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users`  (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `UserName` longtext CHARACTER SET utf8 COLLATE utf8_general_ci,
-  `NickName` longtext CHARACTER SET utf8 COLLATE utf8_general_ci,
-  `Password` longtext CHARACTER SET utf8 COLLATE utf8_general_ci,
+  `UserName` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `NickName` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `Password` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `RoleId` int(11) DEFAULT NULL,
-  `IsDelete` int(255) DEFAULT NULL,
+  `IsDelete` int(11) DEFAULT NULL,
   PRIMARY KEY (`Id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10025 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10046 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of users
