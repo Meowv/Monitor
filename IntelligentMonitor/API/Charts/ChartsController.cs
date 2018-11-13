@@ -26,53 +26,6 @@ namespace IntelligentMonitor.API.Charts
         }
 
         /// <summary>
-        /// 展示的图表Id
-        /// </summary>
-        /// <param name="count"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("get_chartsid")]
-        public JsonResult<string[]> GetChartsId(int count)
-        {
-            var value = _context.ChartsDics.Where(x => x.Key == "chartsId").SingleOrDefault().Value;
-
-            var result = new JsonResult<string[]>
-            {
-                Code = 0,
-                Count = 0,
-                Msg = "success",
-                Data = value.Split(',').Take(count).ToArray()
-            };
-
-            return result;
-        }
-
-        /// <summary>
-        /// 更新展示的图表Id
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("chartsid")]
-        public JsonResult<string> UpdateChartsId([FromBody]string value)
-        {
-            var charts = _context.ChartsDics.Where(x => x.Key == "chartsId").SingleOrDefault();
-            charts.Value = value;
-            _context.Entry(charts).State = EntityState.Modified;
-            _context.SaveChanges();
-
-            var result = new JsonResult<string>
-            {
-                Code = 0,
-                Count = 0,
-                Msg = "success",
-                Data = value
-            };
-
-            return result;
-        }
-
-        /// <summary>
         /// 添加图表
         /// </summary>
         /// <param name="charts"></param>

@@ -1,13 +1,12 @@
 ﻿using IntelligentMonitor.Providers.Zabbix;
+using IntelligentMonitor.Utility;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
+using ZabbixAPICore;
 
 namespace IntelligentMonitor.API.Zabbix
 {
-    using IntelligentMonitor.Utility;
-    using System;
-    using ZabbixAPICore;
-
     [Route("api/[controller]")]
     [ApiController]
     public class ZabbixController : ControllerBase
