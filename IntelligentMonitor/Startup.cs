@@ -1,7 +1,6 @@
 ﻿using IntelligentMonitor.Authorization;
 using IntelligentMonitor.Models.AppSettings;
 using IntelligentMonitor.Providers;
-using IntelligentMonitor.Providers.Charts;
 using IntelligentMonitor.Providers.Users;
 using IntelligentMonitor.Providers.Zabbix;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -60,7 +59,6 @@ namespace IntelligentMonitor
                 .AddTransient<IAuthorizationHandler, PermissionAuthorizationHandler>()
                 .AddTransient<UserProvider>()
                 .AddTransient<ZabbixProvider>()
-                .AddTransient<ChartsProvider>()
                 .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
