@@ -1,10 +1,92 @@
+var time_from = "";
+var time_till = "";
+
+layui.use(['laydate'], function () {
+    var laydate = layui.laydate;
+
+    laydate.render({
+        elem: '#range'
+        , type: 'datetime'
+        , range: true,
+        done: function (value) {
+            if (value.length > 0) {
+                var time = value.split(' - ');
+
+                time_from = time[0];
+                time_till = time[1];
+            } else {
+                time_from = "";
+                time_till = "";
+            }
+
+            renderCharts(time_from, time_till);
+
+            range_menu.close();
+        }
+    });
+
+    $('.ranges a').click(function () {
+        var range = $(this).data("range");
+        getRangeDate(range);
+
+        renderCharts(time_from, time_till);
+
+        range_menu.close();
+    });
+
+    function getRangeDate(range) {
+        var now = new Date;
+        var arr = range.split('|');
+
+        if (arr[1] == "m") {
+            now.setMinutes(now.getMinutes() - arr[0]);
+            time_from = now.format();
+            time_till = new Date().format();
+        } else if (arr[1] == "h") {
+            now.setHours(now.getHours() - arr[0]);
+            time_from = now.format();
+            time_till = new Date().format();
+        } else {
+            time_from = "";
+            time_till = "";
+        }
+    }
+});
+
+Date.prototype.format = function () {
+    var fmt = "yyyy-MM-dd hh:mm:ss";
+    var o = {
+        "M+": this.getMonth() + 1,
+        "d+": this.getDate(),
+        "h+": this.getHours(),
+        "m+": this.getMinutes(),
+        "s+": this.getSeconds(),
+        "q+": Math.floor((this.getMonth() + 3) / 3),
+        "S": this.getMilliseconds()
+    };
+    if (/(y+)/.test(fmt)) {
+        fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    }
+    for (var k in o) {
+        if (new RegExp("(" + k + ")").test(fmt)) {
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        }
+    }
+    return fmt;
+}
+
 //图表刷新时间
-const refreshTime = 60000;
+const refreshTime = 100000;
 //菜单配置
-const _menu = new mSlider({
+const nav_menu = new mSlider({
     dom: ".nav-menu",
     direction: "right",
     distance: "20%",
+});
+const range_menu = new mSlider({
+    dom: ".range-menu",
+    direction: "top",
+    distance: "100px",
 });
 //加载中
 let loading = {};
@@ -35,8 +117,11 @@ function getCharts() {
 }
 
 //菜单点击事件
-$('.nav-time span:eq(0)').click(function () {
-    _menu.open();
+$('.nav-bar span:eq(0)').click(function () {
+    range_menu.open();
+});
+$('.nav-bar span:eq(1)').click(function () {
+    nav_menu.open();
 });
 
 //监听窗口变化
@@ -58,7 +143,7 @@ $('.theme').on('click', 'a', function () {
 });
 
 //全屏查看
-$('.nav-time span:eq(1)').click(function () {
+$('.nav-bar span:eq(2)').click(function () {
     var ele = document.documentElement;
     var SCREEN_FULL_TEXT = "全屏";
     var SCREEN_REST_TEXT = "退出全屏";
@@ -71,7 +156,7 @@ $('.nav-time span:eq(1)').click(function () {
             reqFullScreen.call(ele);
         };
         iconElem.addClass(SCREEN_REST).removeClass(SCREEN_FULL);
-        $('.nav-time span:eq(1)').attr('title', SCREEN_REST_TEXT);
+        $('.nav-bar span:eq(2)').attr('title', SCREEN_REST_TEXT);
     } else {
         if (document.exitFullscreen) {
             document.exitFullscreen();
@@ -83,7 +168,7 @@ $('.nav-time span:eq(1)').click(function () {
             document.msExitFullscreen();
         }
         iconElem.addClass(SCREEN_FULL).removeClass(SCREEN_REST);
-        $('.nav-time span:eq(1)').attr('title', SCREEN_FULL_TEXT);
+        $('.nav-bar span:eq(2)').attr('title', SCREEN_FULL_TEXT);
     }
 });
 
@@ -124,7 +209,7 @@ function getTime() {
     var second = date.getSeconds();
     second = second < 10 ? '0' + second : second;
     var time = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
-    $('.nav-time span:eq(3)').html("当前时间：" + time);
+    $('.nav-bar span:eq(4)').html(time);
 }
 
 //添加cookie
@@ -164,7 +249,7 @@ function setTheme() {
         $('.nav').css("color", style.color);
         $('.nav-header-brand img').attr("src", style.logo);
 
-        renderCharts();
+        renderCharts(time_from, time_till);
     });
 }
 
@@ -178,11 +263,12 @@ function disposeCharts() {
 //重载图表
 function reloadCharts() {
     disposeCharts();
-    renderCharts();
+    renderCharts(time_from, time_till);
 }
 
 //设置主题选项
 function setThemeOptions() {
+    $('.range-menu').removeClass("layui-hide");
     $('.nav-menu').removeClass("layui-hide");
     var html = "";
     $.getJSON('js/themes/themes.json', function (result) {
@@ -200,23 +286,42 @@ function setThemeOptions() {
 }
 
 function format(unix) {
+    var now = new Date();
     var time = new Date(unix * 1000);
-    var y = time.getFullYear();
+    //var y = time.getFullYear();
     var m = time.getMonth() + 1;
+    m = m < 10 ? '0' + m : m;
     var d = time.getDate();
+    d = d < 10 ? '0' + d : d;
     var h = time.getHours();
+    h = h < 10 ? '0' + h : h;
     var mm = time.getMinutes();
-    var s = time.getSeconds();
+    mm = mm < 10 ? '0' + mm : mm;
+    //var s = time.getSeconds();
+    var now_m = now.getMonth() + 1;
+    now_m = now_m < 10 ? '0' + now_m : now_m;
+    var now_d = now.getDate();
+    now_d = now_d < 10 ? '' + now_d : now_d;
+    if (m == now_m && d == now_d) {
+        return h + ':' + mm;
+    }
     return m + '/' + d + ' ' + h + ':' + mm;
 }
 
 //渲染图表
-function renderCharts() {
+function renderCharts(time_from, time_till) {
     for (var i = 0; i < charts_data.length; i++) {
         charts[i] = echarts.init(document.getElementById("charts" + (i + 1)), theme);
         charts[i].showLoading(loading);
 
-        var url = "/api/Zabbix/history?itemids=" + charts_data[i].itemId + "&time_from=" + charts_data[i].timeForm + "&time_till=" + charts_data[i].timeTill;
+        if (time_from == "") {
+            time_from = charts_data[i].timeForm;
+        }
+        if (time_till == "") {
+            time_till = charts_data[i].timeTill;
+        }
+
+        var url = "/api/Zabbix/history?itemids=" + charts_data[i].itemId + "&time_from=" + time_from + "&time_till=" + time_till;
 
         var itemName = charts_data[i].itemName;
 

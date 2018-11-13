@@ -152,13 +152,25 @@ function disposeCharts() {
 }
 
 function format(unix) {
+    var now = new Date();
     var time = new Date(unix * 1000);
-    var y = time.getFullYear();
+    //var y = time.getFullYear();
     var m = time.getMonth() + 1;
+    m = m < 10 ? '0' + m : m;
     var d = time.getDate();
+    d = d < 10 ? '0' + d : d;
     var h = time.getHours();
+    h = h < 10 ? '0' + h : h;
     var mm = time.getMinutes();
-    var s = time.getSeconds();
+    mm = mm < 10 ? '0' + mm : mm;
+    //var s = time.getSeconds();
+    var now_m = now.getMonth() + 1;
+    now_m = now_m < 10 ? '0' + now_m : now_m;
+    var now_d = now.getDate();
+    now_d = now_d < 10 ? '' + now_d : now_d;
+    if (m == now_m && d == now_d) {
+        return h + ':' + mm;
+    }
     return m + '/' + d + ' ' + h + ':' + mm;
 }
 
