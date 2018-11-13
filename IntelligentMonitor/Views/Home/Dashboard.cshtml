@@ -50,7 +50,7 @@
                         </div>
                         <div class="layui-col-md4 layui-col-md4 layui-col-md4">
                             <div class="layui-inline">
-                                <label class="layui-form-label">Custom Range</label>
+                                <label class="layui-form-label">Date Range</label>
                                 <div class="layui-input-inline">
                                     <input type="text" class="layui-input" id="range" placeholder=" - ">
                                 </div>
@@ -105,10 +105,10 @@
                 , type: 'datetime'
                 , range: true,
                 done: function (value) {
-                    charts.showLoading(loading);
                     if (itemName == "" || !hasData) {
                         return false
                     }
+                    charts.showLoading(loading);
                     var time = value.split(' - ');
                     var time_from = time[0];
                     var time_till = time[1];
@@ -251,13 +251,25 @@
             }
 
             function format(unix) {
+                var now = new Date();
                 var time = new Date(unix * 1000);
-                var y = time.getFullYear();
+                //var y = time.getFullYear();
                 var m = time.getMonth() + 1;
+                m = m < 10 ? '0' + m : m;
                 var d = time.getDate();
+                d = d < 10 ? '0' + d : d;
                 var h = time.getHours();
+                h = h < 10 ? '0' + h : h;
                 var mm = time.getMinutes();
-                var s = time.getSeconds();
+                mm = mm < 10 ? '0' + mm : mm;
+                //var s = time.getSeconds();
+                var now_m = now.getMonth() + 1;
+                now_m = now_m < 10 ? '0' + now_m : now_m;
+                var now_d = now.getDate();
+                now_d = now_d < 10 ? '' + now_d : now_d;
+                if (m == now_m && d == now_d) {
+                    return h + ':' + mm;
+                }
                 return m + '/' + d + ' ' + h + ':' + mm;
             }
 

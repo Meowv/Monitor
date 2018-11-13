@@ -41,22 +41,23 @@ body {
     font-size: 22px;
     font-weight: 900;
     line-height: 50px;
-    margin: 0 auto;
-    width: 180px;
+    float:left;
+    text-align:center;
+    width: 200px;
 }
 
-.nav-time {
+.nav-bar {
     float: right;
     line-height: 50px;
     font-weight: 900;
     margin-right: 15px;
 }
 
-.nav-time span {
+.nav-bar span {
     padding-left: 15px;
 }
 
-.nav-time span:nth-child(1), .nav-time span:nth-child(2) {
+.nav-bar span:nth-child(1), .nav-bar span:nth-child(2), .nav-bar span:nth-child(3) {
     cursor: pointer;
 }
 

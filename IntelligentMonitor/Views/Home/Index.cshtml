@@ -15,7 +15,10 @@
                     <img src="~/imgs/logo_white.png" />
                 </a>
             </div>
-            <div class="nav-time">
+            <div class="nav-bar">
+                <span title="日期范围">
+                    <i class="layui-icon layui-icon-log"></i>
+                </span>
                 <span title="菜单">
                     <i class="layui-icon layui-icon-shrink-right"></i>
                 </span>
@@ -27,11 +30,45 @@
                     @User.Identity.Name !
                 </span>
                 <span>
-                    当前时间：@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                    @DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
                 </span>
             </div>
             <div class="nav-title">
                 <p>联诺智能监控系统</p>
+            </div>
+            <div class="range-menu layui-hide">
+                <div class="layui-inline" style="height:100px;line-height:100px;">
+                    <label class="layui-form-label" style="width:auto;height:100px;line-height:81px;">自定义日期范围</label>
+                    <div class="layui-input-inline" style="width: 300px;">
+                        <input type="text" class="layui-input" id="range" placeholder=" - ">
+                    </div>
+                </div>
+                <div class="layui-inline ranges" style="margin-left:20px;">
+                    <a href="javascript:;" data-range="5|m" class="layui-btn layui-btn-primary layui-btn-sm">
+                        Last 5 minutes
+                    </a>
+                    <a href="javascript:;" data-range="15|m" class="layui-btn layui-btn-primary layui-btn-sm">
+                        Last 15 minutes
+                    </a>
+                    <a href="javascript:;" data-range="30|m" class="layui-btn layui-btn-primary layui-btn-sm">
+                        Last 30 minutes
+                    </a>
+                    <a href="javascript:;" data-range="1|h" class="layui-btn layui-btn-primary layui-btn-sm">
+                        Last 1 hour
+                    </a>
+                    <a href="javascript:;" data-range="3|h" class="layui-btn layui-btn-primary layui-btn-sm">
+                        Last 3 hours
+                    </a>
+                    <a href="javascript:;" data-range="6|h" class="layui-btn layui-btn-primary layui-btn-sm">
+                        Last 6 hours
+                    </a>
+                    <a href="javascript:;" data-range="12|h" class="layui-btn layui-btn-primary layui-btn-sm">
+                        Last 12 hours
+                    </a>
+                    <a href="javascript:;" data-range="24|h" class="layui-btn layui-btn-primary layui-btn-sm">
+                        Last 24 hours
+                    </a>
+                </div>
             </div>
             <div class="nav-menu layui-hide">
                 <div class="user">
@@ -54,6 +91,7 @@
         </div>
     </div>
     <script src="~/js/jquery-2.1.1.min.js"></script>
+    <script src="~/layuiadmin//layui/layui.js"></script>
     <script src="~/js/echarts.min.js"></script>
     <script src="~/js/mSlider.min.js"></script>
     <script src="~/js/main.js" asp-append-version="true"></script>
