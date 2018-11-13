@@ -1,7 +1,6 @@
 ﻿using IntelligentMonitor.Models.Charts;
 using IntelligentMonitor.Models.JsonResult;
 using IntelligentMonitor.Providers;
-using IntelligentMonitor.Providers.Charts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,12 +16,10 @@ namespace IntelligentMonitor.API.Charts
     public class ChartsController : ControllerBase
     {
         private readonly IntelligentMonitorContext _context;
-        private readonly ChartsProvider _provider;
 
-        public ChartsController(IntelligentMonitorContext context, ChartsProvider provider)
+        public ChartsController(IntelligentMonitorContext context)
         {
             _context = context;
-            _provider = provider;
         }
 
         /// <summary>

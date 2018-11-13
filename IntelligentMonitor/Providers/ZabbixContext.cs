@@ -8,8 +8,6 @@ namespace IntelligentMonitor.Providers
         {
         }
 
-
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
