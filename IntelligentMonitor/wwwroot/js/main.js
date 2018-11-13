@@ -9,6 +9,7 @@ layui.use(['laydate'], function () {
         , type: 'datetime'
         , range: true,
         done: function (value) {
+            $('.ranges a').removeClass("range-hover");
             if (value.length > 0) {
                 var time = value.split(' - ');
 
@@ -17,6 +18,8 @@ layui.use(['laydate'], function () {
             } else {
                 time_from = "";
                 time_till = "";
+
+                $('.ranges a:eq(3)').addClass("range-hover");
             }
 
             renderCharts(time_from, time_till);
@@ -26,6 +29,9 @@ layui.use(['laydate'], function () {
     });
 
     $('.ranges a').click(function () {
+        $('.ranges a').removeClass("range-hover");
+        $(this).addClass("range-hover");
+
         var range = $(this).data("range");
         getRangeDate(range);
 
@@ -325,6 +331,8 @@ function setRangeOptions() {
         html += "<a href=\"javascript:;\" data-range=\"" + value.range + "\" class=\"layui-btn layui-btn-primary layui-btn-sm\">" + value.name + "</a>";
     }
     $('.ranges').html(html);
+
+    $('.ranges a:eq(3)').addClass("range-hover");
 }
 
 function format(unix) {

@@ -120,3 +120,7 @@ body {
     bottom: 0px;
     left: 0px;
 }
+
+.range-hover {
+    border-color: #009688;
+}
