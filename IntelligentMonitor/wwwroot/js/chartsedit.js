@@ -179,42 +179,60 @@ function renderCharts() {
         charts[i] = echarts.init(document.getElementById("charts" + (i + 1)), theme);
         charts[i].showLoading(loading);
 
-        var url = "/api/Zabbix/history?itemids=" + charts_data[i].itemId + "&time_from=" + charts_data[i].timeForm + "&time_till=" + charts_data[i].timeTill;
-        var itemName = charts_data[i].itemName;
+        var itemid = charts_data[i].itemId.split(",");
+        var itemName = charts_data[i].itemName.split(",");
 
-        getChartsData(url, itemName, i);
+        getChartsData(itemid, itemName, i);
     }
 }
 
-var getChartsData = function (url, itemName, i) {
+var getChartsData = function (itemid, itemName, idx) {
+    var url = "/api/Zabbix/history?";
+    for (var i = 0; i < itemid.length; i++) {
+        url += "&itemids=" + itemid[i];
+    }
+
     $.getJSON(url, function (data) {
+        var series_data = [];
+        var res = data.result;
+
+        for (var i = 0; i < itemid.length; i++) {
+            var xAxis_data = [];
+            var value = [];
+
+            res.map(function (item) {
+                if (item.itemid == itemid[i]) {
+                    value.push(item.value);
+                    xAxis_data.push(format(item.clock));
+                }
+            })
+            var item = {
+                name: itemName[i],
+                type: 'line',
+                data: value
+            };
+            series_data.push(item);
+        }
+
         var option = {
             backgroundColor: '#fff',
             tooltip: {
                 trigger: 'axis'
             },
             legend: {
-                data: [itemName]
+                data: itemName
             },
             xAxis: {
-                data: data.result.map(function (item) {
-                    return format(item.clock);
-                })
+                type: 'category',
+                boundaryGap: false,
+                data: xAxis_data
             },
             yAxis: {
-                splitLine: {
-                    show: false
-                }
+                type: 'value'
             },
-            series: {
-                name: itemName,
-                type: 'line',
-                data: data.result.map(function (item) {
-                    return item.value;
-                })
-            }
+            series: series_data
         };
-        charts[i].setOption(option);
-        charts[i].hideLoading();
+        charts[idx].setOption(option);
+        charts[idx].hideLoading();
     });
 }
