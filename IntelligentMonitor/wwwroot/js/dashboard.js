@@ -4,6 +4,7 @@ layui.use(['form', 'layer'], function () {
 
     $('.layui-form-item .layui-form-label').css("width", "auto");
 
+    var _hostName = "";
     var _itemName = "";
     let itemName = [];
     let itemid = [];
@@ -83,7 +84,7 @@ layui.use(['form', 'layer'], function () {
             });
         }
         if (h) {
-            _itemName += $(this).text();
+            _hostName = $(this).text();
             $.getJSON("/api/Zabbix/application?hostids=" + data.value, function (data) {
                 var options = "<option value=\"\"></option>";
                 for (var i = 0; i < data.result.length; i++) {
@@ -112,7 +113,7 @@ layui.use(['form', 'layer'], function () {
             });
         }
         if (i) {
-            _itemName += "_" + $(this).text();
+            _itemName = _hostName + "_" + $(this).text();
 
             itemName.push(_itemName);
             _itemName = "";
@@ -223,7 +224,10 @@ layui.use(['form', 'layer'], function () {
                 data: xAxis_data
             },
             yAxis: {
-                type: 'value'
+                splitLine: {
+                    show: true
+                },
+                type: 'log'
             },
             series: series_data
         };

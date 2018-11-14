@@ -228,7 +228,10 @@ var getChartsData = function (itemid, itemName, idx) {
                 data: xAxis_data
             },
             yAxis: {
-                type: 'value'
+                splitLine: {
+                    show: true
+                },
+                type: 'log'
             },
             series: series_data
         };

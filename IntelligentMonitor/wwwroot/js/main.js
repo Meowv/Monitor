@@ -436,7 +436,8 @@ var getChartsData = function (itemid, itemName, idx) {
             yAxis: {
                 splitLine: {
                     show: true
-                }
+                },
+                type: 'log'
             },
             series: series_data
         };
