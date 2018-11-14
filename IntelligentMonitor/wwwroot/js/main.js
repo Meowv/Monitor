@@ -409,11 +409,24 @@ var getChartsData = function (itemid, itemName, idx) {
         }
 
         var option = {
+            title: {
+                text: charts_data[idx].chartsName,
+                left: 'center',
+                textStyle: {
+                    fontSize: 16,
+                },
+            },
             tooltip: {
                 trigger: 'axis'
             },
             legend: {
                 //data: itemName
+            },
+            grid: {
+                left: '3%',
+                right: '3%',
+                bottom: '5%',
+                containLabel: true
             },
             xAxis: {
                 type: 'category',
