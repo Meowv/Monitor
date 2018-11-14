@@ -8,7 +8,7 @@
 
         public string ChartsName { get; set; }
 
-        public int ItemId { get; set; }
+        public string ItemId { get; set; }
 
         public string ItemName { get; set; }
 

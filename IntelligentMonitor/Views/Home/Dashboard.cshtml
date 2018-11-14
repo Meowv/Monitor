@@ -12,25 +12,26 @@
 <body>
     <div class="layui-fluid">
         <div class="layui-card">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md12 layui-col-md12 layui-col-md12">
+                    <div class="charts" id="charts" style="height:300px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-card query">
             <div class="layui-form layui-form-pane layui-card-header layuiadmin-card-header-auto">
                 <div class="layui-form-item">
                     <div class="layui-row">
                         <div class="layui-col-md4 layui-col-md4 layui-col-md4">
                             <label class="layui-form-label">Group</label>
                             <div class="layui-input-inline">
-                                <select name="group" id="group" lay-filter="group"></select>
+                                <select name="group" class="group"></select>
                             </div>
                         </div>
                         <div class="layui-col-md4 layui-col-md4 layui-col-md4">
                             <label class="layui-form-label">Host</label>
                             <div class="layui-input-inline">
-                                <select name="host" id="host" lay-filter="host"></select>
-                            </div>
-                        </div>
-                        <div class="layui-col-md4 layui-col-md4 layui-col-md4">
-                            <label class="layui-form-label">Application</label>
-                            <div class="layui-input-inline">
-                                <select name="application" id="application" lay-filter="application"></select>
+                                <select name="host" class="host"></select>
                             </div>
                         </div>
                     </div>
@@ -38,12 +39,33 @@
                 <div class="layui-form-item">
                     <div class="layui-row">
                         <div class="layui-col-md4 layui-col-md4 layui-col-md4">
-                            <label class="layui-form-label">Item</label>
+                            <label class="layui-form-label">Application</label>
                             <div class="layui-input-inline">
-                                <select name="item" id="item" lay-filter="item"></select>
+                                <select name="application" class="application"></select>
                             </div>
                         </div>
                         <div class="layui-col-md4 layui-col-md4 layui-col-md4">
+                            <label class="layui-form-label">Item</label>
+                            <div class="layui-input-inline">
+                                <select name="item" class="item"></select>
+                            </div>
+                        </div>
+                        <div class="layui-col-md4 layui-col-md4 layui-col-md4">
+                            <div class="layui-input-inline layui-hide">
+                                <button class="layui-btn layui-btn-danger layui-btn-fluid btnRemoveQuery">
+                                    Remove Query
+                                </button>
+                            </div>
+                            <div class="layui-input-inline">
+                                <button class="layui-btn layui-btn-fluid btnQuery">
+                                    Add Query
+                                </button>
+                            </div>
+                            <div class="layui-input-inline">
+                                <button class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="save">Save</button>
+                            </div>
+                        </div>
+                        @*<div class="layui-col-md4 layui-col-md4 layui-col-md4">
                             <div class="layui-input-inline">
                                 <button class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="save">Save</button>
                             </div>
@@ -55,15 +77,8 @@
                                     <input type="text" class="layui-input" id="range" placeholder=" - ">
                                 </div>
                             </div>
-                        </div>
+                        </div>*@
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="layui-card">
-            <div class="layui-row layui-col-space15">
-                <div class="layui-col-md12 layui-col-md12 layui-col-md12">
-                    <div class="charts" id="charts" style="height:400px;"></div>
                 </div>
             </div>
         </div>
@@ -78,14 +93,16 @@
                 , laydate = layui.laydate;
 
             $('.layui-form-item .layui-form-label').css("width", "auto");
-            let chartsName = "";
-            let itemName = "";
-            let itemid = 0;
-            let hasData = false;
+            
+            let itemName = [];
+            let itemid = [];
             let loading = {};
             let theme = 'shine';
             let charts = echarts.init(document.getElementById("charts"));
-            renderCharts([]);
+
+            let queryhtml = $('.query>div').prop("outerHTML");
+
+            renderCharts([], [], []);
             $.getJSON('/js/themes/' + theme + '.json', function (result) {
                 echarts.registerTheme(theme, result.theme);
                 loading = result.loading;
@@ -96,112 +113,161 @@
                 for (var i = 0; i < data.result.length; i++) {
                     options += "<option value=\"" + data.result[i].groupid + "\">" + data.result[i].name + "</option>";
                 }
-                $('#group').html(options);
+                $('.group').html(options);
                 form.render('select');
             });
 
-            laydate.render({
-                elem: '#range'
-                , type: 'datetime'
-                , range: true,
-                done: function (value) {
-                    if (itemName == "" || !hasData) {
-                        return false
+            $(".query").delegate(".btnQuery", "click", function () {
+                $('.query').append(queryhtml);
+                var group = $(this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.lastChild).find(".group");
+
+                $.getJSON("/api/Zabbix/hostgroup", function (data) {
+                    var options = "<option value=\"\"></option>";
+                    for (var i = 0; i < data.result.length; i++) {
+                        options += "<option value=\"" + data.result[i].groupid + "\">" + data.result[i].name + "</option>";
                     }
+                    group.html(options);
+                    form.render('select');
+                });
+
+                $(this).parent().parent().find("div:eq(0)").removeClass("layui-hide");
+                $(this).parent().parent().find("div:gt(0)").remove();
+            });
+
+            function deleteArr(arr, idx) {
+                var array = [];
+                for (var i = 0; i < arr.length; i++) {
+                    if (i != idx) {
+                        array.push(arr[i]);
+                    }
+                }
+                return array;
+            }
+
+            $(".query").delegate(".btnRemoveQuery", "click", function () {
+                var idx = $(".btnRemoveQuery").index(this);
+                $(this.parentNode.parentNode.parentNode.parentNode.parentNode).remove();
+
+                itemName = deleteArr(itemName,idx);
+                itemid = deleteArr(itemid, idx);
+
+                getData(itemid, itemName);
+            });
+
+            //laydate.render({
+            //    elem: '#range'
+            //    , type: 'datetime'
+            //    , range: true,
+            //    done: function (value) {
+            //        if (itemName == "" || !hasData) {
+            //            return false
+            //        }
+            //        charts.showLoading(loading);
+            //        var time = value.split(' - ');
+            //        var time_from = time[0];
+            //        var time_till = time[1];
+            //        var url = "/api/Zabbix/history?itemids=" + itemid + "&time_from=" + time_from + "&time_till=" + time_till;
+            //        getData(url);
+            //    }
+            //});
+
+            form.on('select', function (data) {
+                var elem = $(data.elem);
+                var elemDad = elem.parent().parent().parent().parent().parent();
+                var g = elem.hasClass("group");
+                var h = elem.hasClass("host");
+                var a = elem.hasClass("application");
+                var i = elem.hasClass("item");
+                if (g) {
+                    $.getJSON("/api/Zabbix/host?groupids=" + data.value, function (data) {
+                        var options = "<option value=\"\"></option>";
+                        for (var i = 0; i < data.result.length; i++) {
+                            options += "<option value=\"" + data.result[i].hostid + "\">" + data.result[i].name + "</option>";
+                        }
+                        elemDad.find('.host').html(options);
+                        form.render('select');
+                    });
+                }
+                if (h) {
+                    $.getJSON("/api/Zabbix/application?hostids=" + data.value, function (data) {
+                        var options = "<option value=\"\"></option>";
+                        for (var i = 0; i < data.result.length; i++) {
+                            options += "<option value=\"" + data.result[i].applicationid + "\">" + data.result[i].name + "</option>";
+                        }
+                        elemDad.find('.application').html(options);
+                        form.render('select');
+                    });
+                }
+                if (a) {
+                    $.getJSON("/api/Zabbix/item?applicationids=" + data.value, function (data) {
+                        var options = "<option value=\"\"></option>";
+                        for (var i = 0; i < data.result.length; i++) {
+                            var name = data.result[i].name;
+                            if (name.indexOf('$') >= 0) {
+                                var key = data.result[i].key_;
+                                var keys = key.match(/\[(.+?)\]/g)[0].replace("[", "").replace("]", "").split(',');
+                                for (var j = 0; j < keys.length; j++) {
+                                    name = name.replace("$" + (j + 1), keys[j]);
+                                }
+                            }
+                            options += "<option value=\"" + data.result[i].itemid + "\">" + name + "</option>";
+                        }
+                        elemDad.find('.item').html(options);
+                        form.render('select');
+                    });
+                }
+                if (i) {
+                    itemName.push($(this).text());
+                    itemid.push(data.value);
+
                     charts.showLoading(loading);
-                    var time = value.split(' - ');
-                    var time_from = time[0];
-                    var time_till = time[1];
-                    var url = "/api/Zabbix/history?itemids=" + itemid + "&time_from=" + time_from + "&time_till=" + time_till;
-                    getData(url);
+
+                    console.log(itemid)
+                    console.log(itemName)
+
+                    getData(itemid, itemName);
                 }
             });
 
-            form.on('select(group)', function (data) {
-                chartsName = $(this).text();
-                $.getJSON("/api/Zabbix/host?groupids=" + data.value, function (data) {
-                    var options = "<option value=\"\"></option>";
-                    for (var i = 0; i < data.result.length; i++) {
-                        options += "<option value=\"" + data.result[i].hostid + "\">" + data.result[i].name + "</option>";
-                    }
-                    $('#host').html(options);
-                    form.render('select');
-                });
-            });
-            form.on('select(host)', function (data) {
-                chartsName += "_" + $(this).text();
-                $.getJSON("/api/Zabbix/application?hostids=" + data.value, function (data) {
-                    var options = "<option value=\"\"></option>";
-                    for (var i = 0; i < data.result.length; i++) {
-                        options += "<option value=\"" + data.result[i].applicationid + "\">" + data.result[i].name + "</option>";
-                    }
-                    $('#application').html(options);
-                    form.render('select');
-                });
-            });
-            form.on('select(application)', function (data) {
-                chartsName += "_" + $(this).text();
-                $.getJSON("/api/Zabbix/item?applicationids=" + data.value, function (data) {
-                    var options = "<option value=\"\"></option>";
-                    for (var i = 0; i < data.result.length; i++) {
-                        var name = data.result[i].name;
-                        if (name.indexOf('$') >= 0) {
-                            var key = data.result[i].key_;
-                            var keys = key.match(/\[(.+?)\]/g)[0].replace("[", "").replace("]", "").split(',');
-                            for (var j = 0; j < keys.length; j++) {
-                                name = name.replace("$" + (j + 1), keys[j]);
-                            }
-                        }
-                        options += "<option value=\"" + data.result[i].itemid + "\">" + name + "</option>";
-                    }
-                    $('#item').html(options);
-                    form.render('select');
-                });
-            });
-            form.on('select(item)', function (data) {
-                itemName = $(this).text();
-                chartsName += "_" + itemName;
-                charts.showLoading(loading);
-
-                itemid = data.value;
-
-                var url = "/api/Zabbix/history?itemids=" + itemid;
-                getData(url);
-            });
-
             form.on('submit(save)', function (data) {
-                if (itemName != "" && hasData) {
-                    var time = $('#range').val().split(' - ');
-                    var itemid = data.field.item;
-                    var time_from = time[0] || "";
-                    var time_till = time[1] || "";
-                    var charts = {};
-                    charts.itemId = itemid;
-                    charts.timeFrom = time_from;
-                    charts.timeTill = time_till;
-                    charts.itemName = itemName;
-                    charts.chartsName = chartsName;
-                    $.ajax({
-                        type: "post",
-                        url: "/api/Charts/add_charts",
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        data: JSON.stringify(charts),
-                        success: function (result) {
-                            if (result.code == 0) {
-                                layer.msg(result.msg, {
-                                    icon: 1,
-                                    time: 1000
-                                }, function () {
-                                    window.location.reload();
-                                });
-                            } else {
-                                layer.msg(result.msg, {
-                                    icon: 5,
-                                    time: 1000
-                                });
+                if (itemName.length > 0 && itemid.length > 0) {
+                    layer.prompt({
+                        title: '请输入此图表名称'
+                        , formType: 0
+                    }, function (chartsName, index) {
+                        layer.close(index);
+                        //var time = $('#range').val().split(' - ');
+                        var time_from = "";
+                        var time_till = "";
+                        var charts = {};
+                        charts.itemId = itemid.join(",");
+                        charts.timeFrom = time_from;
+                        charts.timeTill = time_till;
+                        charts.itemName = itemName.join(",");
+                        charts.chartsName = chartsName;
+
+                        $.ajax({
+                            type: "post",
+                            url: "/api/Charts/add_charts",
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            data: JSON.stringify(charts),
+                            success: function (result) {
+                                if (result.code == 0) {
+                                    layer.msg(result.msg, {
+                                        icon: 1,
+                                        time: 1000
+                                    }, function () {
+                                        window.location.reload();
+                                    });
+                                } else {
+                                    layer.msg(result.msg, {
+                                        icon: 5,
+                                        time: 1000
+                                    });
+                                }
                             }
-                        }
+                        });
                     });
                 } else {
                     layer.msg("无监控数据，不可保存");
@@ -209,42 +275,63 @@
                 return false;
             });
 
-            function getData(url) {
+            function getData(itemid, itemName) {
+                var url = "/api/Zabbix/history?";
+
+                for (var i = 0; i < itemid.length; i++) {
+                    url += "&itemids=" + itemid[i];
+                }
                 $.getJSON(url, function (data) {
-                    if (data.result.length > 0) {
-                        hasData = true;
+                    var series_data = [];
+                    var res = data.result;
+                    
+                    for (var i = 0; i < itemid.length; i++) {
+                        var xAxis_data = [];
+                        var value = [];
+
+                        res.map(function (item) {
+                            if (item.itemid == itemid[i]) {
+                                value.push(item.value);
+                                xAxis_data.push(format(item.clock));
+                            }
+                        })
+                        var item = {
+                            name: itemName[i],
+                            type: 'line',
+                            data: value
+                        };
+                        series_data.push(item);
                     }
-                    renderCharts(data.result, itemName);
+                    
+                    renderCharts(series_data, xAxis_data, itemName);
                 });
             }
 
-            function renderCharts(data, itemName) {
+            function renderCharts(series_data, xAxis_data, itemName) {
+                charts.clear();
                 let option = {
-                    backgroundColor:'#fff',
                     tooltip: {
                         trigger: 'axis'
                     },
                     legend: {
-                        data: [itemName]
+                        data: itemName
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
                     },
                     xAxis: {
-                        data: data.map(function (item) {
-                            return format(item.clock);
-                        })
+                        type: 'category',
+                        boundaryGap: false,
+                        data: xAxis_data
                     },
                     yAxis: {
-                        splitLine: {
-                            show: false
-                        }
+                        type: 'value'
                     },
-                    series: {
-                        name: itemName,
-                        type: 'line',
-                        data: data.map(function (item) {
-                            return item.value;
-                        })
-                    }
-                }
+                    series: series_data
+                };
 
                 charts.setOption(option);
                 charts.hideLoading();
