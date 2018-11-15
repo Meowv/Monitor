@@ -115,9 +115,22 @@ layui.use(['form', 'layer'], function () {
         if (i) {
             _itemName = _hostName + "_" + $(this).text();
 
-            itemName.push(_itemName);
+            var id = elemDad.find('.itemId').val();
+            var index = function (item) {
+                return item == id;
+            }
+
+            if (id > 0) {
+                var idx = itemid.findIndex(index);
+                itemid[idx] = data.value;
+                itemName[idx] = _itemName;
+            } else {
+                itemid.push(data.value);
+                itemName.push(_itemName);
+            }
+
             _itemName = "";
-            itemid.push(data.value);
+            elemDad.find('.itemId').val(data.value);
 
             charts.showLoading(loading);
 
