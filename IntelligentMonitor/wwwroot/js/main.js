@@ -430,13 +430,9 @@ var getChartsData = function (itemid, itemName, idx) {
             },
             xAxis: {
                 type: 'category',
-                boundaryGap: false,
                 data: xAxis_data
             },
             yAxis: {
-                splitLine: {
-                    show: true
-                },
                 type: 'log'
             },
             series: series_data

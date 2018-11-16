@@ -233,13 +233,9 @@ layui.use(['form', 'layer'], function () {
             },
             xAxis: {
                 type: 'category',
-                boundaryGap: false,
                 data: xAxis_data
             },
             yAxis: {
-                splitLine: {
-                    show: true
-                },
                 type: 'log'
             },
             series: series_data
