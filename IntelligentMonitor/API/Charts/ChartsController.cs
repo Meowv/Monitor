@@ -11,8 +11,8 @@ using System.Linq;
 namespace IntelligentMonitor.API.Charts
 {
     [Authorize]
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class ChartsController : ControllerBase
     {
         private readonly IntelligentMonitorContext _context;
@@ -67,6 +67,7 @@ namespace IntelligentMonitor.API.Charts
         /// <returns></returns>
         [HttpGet]
         [Route("get_charts")]
+        [ResponseCache(CacheProfileName = "ChartsAPI")]
         public JsonResult<List<ChartsViewModel>> GetCharts(int count = 0)
         {
             var chartsList = _context.Charts.Where(x => x.IsDelete == 0).OrderByDescending(x => x.Seq).Take(count != 0 ? count : 100).ToList();

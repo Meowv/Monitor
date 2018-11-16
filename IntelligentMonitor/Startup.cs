@@ -59,7 +59,17 @@ namespace IntelligentMonitor
                 .AddTransient<IAuthorizationHandler, PermissionAuthorizationHandler>()
                 .AddTransient<UserProvider>()
                 .AddTransient<ZabbixProvider>()
-                .AddMvc()
+                .AddResponseCaching()
+                .AddMvc(options => {
+                    options.CacheProfiles.Add("ZabbixAPI", new CacheProfile()
+                    {
+                        Duration = 10
+                    });
+                    options.CacheProfiles.Add("ChartsAPI", new CacheProfile()
+                    {
+                        Duration = 3
+                    });
+                })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -77,7 +87,7 @@ namespace IntelligentMonitor
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
-
+            app.UseResponseCaching();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

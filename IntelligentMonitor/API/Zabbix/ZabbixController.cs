@@ -7,8 +7,8 @@ using ZabbixAPICore;
 
 namespace IntelligentMonitor.API.Zabbix
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class ZabbixController : ControllerBase
     {
         private readonly ZabbixProvider _provider;
@@ -24,6 +24,7 @@ namespace IntelligentMonitor.API.Zabbix
         /// <returns></returns>
         [HttpGet]
         [Route("hostgroup")]
+        [ResponseCache(CacheProfileName = "ZabbixAPI")]
         public Task<Response> GetHostGroup()
         {
             var zabbix = _provider.ZabbixLogin();
