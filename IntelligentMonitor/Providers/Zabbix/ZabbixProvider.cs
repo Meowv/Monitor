@@ -8,10 +8,12 @@ namespace IntelligentMonitor.Providers.Zabbix
     public class ZabbixProvider
     {
         private readonly ZabbixConfig _zabbix;
+        private readonly AppSettings _settings;
 
-        public ZabbixProvider(IOptions<ZabbixConfig> zabbix)
+        public ZabbixProvider(IOptions<ZabbixConfig> zabbix , AppSettings settings)
         {
             _zabbix = zabbix.Value;
+            _settings = settings;
         }
 
         /// <summary>

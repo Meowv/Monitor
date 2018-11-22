@@ -9,6 +9,7 @@ layui.use(['form', 'layer'], function () {
     let itemName = [];
     let itemid = [];
     let loading = {};
+    var value_type = {};
     let theme = 'shine';
     let charts = echarts.init(document.getElementById("charts"));
 
@@ -99,6 +100,7 @@ layui.use(['form', 'layer'], function () {
                 var options = "<option value=\"\"></option>";
                 for (var i = 0; i < data.result.length; i++) {
                     var name = data.result[i].name;
+                    value_type[data.result[i].itemid] = data.result[i].value_type;
                     if (name.indexOf('$') >= 0) {
                         var key = data.result[i].key_;
                         var keys = key.match(/\[(.+?)\]/g)[0].replace("[", "").replace("]", "").split(',');
@@ -149,10 +151,16 @@ layui.use(['form', 'layer'], function () {
                 var time_from = "";
                 var time_till = "";
                 var charts = {};
+                var historys = [];
+                for (var i = 0; i < itemid.length; i++) {
+                    var item = value_type[itemid[i]];
+                    historys.push(item);
+                }
                 charts.itemId = itemid.join(",");
                 charts.timeFrom = time_from;
                 charts.timeTill = time_till;
                 charts.itemName = itemName.join(",");
+                charts.historys = historys.join(",");
                 charts.chartsName = chartsName;
 
                 $.ajax({
@@ -185,35 +193,36 @@ layui.use(['form', 'layer'], function () {
     });
 
     function getData(itemid, itemName) {
-        var url = "/api/Zabbix/history?";
+        var series_data = [];
+        var xAxis_data = [];
 
         for (var i = 0; i < itemid.length; i++) {
-            url += "&itemids=" + itemid[i];
-        }
-        $.getJSON(url, function (data) {
-            var series_data = [];
-            var res = data.result;
-
-            for (var i = 0; i < itemid.length; i++) {
-                var xAxis_data = [];
-                var value = [];
-
-                res.map(function (item) {
-                    if (item.itemid == itemid[i]) {
+            var history = value_type[itemid[i]];
+            xAxis_data = [];
+            var url = "/api/Zabbix/history?itemids=" + itemid[i] + "&history=" + history;
+            $.ajax({
+                type: 'get',
+                url: url,
+                dataType: 'json',
+                async: false,
+                success: function (data) {
+                    var res = data.result;
+                    var value = [];
+                    res.map(function (item) {
                         value.push(item.value);
                         xAxis_data.push(format(item.clock));
-                    }
-                })
-                var item = {
-                    name: itemName[i],
-                    type: 'line',
-                    data: value
-                };
-                series_data.push(item);
-            }
-
-            renderCharts(series_data, xAxis_data, itemName);
-        });
+                    });
+                    var item = {
+                        name: itemName[i],
+                        type: 'line',
+                        data: value
+                    };
+                    series_data.push(item);
+                }
+            });
+        }
+        
+        renderCharts(series_data, xAxis_data, itemName);
     }
 
     function renderCharts(series_data, xAxis_data, itemName) {

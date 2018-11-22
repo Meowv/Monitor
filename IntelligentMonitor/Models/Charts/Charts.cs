@@ -10,6 +10,8 @@ namespace IntelligentMonitor.Models.Charts
 
         public string ItemId { get; set; }
 
+        public string Historys { get; set; }
+
         public string TimeFrom { get; set; }
 
         public string TimeTill { get; set; }

@@ -12,6 +12,8 @@
 
         public string ItemName { get; set; }
 
+        public string Historys { get; set; }
+
         public string TimeForm { get; set; }
 
         public string TimeTill { get; set; }

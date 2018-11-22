@@ -83,6 +83,7 @@ namespace IntelligentMonitor.API.Charts
                     ChartsId = "charts" + idx,
                     ChartsName = x.ChartsName,
                     ItemId = x.ItemId,
+                    Historys = x.Historys,
                     ItemName = x.ItemName,
                     TimeForm = x.TimeFrom,
                     TimeTill = x.TimeTill

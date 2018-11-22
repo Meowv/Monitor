@@ -122,12 +122,13 @@ namespace IntelligentMonitor.API.Zabbix
         /// History
         /// </summary>
         /// <param name="itemids"></param>
+        /// <param name="history"></param>
         /// <param name="time_from"></param>
         /// <param name="time_till"></param>
         /// <returns></returns>
         [HttpGet]
         [Route("history")]
-        public Task<Response> GetHsitory(string[] itemids, string time_from = null, string time_till = null)
+        public Task<Response> GetHsitory(string[] itemids, string history, string time_from = null, string time_till = null)
         {
             long start_time;
             long end_time;
@@ -148,7 +149,7 @@ namespace IntelligentMonitor.API.Zabbix
 
             var result = zabbix.GetResponseObjectAsync("history.get", new
             {
-                history = "0",
+                history,
                 itemids,
                 output = "extend",
                 sortfield = "clock",
