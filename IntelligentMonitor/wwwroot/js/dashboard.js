@@ -193,18 +193,21 @@ layui.use(['form', 'layer'], function () {
     });
 
     function getData(itemid, itemName) {
-        var series_data = [];
-        var xAxis_data = [];
+        setTimeout(function () {
+            for (var i = 0; i < itemid.length; i++) {
+                var history = value_type[itemid[i]];
+                var url = "/api/Zabbix/history?itemids=" + itemid[i] + "&history=" + history;
 
-        for (var i = 0; i < itemid.length; i++) {
-            var history = value_type[itemid[i]];
-            xAxis_data = [];
-            var url = "/api/Zabbix/history?itemids=" + itemid[i] + "&history=" + history;
+                request(url, i);
+            }
+        }, 100);
+        var series_data = [];
+        var request = function (url,i) {
+            var xAxis_data = [];
             $.ajax({
                 type: 'get',
                 url: url,
                 dataType: 'json',
-                async: false,
                 success: function (data) {
                     var res = data.result;
                     var value = [];
@@ -218,41 +221,39 @@ layui.use(['form', 'layer'], function () {
                         data: value
                     };
                     series_data.push(item);
+
+                    renderCharts(series_data, xAxis_data, itemName);
                 }
             });
         }
-
-        renderCharts(series_data, xAxis_data, itemName);
     }
 
     function renderCharts(series_data, xAxis_data, itemName) {
         charts.clear();
-        setTimeout(function () {
-            let option = {
-                tooltip: {
-                    trigger: 'axis'
-                },
-                legend: {
-                    data: itemName
-                },
-                grid: {
-                    left: '3%',
-                    right: '4%',
-                    bottom: '3%',
-                    containLabel: true
-                },
-                xAxis: {
-                    type: 'category',
-                    data: xAxis_data
-                },
-                yAxis: {
-                    type: 'log'
-                },
-                series: series_data
-            };
-            charts.setOption(option);
-            charts.hideLoading();
-        }, 1000);
+        var option = {
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: itemName
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: xAxis_data
+            },
+            yAxis: {
+                type: 'log'
+            },
+            series: series_data
+        };
+        charts.setOption(option);
+        charts.hideLoading();
     }
 
     function format(unix) {
