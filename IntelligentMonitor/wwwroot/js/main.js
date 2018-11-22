@@ -382,62 +382,64 @@ function renderCharts(time_from, time_till) {
 var getChartsData = function (itemid, itemName, historys, idx) {
     var series_data = [];
     var xAxis_data = [];
-    for (var i = 0; i < itemid.length; i++) {
-        xAxis_data = [];
-        var url = "/api/Zabbix/history?itemids=" + itemid[i] + "&history=" + historys[i];
-        url += "&time_from=" + time_from;
-        url += "&time_till=" + time_till;
+    setTimeout(function () {
+        for (var i = 0; i < itemid.length; i++) {
+            xAxis_data = [];
+            var url = "/api/Zabbix/history?itemids=" + itemid[i] + "&history=" + historys[i];
+            url += "&time_from=" + time_from;
+            url += "&time_till=" + time_till;
 
-        $.ajax({
-            type: 'get',
-            url: url,
-            dataType: 'json',
-            async: false,
-            success: function (data) {
-                var res = data.result;
-                var value = [];
-                res.map(function (item) {
-                    value.push(item.value);
-                    xAxis_data.push(format(item.clock));
-                });
-                var item = {
-                    name: itemName[i],
-                    type: 'line',
-                    data: value
-                };
-                series_data.push(item);
-            }
-        });
-    }
-    var option = {
-        title: {
-            text: charts_data[idx].chartsName,
-            left: 'center',
-            textStyle: {
-                fontSize: 16,
+            $.ajax({
+                type: 'get',
+                url: url,
+                dataType: 'json',
+                async: false,
+                success: function (data) {
+                    var res = data.result;
+                    var value = [];
+                    res.map(function (item) {
+                        value.push(item.value);
+                        xAxis_data.push(format(item.clock));
+                    });
+                    var item = {
+                        name: itemName[i],
+                        type: 'line',
+                        data: value
+                    };
+                    series_data.push(item);
+                }
+            });
+        }
+        var option = {
+            title: {
+                text: charts_data[idx].chartsName,
+                left: 'center',
+                textStyle: {
+                    fontSize: 16,
+                },
             },
-        },
-        tooltip: {
-            trigger: 'axis'
-        },
-        legend: {
-            //data: itemName
-        },
-        grid: {
-            left: '3%',
-            right: '3%',
-            bottom: '5%',
-            containLabel: true
-        },
-        xAxis: {
-            type: 'category',
-            data: xAxis_data
-        },
-        yAxis: {
-            type: 'log'
-        },
-        series: series_data
-    };
-    charts[idx].setOption(option);
-    charts[idx].hideLoading();
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                //data: itemName
+            },
+            grid: {
+                left: '3%',
+                right: '3%',
+                bottom: '5%',
+                containLabel: true
+            },
+            xAxis: [{
+                type: 'category',
+                data: xAxis_data
+            }],
+            yAxis: {
+                type: 'log'
+            },
+            series: series_data
+        };
+        charts[idx].setOption(option);
+        charts[idx].hideLoading();
+    }, 1000);
 }

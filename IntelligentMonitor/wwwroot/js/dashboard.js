@@ -221,37 +221,38 @@ layui.use(['form', 'layer'], function () {
                 }
             });
         }
-        
+
         renderCharts(series_data, xAxis_data, itemName);
     }
 
     function renderCharts(series_data, xAxis_data, itemName) {
         charts.clear();
-        let option = {
-            tooltip: {
-                trigger: 'axis'
-            },
-            legend: {
-                data: itemName
-            },
-            grid: {
-                left: '3%',
-                right: '4%',
-                bottom: '3%',
-                containLabel: true
-            },
-            xAxis: {
-                type: 'category',
-                data: xAxis_data
-            },
-            yAxis: {
-                type: 'log'
-            },
-            series: series_data
-        };
-
-        charts.setOption(option);
-        charts.hideLoading();
+        setTimeout(function () {
+            let option = {
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data: itemName
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    data: xAxis_data
+                },
+                yAxis: {
+                    type: 'log'
+                },
+                series: series_data
+            };
+            charts.setOption(option);
+            charts.hideLoading();
+        }, 1000);
     }
 
     function format(unix) {

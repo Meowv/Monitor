@@ -35,8 +35,8 @@
         }
       },
       "symbolSize": 4,
-      "symbol": "circle",
-      "smooth": false
+      "symbol": "none",
+      "smooth": 0.3
     },
     "radar": {
       "itemStyle": {

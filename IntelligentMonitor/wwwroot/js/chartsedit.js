@@ -190,48 +190,49 @@ function renderCharts() {
 var getChartsData = function (itemid, itemName, historys, idx) {
     var series_data = [];
     var xAxis_data = [];
-
-    for (var i = 0; i < itemid.length; i++) {
-        xAxis_data = [];
-        var url = "/api/Zabbix/history?itemids=" + itemid[i] + "&history=" + historys[i];
-        $.ajax({
-            type: 'get',
-            url: url,
-            dataType: 'json',
-            async: false,
-            success: function (data) {
-                var res = data.result;
-                var value = [];
-                res.map(function (item) {
-                    value.push(item.value);
-                    xAxis_data.push(format(item.clock));
-                });
-                var item = {
-                    name: itemName[i],
-                    type: 'line',
-                    data: value
-                };
-                series_data.push(item);
-            }
-        });
-    }
-    var option = {
-        backgroundColor: '#fff',
-        tooltip: {
-            trigger: 'axis'
-        },
-        legend: {
-            data: itemName
-        },
-        xAxis: {
-            type: 'category',
-            data: xAxis_data
-        },
-        yAxis: {
-            type: 'log'
-        },
-        series: series_data
-    };
-    charts[idx].setOption(option);
-    charts[idx].hideLoading();
+    setTimeout(function () {
+        for (var i = 0; i < itemid.length; i++) {
+            xAxis_data = [];
+            var url = "/api/Zabbix/history?itemids=" + itemid[i] + "&history=" + historys[i];
+            $.ajax({
+                type: 'get',
+                url: url,
+                dataType: 'json',
+                async: false,
+                success: function (data) {
+                    var res = data.result;
+                    var value = [];
+                    res.map(function (item) {
+                        value.push(item.value);
+                        xAxis_data.push(format(item.clock));
+                    });
+                    var item = {
+                        name: itemName[i],
+                        type: 'line',
+                        data: value
+                    };
+                    series_data.push(item);
+                }
+            });
+        }
+        var option = {
+            backgroundColor: '#fff',
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: itemName
+            },
+            xAxis: {
+                type: 'category',
+                data: xAxis_data
+            },
+            yAxis: {
+                type: 'log'
+            },
+            series: series_data
+        };
+        charts[idx].setOption(option);
+        charts[idx].hideLoading();
+    }, 1000);
 }
